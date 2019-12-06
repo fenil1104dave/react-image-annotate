@@ -93,8 +93,12 @@ export default ({ state, dispatch }: Props) => {
                   createWithPrimary={state.selectedTool.includes("create")}
                   dragWithPrimary={state.selectedTool === "pan"}
                   zoomWithPrimary={state.selectedTool === "zoom"}
+                  zoomOutWithPrimary={state.selectedTool === "zoom-out"}
                   showPointDistances={state.showPointDistances}
                   pointDistancePrecision={state.pointDistancePrecision}
+                  zoomHistory={state.zoomHistory}
+                  changeZoomHistory={action("ZOOM_HISTORY", "region", "direction")}
+                  resetZoomHistory={action("RESET_ZOOM_HISTORY")}
                   onMouseMove={action("MOUSE_MOVE")}
                   onMouseDown={action("MOUSE_DOWN")}
                   onMouseUp={action("MOUSE_UP")}

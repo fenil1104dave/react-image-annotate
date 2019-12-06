@@ -11,6 +11,7 @@ export type ToolEnum =
   | "select"
   | "pan"
   | "zoom"
+  | "zoom-out"
   | "create-point"
   | "create-box"
   | "create-polygon"
@@ -63,7 +64,8 @@ export type MainLayoutState = {|
   imageClsList?: Array<string>,
   imageTagList?: Array<string>,
   enabledTools: Array<string>,
-  history: Array<{ time: Date, state: MainLayoutState, name: string }>
+  history: Array<{ time: Date, state: MainLayoutState, name: string }>,
+  zoomHistory: Array<{ state: MainLayoutState, name: string }>
 |}
 
 export type Action =

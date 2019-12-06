@@ -553,6 +553,27 @@ export default (state: MainLayoutState, action: Action) => {
         )
       )
     }
+    case "ZOOM_HISTORY": {
+      const {region, direction} = action;
+      if(direction=="ADD_NEW"){
+        return updateIn(state, ["zoomHistory"], zh =>
+          [
+            region
+          ].concat((zh || []).slice())
+        )
+      }else{
+        return updateIn(state, ["zoomHistory"], function(zh){
+            let newRegion = (zh || []).slice()
+            newRegion = newRegion.asMutable({deep: true})
+            newRegion.splice(region, 1)
+            return newRegion;
+          }
+        )
+      }
+    }
+    case "RESET_ZOOM_HISTORY": {
+      return setIn(state, ["zoomHistory"], [])
+    }
     case "HEADER_BUTTON_CLICKED": {
       const buttonName = action.buttonName.toLowerCase()
       switch (buttonName) {

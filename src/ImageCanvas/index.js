@@ -39,6 +39,7 @@ type Props = {
   onMouseUp?: ({ x: number, y: number }) => any,
   dragWithPrimary?: boolean,
   zoomWithPrimary?: boolean,
+  zoomOutWithPrimary?: boolean,
   createWithPrimary?: boolean,
   showTags?: boolean,
   realSize?: { width: number, height: number, unitName: string },
@@ -74,6 +75,7 @@ export default ({
   onMouseUp = p => null,
   dragWithPrimary = false,
   zoomWithPrimary = false,
+  zoomOutWithPrimary = false,
   createWithPrimary = false,
   pointDistancePrecision = 0,
   regionClsList,
@@ -81,8 +83,11 @@ export default ({
   showCrosshairs,
   showPointDistances,
   allowedArea,
+  zoomHistory,
 
   onImageLoaded,
+  changeZoomHistory,
+  resetZoomHistory,
   onChangeRegion,
   onBeginRegionEdit,
   onCloseRegionEdit,
@@ -354,15 +359,36 @@ export default ({
   const zoomIn = (direction, point) => {
     const [mx, my] = [point.x, point.y]
     let scale =
-      typeof direction === "object" ? direction.to / mat.a : 1 + 0.2 * direction
+      typeof direction === "object" ? direction.to : 1 + 0.2 * direction
 
+    const oldMat = mat.clone();
+    if(!zoomHistory || zoomHistory.length==0){
+      changeZoomHistory(oldMat, "ADD_NEW")
+    }
     // NOTE: We're mutating mat here
     mat.translate(mx, my).scaleU(scale)
     if (mat.a > 2) mat.scaleU(2 / mat.a)
     if (mat.a < 0.1) mat.scaleU(0.1 / mat.a)
     mat.translate(-mx, -my)
+    const newMatClone = mat.clone();
 
-    changeMat(mat.clone())
+    if(!(Object.keys(oldMat).length === Object.keys(newMatClone).length && Object.keys(oldMat).every(key => oldMat[key] === newMatClone[key]))){
+      changeZoomHistory(newMatClone, "ADD_NEW")
+      changeMat(newMatClone)
+    }
+  }
+  const zoomOut = () => {
+    if(zoomHistory && zoomHistory.length>0){
+      const newMat = zoomHistory[0];
+      changeZoomHistory(0, "")
+      changeMat(Matrix.from(newMat));
+    }else{
+      changeMat(Matrix.from(getDefaultMat()));
+    }
+  }
+  const resetPosition = () => {
+    resetZoomHistory();
+    changeMat(Matrix.from(getDefaultMat()));
   }
 
   const mouseEvents = {
@@ -410,6 +436,9 @@ export default ({
         changeZoomEnd(projMouse)
         return
       }
+      if(zoomOutWithPrimary && e.button === 0){
+        zoomOut()
+      }
       if (e.button === 0) {
         if (specialEvent.type === "resize-box") {
           // onResizeBox()
@@ -433,11 +462,12 @@ export default ({
           Math.abs(zoomStart.x - zoomEnd.x) < 10 &&
           Math.abs(zoomStart.y - zoomEnd.y) < 10
         ) {
-          if (mat.a < 1) {
-            zoomIn({ to: 1 }, mousePosition.current)
-          } else {
-            zoomIn({ to: 0.25 }, mousePosition.current)
-          }
+          zoomIn({ to: 0.75 }, mousePosition.current)
+          // if (mat.a < 1) {
+          //   // zoomIn({ to: 1 }, mousePosition.current)
+          // } else {
+          //   zoomIn({ to: 0.25 }, mousePosition.current)
+          // }
         } else {
           const { iw, ih } = layoutParams.current
 
@@ -459,8 +489,9 @@ export default ({
           const newMat = getDefaultMat()
             .translate(zoomStart.x, zoomStart.y)
             .scaleU(scale)
-
-          changeMat(newMat.clone())
+          const newMatClone = newMat.clone()
+          changeZoomHistory(newMatClone, "ADD_NEW")
+          changeMat(newMatClone)
         }
 
         changeZoomStart(null)
@@ -474,8 +505,20 @@ export default ({
       }
     },
     onWheel: e => {
-      const direction = e.deltaY > 0 ? 1 : e.deltaY < 0 ? -1 : 0
-      zoomIn(direction, mousePosition.current)
+      if(e.ctrlKey){
+        const direction = e.deltaY > 0 ? 1 : e.deltaY < 0 ? -1 : 0
+        zoomIn(direction, mousePosition.current)
+      }else{
+        prevMousePosition.current.x = mousePosition.current.x
+        prevMousePosition.current.y = mousePosition.current.y
+        mousePosition.current.x = e.deltaX + prevMousePosition.current.x
+        mousePosition.current.y = e.deltaY - prevMousePosition.current.y
+        mat.translate(
+          e.deltaX,
+          e.deltaY
+        )
+        changeMat(mat.clone());
+      }
       e.preventDefault()
     }
   }
@@ -504,6 +547,10 @@ export default ({
   }
 
   return (
+    <div>
+    <div>
+      <button onClick={resetPosition}>Reset Position</button>
+    </div>
     <div
       style={{
         width: "100%",
@@ -518,9 +565,9 @@ export default ({
           : dragWithPrimary
           ? "grab"
           : zoomWithPrimary
-          ? mat.a < 1
-            ? "zoom-out"
-            : "zoom-in"
+          ? "zoom-in"
+          : zoomOutWithPrimary
+          ? "zoom-out"
           : undefined
       }}
     >
@@ -540,6 +587,7 @@ export default ({
                   dragWithPrimary={dragWithPrimary}
                   createWithPrimary={createWithPrimary}
                   zoomWithPrimary={zoomWithPrimary}
+                  zoomOutWithPrimary={zoomOutWithPrimary}
                   onBeginMovePoint={onBeginMovePoint}
                   onSelectRegion={onSelectRegion}
                   pbox={pbox}
@@ -547,6 +595,7 @@ export default ({
                 {r.type === "box" &&
                   !dragWithPrimary &&
                   !zoomWithPrimary &&
+                  !zoomOutWithPrimary &&
                   !r.locked &&
                   r.highlighted &&
                   mat.a < 1.2 &&
@@ -585,6 +634,7 @@ export default ({
                   r.type === "circle" &&
                   !dragWithPrimary &&
                   !zoomWithPrimary &&
+                  !zoomOutWithPrimary &&
                   !r.locked &&
                   r.highlighted &&
                   [
@@ -623,6 +673,7 @@ export default ({
                 {r.type === "polygon" &&
                   !dragWithPrimary &&
                   !zoomWithPrimary &&
+                  !zoomOutWithPrimary &&
                   !r.locked &&
                   r.highlighted &&
                   r.points.map(([px, py], i) => {
@@ -660,6 +711,7 @@ export default ({
                   r.highlighted &&
                   !dragWithPrimary &&
                   !zoomWithPrimary &&
+                  !zoomOutWithPrimary &&
                   !r.locked &&
                   !r.open &&
                   r.points.length > 1 &&
@@ -790,7 +842,7 @@ export default ({
               </div>
             )
           })}
-      {zoomWithPrimary && zoomBox !== null && (
+      {zoomWithPrimary && zoomOutWithPrimary && zoomBox !== null && (
         <div
           style={{
             position: "absolute",
@@ -869,6 +921,7 @@ export default ({
       <div className={classes.zoomIndicator}>
         {((1 / mat.a) * 100).toFixed(0)}%
       </div>
+    </div>
     </div>
   )
 }

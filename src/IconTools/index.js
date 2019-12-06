@@ -12,7 +12,9 @@ import {
   faDrawPolygon,
   faVectorSquare,
   faHandPaper,
-  faSearch
+  faSearch,
+  faSearchPlus,
+  faSearchMinus
 } from "@fortawesome/free-solid-svg-icons"
 import { faCircle } from "@fortawesome/free-regular-svg-icons"
 import SmallToolButton, { SelectedTool } from "../SmallToolButton"
@@ -64,8 +66,14 @@ export default ({
         <SmallToolButton
           alwaysShowing
           id="zoom"
-          name="Zoom In/Out"
-          icon={<FontAwesomeIcon size="xs" fixedWidth icon={faSearch} />}
+          name="Zoom In"
+          icon={<FontAwesomeIcon size="xs" fixedWidth icon={faSearchPlus} />}
+        />
+        <SmallToolButton
+          alwaysShowing
+          id="zoom-out"
+          name="Zoom Out"
+          icon={<FontAwesomeIcon size="xs" fixedWidth icon={faSearchMinus} />}
         />
         {/* <SmallToolButton
           name="Move Region"

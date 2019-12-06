@@ -36,6 +36,7 @@ export default ({
   mouseEvents,
   dragWithPrimary,
   zoomWithPrimary,
+  zoomOutWithPrimary,
   createWithPrimary,
   onBeginMovePoint,
   onSelectRegion,
@@ -45,6 +46,7 @@ export default ({
   mouseEvents: any,
   dragWithPrimary: boolean,
   zoomWithPrimary: boolean,
+  zoomOutWithPrimary: boolean,
   createWithPrimary: boolean,
   onBeginMovePoint: Function,
   onSelectRegion: Function,
@@ -59,7 +61,7 @@ export default ({
         highlighted: r.highlighted
       })}
       {...mouseEvents}
-      {...(!zoomWithPrimary && !dragWithPrimary
+      {...(!zoomWithPrimary && !zoomOutWithPrimary && !dragWithPrimary
         ? {
             onMouseDown: e => {
               if (
@@ -82,11 +84,12 @@ export default ({
               cursor: "grab"
             }
           : {
-              cursor: !(zoomWithPrimary || dragWithPrimary || createWithPrimary)
+              cursor: !(zoomWithPrimary || zoomOutWithPrimary || dragWithPrimary || createWithPrimary)
                 ? "pointer"
                 : undefined,
               pointerEvents:
                 zoomWithPrimary ||
+                zoomOutWithPrimary ||
                 dragWithPrimary ||
                 (createWithPrimary && !r.highlighted)
                   ? "none"
