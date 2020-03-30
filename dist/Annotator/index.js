@@ -1,6 +1,6 @@
 import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
 import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
-import React, { useReducer, useEffect, useState } from "react";
+import React, { useReducer, useEffect } from "react";
 import MainLayout from "../MainLayout";
 import SettingsProvider from "../SettingsProvider";
 import reducer from "./reducer";
@@ -74,16 +74,7 @@ export default (function (_ref) {
       type: "CHANGE_CURRENT_MAT",
       currentMat: currentMat
     });
-  }, [JSON.stringify(currentMat)]); // useEffect(() => {
-  //   console.log(selectedTool);
-  //   if(selectedTool !== undefined && state.selectedTool !== selectedTool){
-  //     console.log("Hereeee");
-  //     dispatchToReducer({type: "SELECT_TOOL", selectedTool: selectedTool})
-  //   }
-  //   // if(mat != null){
-  //   //   dispatchToReducer({type: "CHANGE_MAT", mat: mat})
-  //   // }
-  // });
+  }, [JSON.stringify(currentMat)]);
 
   var dispatch = function dispatch(action) {
     if (action.type === "HEADER_BUTTON_CLICKED" && (action.buttonName === "Exit" || action.buttonName === "Done" || action.buttonName === "Save" || action.buttonName === "Complete")) {

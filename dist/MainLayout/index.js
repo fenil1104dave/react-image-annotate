@@ -1,6 +1,6 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Sidebar from "../Sidebar";
@@ -22,7 +22,6 @@ export default (function (_ref) {
       dispatch = _ref.dispatch;
   var classes = useStyles();
   var settings = useSettings();
-  var imageCanvasRef = useRef();
 
   var action = function action(type) {
     for (var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -99,7 +98,7 @@ export default (function (_ref) {
     zoomWithPrimary: state.selectedTool === "zoom",
     zoomOutWithPrimary: state.selectedTool === "zoom-out",
     showPointDistances: state.showPointDistances
-  }, _defineProperty(_Object$assign, "pointDistancePrecision", state.pointDistancePrecision), _defineProperty(_Object$assign, "zoomHistory", state.zoomHistory), _defineProperty(_Object$assign, "changeZoomHistory", action("ZOOM_HISTORY", "region", "direction")), _defineProperty(_Object$assign, "resetZoomHistory", action("RESET_ZOOM_HISTORY")), _defineProperty(_Object$assign, "onMouseMove", action("MOUSE_MOVE")), _defineProperty(_Object$assign, "onMouseDown", action("MOUSE_DOWN")), _defineProperty(_Object$assign, "onMouseUp", action("MOUSE_UP")), _defineProperty(_Object$assign, "onChangeRegion", action("CHANGE_REGION", "region")), _defineProperty(_Object$assign, "onBeginRegionEdit", action("OPEN_REGION_EDITOR", "region")), _defineProperty(_Object$assign, "onCloseRegionEdit", action("CLOSE_REGION_EDITOR", "region")), _defineProperty(_Object$assign, "onDeleteRegion", action("DELETE_REGION", "region")), _defineProperty(_Object$assign, "onBeginCircleTransform", action("BEGIN_CIRCLE_TRANSFORM", "circle", "directions")), _defineProperty(_Object$assign, "onBeginBoxTransform", action("BEGIN_BOX_TRANSFORM", "box", "directions")), _defineProperty(_Object$assign, "onBeginMovePolygonPoint", action("BEGIN_MOVE_POLYGON_POINT", "polygon", "pointIndex")), _defineProperty(_Object$assign, "onAddPolygonPoint", action("ADD_POLYGON_POINT", "polygon", "point", "pointIndex")), _defineProperty(_Object$assign, "onSelectRegion", action("SELECT_REGION", "region")), _defineProperty(_Object$assign, "onBeginMovePoint", action("BEGIN_MOVE_POINT", "point")), _defineProperty(_Object$assign, "onImageLoaded", action("IMAGE_LOADED", "image")), _defineProperty(_Object$assign, "mat", Matrix.from(state.currentMat)), _defineProperty(_Object$assign, "changeMat", state.changeMat), _defineProperty(_Object$assign, "ref", imageCanvasRef), _Object$assign)))))), React.createElement(SettingsDialog, {
+  }, _defineProperty(_Object$assign, "pointDistancePrecision", state.pointDistancePrecision), _defineProperty(_Object$assign, "zoomHistory", state.zoomHistory), _defineProperty(_Object$assign, "changeZoomHistory", action("ZOOM_HISTORY", "region", "direction")), _defineProperty(_Object$assign, "resetZoomHistory", action("RESET_ZOOM_HISTORY")), _defineProperty(_Object$assign, "onMouseMove", action("MOUSE_MOVE")), _defineProperty(_Object$assign, "onMouseDown", action("MOUSE_DOWN")), _defineProperty(_Object$assign, "onMouseUp", action("MOUSE_UP")), _defineProperty(_Object$assign, "onChangeRegion", action("CHANGE_REGION", "region")), _defineProperty(_Object$assign, "onBeginRegionEdit", action("OPEN_REGION_EDITOR", "region")), _defineProperty(_Object$assign, "onCloseRegionEdit", action("CLOSE_REGION_EDITOR", "region")), _defineProperty(_Object$assign, "onDeleteRegion", action("DELETE_REGION", "region")), _defineProperty(_Object$assign, "onBeginCircleTransform", action("BEGIN_CIRCLE_TRANSFORM", "circle", "directions")), _defineProperty(_Object$assign, "onBeginBoxTransform", action("BEGIN_BOX_TRANSFORM", "box", "directions")), _defineProperty(_Object$assign, "onBeginMovePolygonPoint", action("BEGIN_MOVE_POLYGON_POINT", "polygon", "pointIndex")), _defineProperty(_Object$assign, "onAddPolygonPoint", action("ADD_POLYGON_POINT", "polygon", "point", "pointIndex")), _defineProperty(_Object$assign, "onSelectRegion", action("SELECT_REGION", "region")), _defineProperty(_Object$assign, "onBeginMovePoint", action("BEGIN_MOVE_POINT", "point")), _defineProperty(_Object$assign, "onImageLoaded", action("IMAGE_LOADED", "image")), _defineProperty(_Object$assign, "mat", Matrix.from(state.currentMat)), _defineProperty(_Object$assign, "changeMat", state.changeMat), _Object$assign)))))), React.createElement(SettingsDialog, {
     open: state.settingsOpen,
     onClose: function onClose() {
       return dispatch({
