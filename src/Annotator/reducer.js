@@ -4,6 +4,7 @@ import type { MainLayoutState, Action } from "../MainLayout/types"
 import { moveRegion } from "../ImageCanvas/region-tools.js"
 import { setIn, updateIn } from "seamless-immutable"
 import moment from "moment"
+import { Matrix } from "transformation-matrix-js"
 import isEqual from "lodash/isEqual"
 
 const getRandomId = () =>
@@ -617,6 +618,9 @@ export default (state: MainLayoutState, action: Action) => {
         return setIn(state, ["showTags"], !state.showTags)
       }
       return setIn(state, ["selectedTool"], action.selectedTool)
+    }
+    case "CHANGE_CURRENT_MAT": {
+      return setIn(state, ["currentMat"], action.currentMat)
     }
     case "CANCEL": {
       const { mode } = state

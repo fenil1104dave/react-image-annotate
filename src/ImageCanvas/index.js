@@ -97,7 +97,9 @@ export default ({
   onAddPolygonPoint,
   onSelectRegion,
   onBeginMovePoint,
-  onDeleteRegion
+  onDeleteRegion,
+  mat,
+  changeMat
 }: Props) => {
   const classes = useStyles()
 
@@ -112,7 +114,7 @@ export default ({
   const [zoomEnd, changeZoomEnd] = useState(null)
   const mousePosition = useRef({ x: 0, y: 0 })
   const prevMousePosition = useRef({ x: 0, y: 0 })
-  const [mat, changeMat] = useState(getDefaultMat())
+  // const [mat, changeMat] = useState(getDefaultMat())
   const maskImages = useRef({})
 
   const innerMousePos = mat.applyToPoint(

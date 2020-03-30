@@ -1,9 +1,15 @@
 import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
 import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import MainLayout from "../MainLayout";
 import SettingsProvider from "../SettingsProvider";
 import reducer from "./reducer";
+import { Matrix } from "transformation-matrix-js";
+
+var getDefaultMat = function getDefaultMat() {
+  return Matrix.from(1, 0, 0, 1, -10, -10);
+};
+
 export default (function (_ref) {
   var images = _ref.images,
       allowedArea = _ref.allowedArea,
@@ -11,6 +17,8 @@ export default (function (_ref) {
       selectedImage = _ref$selectedImage === void 0 ? images.length > 0 ? images[0].src : undefined : _ref$selectedImage,
       showPointDistances = _ref.showPointDistances,
       pointDistancePrecision = _ref.pointDistancePrecision,
+      _ref$selectedTool = _ref.selectedTool,
+      selectedTool = _ref$selectedTool === void 0 ? "select" : _ref$selectedTool,
       _ref$showTags = _ref.showTags,
       showTags = _ref$showTags === void 0 ? true : _ref$showTags,
       _ref$enabledTools = _ref.enabledTools,
@@ -24,6 +32,9 @@ export default (function (_ref) {
       _ref$imageClsList = _ref.imageClsList,
       imageClsList = _ref$imageClsList === void 0 ? [] : _ref$imageClsList,
       taskDescription = _ref.taskDescription,
+      _ref$currentMat = _ref.currentMat,
+      currentMat = _ref$currentMat === void 0 ? getDefaultMat() : _ref$currentMat,
+      changeMat = _ref.changeMat,
       onExit = _ref.onExit;
 
   var _useReducer = useReducer(reducer, {
@@ -32,7 +43,8 @@ export default (function (_ref) {
     selectedImage: selectedImage,
     showPointDistances: showPointDistances,
     pointDistancePrecision: pointDistancePrecision,
-    selectedTool: "select",
+    selectedTool: selectedTool,
+    // selectedTool: "select",
     mode: null,
     taskDescription: taskDescription,
     images: images,
@@ -41,12 +53,37 @@ export default (function (_ref) {
     regionTagList: regionTagList,
     imageClsList: imageClsList,
     imageTagList: imageTagList,
+    currentMat: currentMat,
+    changeMat: changeMat,
     enabledTools: enabledTools,
     history: []
   }),
       _useReducer2 = _slicedToArray(_useReducer, 2),
       state = _useReducer2[0],
       dispatchToReducer = _useReducer2[1];
+
+  useEffect(function () {
+    console.log("Hell");
+    dispatchToReducer({
+      type: "SELECT_TOOL",
+      selectedTool: selectedTool
+    });
+  }, [selectedTool]);
+  useEffect(function () {
+    dispatchToReducer({
+      type: "CHANGE_CURRENT_MAT",
+      currentMat: currentMat
+    });
+  }, [JSON.stringify(currentMat)]); // useEffect(() => {
+  //   console.log(selectedTool);
+  //   if(selectedTool !== undefined && state.selectedTool !== selectedTool){
+  //     console.log("Hereeee");
+  //     dispatchToReducer({type: "SELECT_TOOL", selectedTool: selectedTool})
+  //   }
+  //   // if(mat != null){
+  //   //   dispatchToReducer({type: "CHANGE_MAT", mat: mat})
+  //   // }
+  // });
 
   var dispatch = function dispatch(action) {
     if (action.type === "HEADER_BUTTON_CLICKED" && (action.buttonName === "Exit" || action.buttonName === "Done" || action.buttonName === "Save" || action.buttonName === "Complete")) {

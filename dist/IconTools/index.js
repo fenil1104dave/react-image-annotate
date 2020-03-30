@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowsAlt, faMousePointer, faExpandArrowsAlt, faTag, faPaintBrush, faCrosshairs, faDrawPolygon, faVectorSquare, faHandPaper, faSearch, faCircle } from "@fortawesome/free-solid-svg-icons";
+import { faArrowsAlt, faMousePointer, faExpandArrowsAlt, faTag, faPaintBrush, faCrosshairs, faDrawPolygon, faVectorSquare, faHandPaper, faSearch, faSearchPlus, faSearchMinus } from "@fortawesome/free-solid-svg-icons";
+import { faCircle } from "@fortawesome/free-regular-svg-icons";
 import SmallToolButton, { SelectedTool } from "../SmallToolButton";
 import { makeStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
@@ -50,11 +51,20 @@ export default (function (_ref) {
   }), React.createElement(SmallToolButton, {
     alwaysShowing: true,
     id: "zoom",
-    name: "Zoom In/Out",
+    name: "Zoom In",
     icon: React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
-      icon: faSearch
+      icon: faSearchPlus
+    })
+  }), React.createElement(SmallToolButton, {
+    alwaysShowing: true,
+    id: "zoom-out",
+    name: "Zoom Out",
+    icon: React.createElement(FontAwesomeIcon, {
+      size: "xs",
+      fixedWidth: true,
+      icon: faSearchMinus
     })
   }), React.createElement(SmallToolButton, {
     alwaysShowing: true,

@@ -14,6 +14,7 @@ import classnames from "classnames"
 import { useSettings } from "../SettingsProvider"
 import SettingsDialog from "../SettingsDialog"
 import Fullscreen from "react-full-screen"
+import {Matrix} from "transformation-matrix-js";
 
 const useStyles = makeStyles(styles)
 
@@ -42,6 +43,15 @@ export default ({ state, dispatch }: Props) => {
     detectKeys: [27]
   })
 
+  if(state.changeMat === undefined){
+      state.changeMat = (mat) => {
+          dispatch({
+              type: "CHANGE_CURRENT_MAT",
+              currentMat: mat
+          })
+      }
+  }
+
   return (
     <Fullscreen
       enabled={state.fullScreen}
@@ -57,23 +67,23 @@ export default ({ state, dispatch }: Props) => {
           state.fullScreen && "Fullscreen"
         )}
       >
-        <div className={classes.headerContainer}>
-          <Header
-            onHeaderButtonClick={action("HEADER_BUTTON_CLICKED", "buttonName")}
-            inFullScreen={state.fullScreen}
-            multipleImages={Boolean(state.images.length > 1)}
-            title={currentImage ? currentImage.name : "No Image Selected"}
-          />
-        </div>
+        {/*<div className={classes.headerContainer}>*/}
+        {/*  <Header*/}
+        {/*    onHeaderButtonClick={action("HEADER_BUTTON_CLICKED", "buttonName")}*/}
+        {/*    inFullScreen={state.fullScreen}*/}
+        {/*    multipleImages={Boolean(state.images.length > 1)}*/}
+        {/*    title={currentImage ? currentImage.name : "No Image Selected"}*/}
+        {/*  />*/}
+        {/*</div>*/}
         <div className={classes.workspace}>
-          <div className={classes.iconToolsContainer}>
-            <IconTools
-              enabledTools={state.enabledTools}
-              showTags={state.showTags}
-              selectedTool={state.selectedTool}
-              onClickTool={action("SELECT_TOOL", "selectedTool")}
-            />
-          </div>
+          {/*<div className={classes.iconToolsContainer}>*/}
+          {/*  <IconTools*/}
+          {/*    enabledTools={state.enabledTools}*/}
+          {/*    showTags={state.showTags}*/}
+          {/*    selectedTool={state.selectedTool}*/}
+          {/*    onClickTool={action("SELECT_TOOL", "selectedTool")}*/}
+          {/*  />*/}
+          {/*</div>*/}
           <div className={classes.imageCanvasContainer}>
             {!state.selectedImage ? (
               <div className={classes.noImageSelected}>No Image Selected</div>
@@ -130,29 +140,31 @@ export default ({ state, dispatch }: Props) => {
                   onSelectRegion={action("SELECT_REGION", "region")}
                   onBeginMovePoint={action("BEGIN_MOVE_POINT", "point")}
                   onImageLoaded={action("IMAGE_LOADED", "image")}
+                  mat={Matrix.from(state.currentMat)}
+                  changeMat={state.changeMat}
                 />
               </div>
             )}
           </div>
-          <div className={classes.sidebarContainer}>
-            <Sidebar
-              debug={window.localStorage.$ANNOTATE_DEBUG_MODE && state}
-              taskDescription={state.taskDescription}
-              images={state.images}
-              regions={currentImage ? currentImage.regions || [] : []}
-              history={state.history}
-              currentImage={currentImage}
-              labelImages={state.labelImages}
-              imageClsList={state.imageClsList}
-              imageTagList={state.imageTagList}
-              onChangeImage={action("CHANGE_IMAGE", "delta")}
-              onSelectRegion={action("SELECT_REGION", "region")}
-              onDeleteRegion={action("DELETE_REGION", "region")}
-              onSelectImage={action("SELECT_IMAGE", "image")}
-              onChangeRegion={action("CHANGE_REGION", "region")}
-              onRestoreHistory={action("RESTORE_HISTORY")}
-            />
-          </div>
+          {/*<div className={classes.sidebarContainer}>*/}
+          {/*  <Sidebar*/}
+          {/*    debug={window.localStorage.$ANNOTATE_DEBUG_MODE && state}*/}
+          {/*    taskDescription={state.taskDescription}*/}
+          {/*    images={state.images}*/}
+          {/*    regions={currentImage ? currentImage.regions || [] : []}*/}
+          {/*    history={state.history}*/}
+          {/*    currentImage={currentImage}*/}
+          {/*    labelImages={state.labelImages}*/}
+          {/*    imageClsList={state.imageClsList}*/}
+          {/*    imageTagList={state.imageTagList}*/}
+          {/*    onChangeImage={action("CHANGE_IMAGE", "delta")}*/}
+          {/*    onSelectRegion={action("SELECT_REGION", "region")}*/}
+          {/*    onDeleteRegion={action("DELETE_REGION", "region")}*/}
+          {/*    onSelectImage={action("SELECT_IMAGE", "image")}*/}
+          {/*    onChangeRegion={action("CHANGE_REGION", "region")}*/}
+          {/*    onRestoreHistory={action("RESTORE_HISTORY")}*/}
+          {/*  />*/}
+          {/*</div>*/}
         </div>
         <SettingsDialog
           open={state.settingsOpen}

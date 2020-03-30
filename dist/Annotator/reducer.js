@@ -4,6 +4,7 @@ import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
 import { moveRegion } from "../ImageCanvas/region-tools.js";
 import { setIn, updateIn } from "seamless-immutable";
 import moment from "moment";
+import { Matrix } from "transformation-matrix-js";
 import isEqual from "lodash/isEqual";
 
 var getRandomId = function getRandomId() {
@@ -367,9 +368,7 @@ export default (function (state, action) {
               return setIn(state, ["images", currentImageIndex, "regions", _regionIndex6], _objectSpread({}, _region, {
                 xr: action.x,
                 yr: action.y
-              }) // region.radius+1
-              // Math.sqrt(Math.pow(region.x - x,2) + Math.pow(region.y - y,2))
-              );
+              }));
             }
 
           case "DRAW_POLYGON":
@@ -624,6 +623,32 @@ export default (function (state, action) {
         }));
       }
 
+    case "ZOOM_HISTORY":
+      {
+        var _region7 = action.region,
+            direction = action.direction;
+
+        if (direction == "ADD_NEW") {
+          return updateIn(state, ["zoomHistory"], function (zh) {
+            return [_region7].concat((zh || []).slice());
+          });
+        } else {
+          return updateIn(state, ["zoomHistory"], function (zh) {
+            var newRegion = (zh || []).slice();
+            newRegion = newRegion.asMutable({
+              deep: true
+            });
+            newRegion.splice(_region7, 1);
+            return newRegion;
+          });
+        }
+      }
+
+    case "RESET_ZOOM_HISTORY":
+      {
+        return setIn(state, ["zoomHistory"], []);
+      }
+
     case "HEADER_BUTTON_CLICKED":
       {
         var buttonName = action.buttonName.toLowerCase();
@@ -688,6 +713,11 @@ export default (function (state, action) {
         }
 
         return setIn(state, ["selectedTool"], action.selectedTool);
+      }
+
+    case "CHANGE_CURRENT_MAT":
+      {
+        return setIn(state, ["currentMat"], action.currentMat);
       }
 
     case "CANCEL":

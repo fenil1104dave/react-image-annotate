@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useReducer } from "react"
+import React, { useReducer, useEffect } from "react"
 import MainLayout from "../MainLayout"
 import type {
   ToolEnum,
@@ -11,6 +11,7 @@ import type {
 } from "../MainLayout/types"
 import SettingsProvider from "../SettingsProvider"
 import reducer from "./reducer"
+import {Matrix} from "transformation-matrix-js";
 
 type Props = {
   taskDescription: string,
@@ -28,12 +29,15 @@ type Props = {
   onExit: MainLayoutState => any
 }
 
+const getDefaultMat = () => Matrix.from(1, 0, 0, 1, -10, -10)
+
 export default ({
   images,
   allowedArea,
   selectedImage = images.length > 0 ? images[0].src : undefined,
   showPointDistances,
   pointDistancePrecision,
+  selectedTool="select",
   showTags = true,
   enabledTools = ["select", "create-point", "create-box", "create-polygon", "create-circle"],
   regionTagList = [],
@@ -41,15 +45,19 @@ export default ({
   imageTagList = [],
   imageClsList = [],
   taskDescription,
+  currentMat = getDefaultMat(),
+  changeMat,
   onExit
 }: Props) => {
+
   const [state, dispatchToReducer] = useReducer(reducer, {
     showTags,
     allowedArea,
     selectedImage,
     showPointDistances,
     pointDistancePrecision,
-    selectedTool: "select",
+    selectedTool,
+    // selectedTool: "select",
     mode: null,
     taskDescription,
     images,
@@ -58,9 +66,20 @@ export default ({
     regionTagList,
     imageClsList,
     imageTagList,
+    currentMat,
+    changeMat,
     enabledTools,
     history: []
   })
+
+  useEffect(() => {
+    console.log("Hell")
+    dispatchToReducer({type: "SELECT_TOOL", selectedTool: selectedTool})
+  }, [selectedTool]);
+
+  useEffect(() => {
+    dispatchToReducer({type: "CHANGE_CURRENT_MAT", currentMat: currentMat})
+  }, [JSON.stringify(currentMat)]);
 
   const dispatch = (action: Action) => {
     if (

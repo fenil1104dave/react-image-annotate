@@ -37,6 +37,7 @@ export default (function (_ref) {
   var mouseEvents = _ref.mouseEvents,
       dragWithPrimary = _ref.dragWithPrimary,
       zoomWithPrimary = _ref.zoomWithPrimary,
+      zoomOutWithPrimary = _ref.zoomOutWithPrimary,
       createWithPrimary = _ref.createWithPrimary,
       onBeginMovePoint = _ref.onBeginMovePoint,
       onSelectRegion = _ref.onSelectRegion,
@@ -48,7 +49,7 @@ export default (function (_ref) {
     className: classnames(classes.highlightBox, {
       highlighted: r.highlighted
     })
-  }, mouseEvents, !zoomWithPrimary && !dragWithPrimary ? {
+  }, mouseEvents, !zoomWithPrimary && !zoomOutWithPrimary && !dragWithPrimary ? {
     onMouseDown: function onMouseDown(e) {
       if (!r.locked && r.type === "point" && r.highlighted && e.button === 0) {
         return onBeginMovePoint(r);
@@ -62,8 +63,8 @@ export default (function (_ref) {
       pointerEvents: r.type !== "point" ? "none" : undefined,
       cursor: "grab"
     } : {
-      cursor: !(zoomWithPrimary || dragWithPrimary || createWithPrimary) ? "pointer" : undefined,
-      pointerEvents: zoomWithPrimary || dragWithPrimary || createWithPrimary && !r.highlighted ? "none" : undefined
+      cursor: !(zoomWithPrimary || zoomOutWithPrimary || dragWithPrimary || createWithPrimary) ? "pointer" : undefined,
+      pointerEvents: zoomWithPrimary || zoomOutWithPrimary || dragWithPrimary || createWithPrimary && !r.highlighted ? "none" : undefined
     }, {
       position: "absolute",
       left: pbox.x - 5,

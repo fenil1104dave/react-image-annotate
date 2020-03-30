@@ -65,7 +65,9 @@ export type MainLayoutState = {|
   imageTagList?: Array<string>,
   enabledTools: Array<string>,
   history: Array<{ time: Date, state: MainLayoutState, name: string }>,
-  zoomHistory: Array<{ state: MainLayoutState, name: string }>
+  zoomHistory: Array<{ state: MainLayoutState, name: string }>,
+  currentMat: Matrix,
+  changeMat: any
 |}
 
 export type Action =
@@ -96,3 +98,4 @@ export type Action =
   | {| type: "HEADER_BUTTON_CLICKED", buttonName: string |}
   | {| type: "SELECT_TOOL", selectedTool: string |}
   | {| type: "CANCEL" |}
+  | {| type: "CHANGE_CURRENT_MAT", currentMat: Matrix |}

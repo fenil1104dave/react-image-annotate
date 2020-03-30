@@ -44,6 +44,8 @@ export default (function (_ref) {
       dragWithPrimary = _ref$dragWithPrimary === void 0 ? false : _ref$dragWithPrimary,
       _ref$zoomWithPrimary = _ref.zoomWithPrimary,
       zoomWithPrimary = _ref$zoomWithPrimary === void 0 ? false : _ref$zoomWithPrimary,
+      _ref$zoomOutWithPrima = _ref.zoomOutWithPrimary,
+      zoomOutWithPrimary = _ref$zoomOutWithPrima === void 0 ? false : _ref$zoomOutWithPrima,
       _ref$createWithPrimar = _ref.createWithPrimary,
       createWithPrimary = _ref$createWithPrimar === void 0 ? false : _ref$createWithPrimar,
       _ref$pointDistancePre = _ref.pointDistancePrecision,
@@ -53,7 +55,10 @@ export default (function (_ref) {
       showCrosshairs = _ref.showCrosshairs,
       showPointDistances = _ref.showPointDistances,
       allowedArea = _ref.allowedArea,
+      zoomHistory = _ref.zoomHistory,
       onImageLoaded = _ref.onImageLoaded,
+      changeZoomHistory = _ref.changeZoomHistory,
+      resetZoomHistory = _ref.resetZoomHistory,
       onChangeRegion = _ref.onChangeRegion,
       onBeginRegionEdit = _ref.onBeginRegionEdit,
       onCloseRegionEdit = _ref.onCloseRegionEdit,
@@ -63,7 +68,9 @@ export default (function (_ref) {
       onAddPolygonPoint = _ref.onAddPolygonPoint,
       onSelectRegion = _ref.onSelectRegion,
       onBeginMovePoint = _ref.onBeginMovePoint,
-      onDeleteRegion = _ref.onDeleteRegion;
+      onDeleteRegion = _ref.onDeleteRegion,
+      mat = _ref.mat,
+      changeMat = _ref.changeMat;
 
   var classes = useStyles();
   var canvasEl = useRef(null);
@@ -103,12 +110,7 @@ export default (function (_ref) {
   var prevMousePosition = useRef({
     x: 0,
     y: 0
-  });
-
-  var _useState11 = useState(getDefaultMat()),
-      _useState12 = _slicedToArray(_useState11, 2),
-      mat = _useState12[0],
-      changeMat = _useState12[1];
+  }); // const [mat, changeMat] = useState(getDefaultMat())
 
   var maskImages = useRef({});
   var innerMousePos = mat.applyToPoint(mousePosition.current.x, mousePosition.current.y);
@@ -230,8 +232,7 @@ export default (function (_ref) {
         switch (region.type) {
           case "point":
             {
-              context.save(); // debugger;
-
+              context.save();
               context.beginPath();
               context.strokeStyle = region.color;
               context.moveTo(region.x * iw - 10, region.y * ih);
@@ -390,13 +391,41 @@ export default (function (_ref) {
     var _ref2 = [point.x, point.y],
         mx = _ref2[0],
         my = _ref2[1];
-    var scale = typeof direction === "object" ? direction.to / mat.a : 1 + 0.2 * direction; // NOTE: We're mutating mat here
+    var scale = typeof direction === "object" ? direction.to : 1 + 0.2 * direction;
+    var oldMat = mat.clone();
+
+    if (!zoomHistory || zoomHistory.length == 0) {
+      changeZoomHistory(oldMat, "ADD_NEW");
+    } // NOTE: We're mutating mat here
+
 
     mat.translate(mx, my).scaleU(scale);
     if (mat.a > 2) mat.scaleU(2 / mat.a);
     if (mat.a < 0.1) mat.scaleU(0.1 / mat.a);
     mat.translate(-mx, -my);
-    changeMat(mat.clone());
+    var newMatClone = mat.clone();
+
+    if (!(Object.keys(oldMat).length === Object.keys(newMatClone).length && Object.keys(oldMat).every(function (key) {
+      return oldMat[key] === newMatClone[key];
+    }))) {
+      changeZoomHistory(newMatClone, "ADD_NEW");
+      changeMat(newMatClone);
+    }
+  };
+
+  var zoomOut = function zoomOut() {
+    if (zoomHistory && zoomHistory.length > 0) {
+      var newMat = zoomHistory[0];
+      changeZoomHistory(0, "");
+      changeMat(Matrix.from(newMat));
+    } else {
+      changeMat(Matrix.from(getDefaultMat()));
+    }
+  };
+
+  var resetPosition = function resetPosition() {
+    resetZoomHistory();
+    changeMat(Matrix.from(getDefaultMat()));
   };
 
   var mouseEvents = {
@@ -443,6 +472,10 @@ export default (function (_ref) {
         return;
       }
 
+      if (zoomOutWithPrimary && e.button === 0) {
+        zoomOut();
+      }
+
       if (e.button === 0) {
         if (specialEvent.type === "resize-box") {// onResizeBox()
         }
@@ -468,15 +501,13 @@ export default (function (_ref) {
         var _zoomEnd = projMouse;
 
         if (Math.abs(zoomStart.x - _zoomEnd.x) < 10 && Math.abs(zoomStart.y - _zoomEnd.y) < 10) {
-          if (mat.a < 1) {
-            zoomIn({
-              to: 1
-            }, mousePosition.current);
-          } else {
-            zoomIn({
-              to: 0.25
-            }, mousePosition.current);
-          }
+          zoomIn({
+            to: 0.75
+          }, mousePosition.current); // if (mat.a < 1) {
+          //   // zoomIn({ to: 1 }, mousePosition.current)
+          // } else {
+          //   zoomIn({ to: 0.25 }, mousePosition.current)
+          // }
         } else {
           var _layoutParams$current4 = layoutParams.current,
               _iw2 = _layoutParams$current4.iw,
@@ -501,7 +532,9 @@ export default (function (_ref) {
           if (scale < 0.1) scale = 0.1;
           if (scale > 10) scale = 10;
           var newMat = getDefaultMat().translate(zoomStart.x, zoomStart.y).scaleU(scale);
-          changeMat(newMat.clone());
+          var newMatClone = newMat.clone();
+          changeZoomHistory(newMatClone, "ADD_NEW");
+          changeMat(newMatClone);
         }
 
         changeZoomStart(null);
@@ -522,8 +555,18 @@ export default (function (_ref) {
       }
     },
     onWheel: function onWheel(e) {
-      var direction = e.deltaY > 0 ? 1 : e.deltaY < 0 ? -1 : 0;
-      zoomIn(direction, mousePosition.current);
+      if (e.ctrlKey) {
+        var direction = e.deltaY > 0 ? 1 : e.deltaY < 0 ? -1 : 0;
+        zoomIn(direction, mousePosition.current);
+      } else {
+        prevMousePosition.current.x = mousePosition.current.x;
+        prevMousePosition.current.y = mousePosition.current.y;
+        mousePosition.current.x = e.deltaX + prevMousePosition.current.x;
+        mousePosition.current.y = e.deltaY - prevMousePosition.current.y;
+        mat.translate(e.deltaX, e.deltaY);
+        changeMat(mat.clone());
+      }
+
       e.preventDefault();
     }
   };
@@ -547,14 +590,16 @@ export default (function (_ref) {
     }
   }
 
-  return React.createElement("div", {
+  return React.createElement("div", null, React.createElement("div", null, React.createElement("button", {
+    onClick: resetPosition
+  }, "Reset Position")), React.createElement("div", {
     style: {
       width: "100%",
       height: "100%",
       maxHeight: "calc(100vh - 68px)",
       position: "relative",
       overflow: "hidden",
-      cursor: createWithPrimary ? "crosshair" : dragging ? "grabbing" : dragWithPrimary ? "grab" : zoomWithPrimary ? mat.a < 1 ? "zoom-out" : "zoom-in" : undefined
+      cursor: createWithPrimary ? "crosshair" : dragging ? "grabbing" : dragWithPrimary ? "grab" : zoomWithPrimary ? "zoom-in" : zoomOutWithPrimary ? "zoom-out" : undefined
     }
   }, showCrosshairs && React.createElement(Crosshairs, {
     mousePosition: mousePosition
@@ -573,10 +618,11 @@ export default (function (_ref) {
       dragWithPrimary: dragWithPrimary,
       createWithPrimary: createWithPrimary,
       zoomWithPrimary: zoomWithPrimary,
+      zoomOutWithPrimary: zoomOutWithPrimary,
       onBeginMovePoint: onBeginMovePoint,
       onSelectRegion: onSelectRegion,
       pbox: pbox
-    }), r.type === "box" && !dragWithPrimary && !zoomWithPrimary && !r.locked && r.highlighted && mat.a < 1.2 && [[0, 0], [0.5, 0], [1, 0], [1, 0.5], [1, 1], [0.5, 1], [0, 1], [0, 0.5], [0.5, 0.5]].map(function (_ref5, i) {
+    }), r.type === "box" && !dragWithPrimary && !zoomWithPrimary && !zoomOutWithPrimary && !r.locked && r.highlighted && mat.a < 1.2 && [[0, 0], [0.5, 0], [1, 0], [1, 0.5], [1, 1], [0.5, 1], [0, 1], [0, 0.5], [0.5, 0.5]].map(function (_ref5, i) {
       var _ref6 = _slicedToArray(_ref5, 2),
           px = _ref6[0],
           py = _ref6[1];
@@ -596,7 +642,7 @@ export default (function (_ref) {
           borderRadius: px === 0.5 && py === 0.5 ? 4 : undefined
         }
       }));
-    }), r.type === "circle" && !dragWithPrimary && !zoomWithPrimary && !r.locked && r.highlighted && [[r.x, r.y], [(r.x * iw + Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / iw, r.y], [r.x, (r.y * ih + Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / ih], [(r.x * iw - Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / iw, r.y], [r.x, (r.y * ih - Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / ih]].map(function (_ref7, i) {
+    }), r.type === "circle" && !dragWithPrimary && !zoomWithPrimary && !zoomOutWithPrimary && !r.locked && r.highlighted && [[r.x, r.y], [(r.x * iw + Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / iw, r.y], [r.x, (r.y * ih + Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / ih], [(r.x * iw - Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / iw, r.y], [r.x, (r.y * ih - Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / ih]].map(function (_ref7, i) {
       var _ref8 = _slicedToArray(_ref7, 2),
           px = _ref8[0],
           py = _ref8[1];
@@ -618,12 +664,10 @@ export default (function (_ref) {
         style: {
           left: proj.x - 4,
           top: proj.y - 4,
-          // top: pbox.y - 4 - 2 + pbox.h * py,
-          // cursor: boxCursorMap[py * 2][px * 2],
           borderRadius: px === r.x && py === r.y ? 4 : undefined
         }
       }));
-    }), r.type === "polygon" && !dragWithPrimary && !zoomWithPrimary && !r.locked && r.highlighted && r.points.map(function (_ref9, i) {
+    }), r.type === "polygon" && !dragWithPrimary && !zoomWithPrimary && !zoomOutWithPrimary && !r.locked && r.highlighted && r.points.map(function (_ref9, i) {
       var _ref10 = _slicedToArray(_ref9, 2),
           px = _ref10[0],
           py = _ref10[1];
@@ -644,7 +688,7 @@ export default (function (_ref) {
           top: proj.y - 4
         }
       }));
-    }), r.type === "polygon" && r.highlighted && !dragWithPrimary && !zoomWithPrimary && !r.locked && !r.open && r.points.length > 1 && r.points.map(function (p1, i) {
+    }), r.type === "polygon" && r.highlighted && !dragWithPrimary && !zoomWithPrimary && !zoomOutWithPrimary && !r.locked && !r.open && r.points.length > 1 && r.points.map(function (p1, i) {
       return [p1, r.points[(i + 1) % r.points.length]];
     }).map(function (_ref11) {
       var _ref12 = _slicedToArray(_ref11, 2),
@@ -762,7 +806,7 @@ export default (function (_ref) {
       editing: region.editingLabels,
       region: region
     })));
-  }), zoomWithPrimary && zoomBox !== null && React.createElement("div", {
+  }), zoomWithPrimary && zoomOutWithPrimary && zoomBox !== null && React.createElement("div", {
     style: {
       position: "absolute",
       border: "1px solid #fff",
@@ -824,5 +868,5 @@ export default (function (_ref) {
     ref: canvasEl
   })), React.createElement("div", {
     className: classes.zoomIndicator
-  }, (1 / mat.a * 100).toFixed(0), "%"));
+  }, (1 / mat.a * 100).toFixed(0), "%")));
 });
