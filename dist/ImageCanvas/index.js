@@ -70,7 +70,8 @@ export default (function (_ref) {
       onBeginMovePoint = _ref.onBeginMovePoint,
       onDeleteRegion = _ref.onDeleteRegion,
       mat = _ref.mat,
-      changeMat = _ref.changeMat;
+      changeMat = _ref.changeMat,
+      onIhIwChange = _ref.onIhIwChange;
 
   var classes = useStyles();
   var canvasEl = useRef(null);
@@ -118,7 +119,8 @@ export default (function (_ref) {
   var projectRegionBox = function projectRegionBox(r) {
     var _layoutParams$current = layoutParams.current,
         iw = _layoutParams$current.iw,
-        ih = _layoutParams$current.ih;
+        ih = _layoutParams$current.ih; // onIhIwChange(ih, iw);
+
     var bbox = getEnclosingBox(r, iw, ih);
     var margin = r.type === "point" ? 15 : 2;
     var cbox = {
@@ -176,6 +178,7 @@ export default (function (_ref) {
     var fitScale = Math.max(image.current.naturalWidth / (clientWidth - 20), image.current.naturalHeight / (clientHeight - 20));
     var iw = image.current.naturalWidth / fitScale,
         ih = image.current.naturalHeight / fitScale;
+    onIhIwChange(ih, iw);
     layoutParams.current = {
       iw: iw,
       ih: ih,
@@ -446,7 +449,7 @@ export default (function (_ref) {
 
       var _layoutParams$current2 = layoutParams.current,
           iw = _layoutParams$current2.iw,
-          ih = _layoutParams$current2.ih;
+          ih = _layoutParams$current2.ih; // onIhIwChange(ih, iw);
 
       _onMouseMove({
         x: projMouse.x / iw,
@@ -485,7 +488,7 @@ export default (function (_ref) {
 
         var _layoutParams$current3 = layoutParams.current,
             _iw = _layoutParams$current3.iw,
-            _ih = _layoutParams$current3.ih;
+            _ih = _layoutParams$current3.ih; // onIhIwChange(ih, iw);
 
         _onMouseDown({
           x: projMouse.x / _iw,
@@ -511,7 +514,7 @@ export default (function (_ref) {
         } else {
           var _layoutParams$current4 = layoutParams.current,
               _iw2 = _layoutParams$current4.iw,
-              _ih2 = _layoutParams$current4.ih;
+              _ih2 = _layoutParams$current4.ih; // onIhIwChange(ih, iw);
 
           if (zoomStart.x > _zoomEnd.x) {
             ;
@@ -546,7 +549,7 @@ export default (function (_ref) {
       if (e.button === 0) {
         var _layoutParams$current5 = layoutParams.current,
             _iw3 = _layoutParams$current5.iw,
-            _ih3 = _layoutParams$current5.ih;
+            _ih3 = _layoutParams$current5.ih; // onIhIwChange(ih, iw);
 
         _onMouseUp({
           x: projMouse.x / _iw3,
@@ -572,7 +575,8 @@ export default (function (_ref) {
   };
   var _layoutParams$current6 = layoutParams.current,
       iw = _layoutParams$current6.iw,
-      ih = _layoutParams$current6.ih;
+      ih = _layoutParams$current6.ih; // onIhIwChange(ih, iw);
+
   var zoomBox = !zoomStart ? null : _objectSpread({}, mat.clone().inverse().applyToPoint(zoomStart.x, zoomStart.y), {
     w: (zoomEnd.x - zoomStart.x) / mat.a,
     h: (zoomEnd.y - zoomStart.y) / mat.d
@@ -611,7 +615,8 @@ export default (function (_ref) {
     var pbox = projectRegionBox(r);
     var _layoutParams$current7 = layoutParams.current,
         iw = _layoutParams$current7.iw,
-        ih = _layoutParams$current7.ih;
+        ih = _layoutParams$current7.ih; // onIhIwChange(ih, iw);
+
     return React.createElement(Fragment, null, React.createElement(PreventScrollToParents, null, React.createElement(HighlightBox, {
       region: r,
       mouseEvents: mouseEvents,
@@ -721,7 +726,8 @@ export default (function (_ref) {
     var pbox = projectRegionBox(region);
     var _layoutParams$current8 = layoutParams.current,
         iw = _layoutParams$current8.iw,
-        ih = _layoutParams$current8.ih;
+        ih = _layoutParams$current8.ih; // onIhIwChange(ih, iw);
+
     var margin = 8;
     if (region.highlighted && region.type === "box") margin += 6;
     var labelBoxHeight = region.editingLabels && !region.locked ? 170 : region.tags ? 60 : 50;

@@ -35,6 +35,8 @@ export default (function (_ref) {
       _ref$currentMat = _ref.currentMat,
       currentMat = _ref$currentMat === void 0 ? getDefaultMat() : _ref$currentMat,
       changeMat = _ref.changeMat,
+      _ref$onIhIwChange = _ref.onIhIwChange,
+      onIhIwChange = _ref$onIhIwChange === void 0 ? function () {} : _ref$onIhIwChange,
       onExit = _ref.onExit;
 
   var _useReducer = useReducer(reducer, {
@@ -55,6 +57,7 @@ export default (function (_ref) {
     imageTagList: imageTagList,
     currentMat: currentMat,
     changeMat: changeMat,
+    onIhIwChange: onIhIwChange,
     enabledTools: enabledTools,
     history: []
   }),
