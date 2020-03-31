@@ -142,6 +142,7 @@ export default ({ state, dispatch }: Props) => {
                   onImageLoaded={action("IMAGE_LOADED", "image")}
                   mat={Matrix.from(state.currentMat)}
                   changeMat={state.changeMat}
+                  onIhIwChange={state.onIhIwChange}
                 />
               </div>
             )}

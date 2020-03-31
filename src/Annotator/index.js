@@ -47,6 +47,7 @@ export default ({
   taskDescription,
   currentMat = getDefaultMat(),
   changeMat,
+  onIhIwChange = () => {},
   onExit
 }: Props) => {
 
@@ -68,6 +69,7 @@ export default ({
     imageTagList,
     currentMat,
     changeMat,
+    onIhIwChange,
     enabledTools,
     history: []
   })

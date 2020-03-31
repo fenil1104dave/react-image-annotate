@@ -99,7 +99,8 @@ export default ({
   onBeginMovePoint,
   onDeleteRegion,
   mat,
-  changeMat
+  changeMat,
+  onIhIwChange
 }: Props) => {
   const classes = useStyles()
 
@@ -124,6 +125,7 @@ export default ({
 
   const projectRegionBox = r => {
     const { iw, ih } = layoutParams.current
+    // onIhIwChange(ih, iw);
     const bbox = getEnclosingBox(r, iw, ih)
     const margin = r.type === "point" ? 15 : 2
     const cbox = {
@@ -190,6 +192,7 @@ export default ({
       image.current.naturalWidth / fitScale,
       image.current.naturalHeight / fitScale
     ]
+    onIhIwChange(ih, iw);
 
     layoutParams.current = {
       iw,
@@ -411,6 +414,7 @@ export default ({
       }
 
       const { iw, ih } = layoutParams.current
+      // onIhIwChange(ih, iw);
       onMouseMove({ x: projMouse.x / iw, y: projMouse.y / ih })
 
       if (dragging) {
@@ -449,6 +453,7 @@ export default ({
           // onResizeBox()
         }
         const { iw, ih } = layoutParams.current
+        // onIhIwChange(ih, iw);
         onMouseDown({ x: projMouse.x / iw, y: projMouse.y / ih })
       }
     },
@@ -472,6 +477,7 @@ export default ({
           // }
         } else {
           const { iw, ih } = layoutParams.current
+          // onIhIwChange(ih, iw);
 
           if (zoomStart.x > zoomEnd.x) {
             ;[zoomStart.x, zoomEnd.x] = [zoomEnd.x, zoomStart.x]
@@ -503,6 +509,7 @@ export default ({
         return changeDragging(false)
       if (e.button === 0) {
         const { iw, ih } = layoutParams.current
+        // onIhIwChange(ih, iw);
         onMouseUp({ x: projMouse.x / iw, y: projMouse.y / ih })
       }
     },
@@ -526,6 +533,7 @@ export default ({
   }
 
   const { iw, ih } = layoutParams.current
+  // onIhIwChange(ih, iw);
 
   let zoomBox = !zoomStart
     ? null
@@ -580,6 +588,7 @@ export default ({
         .map((r, i) => {
           const pbox = projectRegionBox(r)
           const { iw, ih } = layoutParams.current
+          // onIhIwChange(ih, iw);
           return (
             <Fragment>
               <PreventScrollToParents>
@@ -758,6 +767,7 @@ export default ({
           .map(region => {
             const pbox = projectRegionBox(region)
             const { iw, ih } = layoutParams.current
+            // onIhIwChange(ih, iw);
             let margin = 8
             if (region.highlighted && region.type === "box") margin += 6
             const labelBoxHeight =
