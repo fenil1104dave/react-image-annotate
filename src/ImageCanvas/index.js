@@ -557,10 +557,10 @@ export default ({
   }
 
   return (
-    <div>
-    <div>
-      <button onClick={resetPosition}>Reset Position</button>
-    </div>
+    // <div>
+    // <div>
+    //   <button onClick={resetPosition}>Reset Position</button>
+    // </div>
     <div
       style={{
         width: "100%",
@@ -930,10 +930,10 @@ export default ({
       >
         <canvas className={classes.canvas} ref={canvasEl} />
       </PreventScrollToParents>
-      <div className={classes.zoomIndicator}>
-        {((1 / mat.a) * 100).toFixed(0)}%
-      </div>
+      {/*<div className={classes.zoomIndicator}>*/}
+      {/*  {((1 / mat.a) * 100).toFixed(0)}%*/}
+      {/*</div>*/}
     </div>
-    </div>
+    // </div>
   )
 }

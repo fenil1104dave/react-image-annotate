@@ -594,160 +594,208 @@ export default (function (_ref) {
     }
   }
 
-  return React.createElement("div", null, React.createElement("div", null, React.createElement("button", {
-    onClick: resetPosition
-  }, "Reset Position")), React.createElement("div", {
-    style: {
-      width: "100%",
-      height: "100%",
-      maxHeight: "calc(100vh - 68px)",
-      position: "relative",
-      overflow: "hidden",
-      cursor: createWithPrimary ? "crosshair" : dragging ? "grabbing" : dragWithPrimary ? "grab" : zoomWithPrimary ? "zoom-in" : zoomOutWithPrimary ? "zoom-out" : undefined
-    }
-  }, showCrosshairs && React.createElement(Crosshairs, {
-    mousePosition: mousePosition
-  }), regions.filter(function (r) {
-    return r.visible || r.visible === undefined;
-  }).filter(function (r) {
-    return !r.locked;
-  }).map(function (r, i) {
-    var pbox = projectRegionBox(r);
-    var _layoutParams$current7 = layoutParams.current,
-        iw = _layoutParams$current7.iw,
-        ih = _layoutParams$current7.ih; // onIhIwChange(ih, iw);
+  return (// <div>
+    // <div>
+    //   <button onClick={resetPosition}>Reset Position</button>
+    // </div>
+    React.createElement("div", {
+      style: {
+        width: "100%",
+        height: "100%",
+        maxHeight: "calc(100vh - 68px)",
+        position: "relative",
+        overflow: "hidden",
+        cursor: createWithPrimary ? "crosshair" : dragging ? "grabbing" : dragWithPrimary ? "grab" : zoomWithPrimary ? "zoom-in" : zoomOutWithPrimary ? "zoom-out" : undefined
+      }
+    }, showCrosshairs && React.createElement(Crosshairs, {
+      mousePosition: mousePosition
+    }), regions.filter(function (r) {
+      return r.visible || r.visible === undefined;
+    }).filter(function (r) {
+      return !r.locked;
+    }).map(function (r, i) {
+      var pbox = projectRegionBox(r);
+      var _layoutParams$current7 = layoutParams.current,
+          iw = _layoutParams$current7.iw,
+          ih = _layoutParams$current7.ih; // onIhIwChange(ih, iw);
 
-    return React.createElement(Fragment, null, React.createElement(PreventScrollToParents, null, React.createElement(HighlightBox, {
-      region: r,
-      mouseEvents: mouseEvents,
-      dragWithPrimary: dragWithPrimary,
-      createWithPrimary: createWithPrimary,
-      zoomWithPrimary: zoomWithPrimary,
-      zoomOutWithPrimary: zoomOutWithPrimary,
-      onBeginMovePoint: onBeginMovePoint,
-      onSelectRegion: onSelectRegion,
-      pbox: pbox
-    }), r.type === "box" && !dragWithPrimary && !zoomWithPrimary && !zoomOutWithPrimary && !r.locked && r.highlighted && mat.a < 1.2 && [[0, 0], [0.5, 0], [1, 0], [1, 0.5], [1, 1], [0.5, 1], [0, 1], [0, 0.5], [0.5, 0.5]].map(function (_ref5, i) {
-      var _ref6 = _slicedToArray(_ref5, 2),
-          px = _ref6[0],
-          py = _ref6[1];
+      return React.createElement(Fragment, null, React.createElement(PreventScrollToParents, null, React.createElement(HighlightBox, {
+        region: r,
+        mouseEvents: mouseEvents,
+        dragWithPrimary: dragWithPrimary,
+        createWithPrimary: createWithPrimary,
+        zoomWithPrimary: zoomWithPrimary,
+        zoomOutWithPrimary: zoomOutWithPrimary,
+        onBeginMovePoint: onBeginMovePoint,
+        onSelectRegion: onSelectRegion,
+        pbox: pbox
+      }), r.type === "box" && !dragWithPrimary && !zoomWithPrimary && !zoomOutWithPrimary && !r.locked && r.highlighted && mat.a < 1.2 && [[0, 0], [0.5, 0], [1, 0], [1, 0.5], [1, 1], [0.5, 1], [0, 1], [0, 0.5], [0.5, 0.5]].map(function (_ref5, i) {
+        var _ref6 = _slicedToArray(_ref5, 2),
+            px = _ref6[0],
+            py = _ref6[1];
 
-      return React.createElement("div", Object.assign({
-        key: i,
-        className: classes.transformGrabber
-      }, mouseEvents, {
-        onMouseDown: function onMouseDown(e) {
-          if (e.button === 0) return onBeginBoxTransform(r, [px * 2 - 1, py * 2 - 1]);
-          mouseEvents.onMouseDown(e);
-        },
-        style: {
-          left: pbox.x - 4 - 2 + pbox.w * px,
-          top: pbox.y - 4 - 2 + pbox.h * py,
-          cursor: boxCursorMap[py * 2][px * 2],
-          borderRadius: px === 0.5 && py === 0.5 ? 4 : undefined
-        }
-      }));
-    }), r.type === "circle" && !dragWithPrimary && !zoomWithPrimary && !zoomOutWithPrimary && !r.locked && r.highlighted && [[r.x, r.y], [(r.x * iw + Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / iw, r.y], [r.x, (r.y * ih + Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / ih], [(r.x * iw - Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / iw, r.y], [r.x, (r.y * ih - Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / ih]].map(function (_ref7, i) {
-      var _ref8 = _slicedToArray(_ref7, 2),
-          px = _ref8[0],
-          py = _ref8[1];
-
-      var proj = mat.clone().inverse().applyToPoint(px * iw, py * ih);
-      return React.createElement("div", Object.assign({
-        key: i,
-        className: classes.transformGrabber
-      }, mouseEvents, {
-        onMouseDown: function onMouseDown(e) {
-          if (e.button === 0 && i == 0) {
-            return onBeginCircleTransform(r, "MOVE_REGION");
-          } else if (e.button === 0 && i != 0) {
-            return onBeginCircleTransform(r, "RESIZE_CIRCLE");
+        return React.createElement("div", Object.assign({
+          key: i,
+          className: classes.transformGrabber
+        }, mouseEvents, {
+          onMouseDown: function onMouseDown(e) {
+            if (e.button === 0) return onBeginBoxTransform(r, [px * 2 - 1, py * 2 - 1]);
+            mouseEvents.onMouseDown(e);
+          },
+          style: {
+            left: pbox.x - 4 - 2 + pbox.w * px,
+            top: pbox.y - 4 - 2 + pbox.h * py,
+            cursor: boxCursorMap[py * 2][px * 2],
+            borderRadius: px === 0.5 && py === 0.5 ? 4 : undefined
           }
+        }));
+      }), r.type === "circle" && !dragWithPrimary && !zoomWithPrimary && !zoomOutWithPrimary && !r.locked && r.highlighted && [[r.x, r.y], [(r.x * iw + Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / iw, r.y], [r.x, (r.y * ih + Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / ih], [(r.x * iw - Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / iw, r.y], [r.x, (r.y * ih - Math.sqrt(Math.pow((r.xr - r.x) * iw, 2) + Math.pow((r.yr - r.y) * ih, 2))) / ih]].map(function (_ref7, i) {
+        var _ref8 = _slicedToArray(_ref7, 2),
+            px = _ref8[0],
+            py = _ref8[1];
 
-          mouseEvents.onMouseDown(e);
-        },
-        style: {
-          left: proj.x - 4,
-          top: proj.y - 4,
-          borderRadius: px === r.x && py === r.y ? 4 : undefined
-        }
-      }));
-    }), r.type === "polygon" && !dragWithPrimary && !zoomWithPrimary && !zoomOutWithPrimary && !r.locked && r.highlighted && r.points.map(function (_ref9, i) {
-      var _ref10 = _slicedToArray(_ref9, 2),
-          px = _ref10[0],
-          py = _ref10[1];
+        var proj = mat.clone().inverse().applyToPoint(px * iw, py * ih);
+        return React.createElement("div", Object.assign({
+          key: i,
+          className: classes.transformGrabber
+        }, mouseEvents, {
+          onMouseDown: function onMouseDown(e) {
+            if (e.button === 0 && i == 0) {
+              return onBeginCircleTransform(r, "MOVE_REGION");
+            } else if (e.button === 0 && i != 0) {
+              return onBeginCircleTransform(r, "RESIZE_CIRCLE");
+            }
 
-      var proj = mat.clone().inverse().applyToPoint(px * iw, py * ih);
-      return React.createElement("div", Object.assign({
-        key: i
-      }, mouseEvents, {
-        onMouseDown: function onMouseDown(e) {
-          if (e.button === 0 && (!r.open || i === 0)) return onBeginMovePolygonPoint(r, i);
-          mouseEvents.onMouseDown(e);
-        },
-        className: classes.transformGrabber,
-        style: {
-          cursor: !r.open ? "move" : i === 0 ? "pointer" : undefined,
-          pointerEvents: r.open && i === r.points.length - 1 ? "none" : undefined,
-          left: proj.x - 4,
-          top: proj.y - 4
-        }
-      }));
-    }), r.type === "polygon" && r.highlighted && !dragWithPrimary && !zoomWithPrimary && !zoomOutWithPrimary && !r.locked && !r.open && r.points.length > 1 && r.points.map(function (p1, i) {
-      return [p1, r.points[(i + 1) % r.points.length]];
-    }).map(function (_ref11) {
-      var _ref12 = _slicedToArray(_ref11, 2),
-          p1 = _ref12[0],
-          p2 = _ref12[1];
+            mouseEvents.onMouseDown(e);
+          },
+          style: {
+            left: proj.x - 4,
+            top: proj.y - 4,
+            borderRadius: px === r.x && py === r.y ? 4 : undefined
+          }
+        }));
+      }), r.type === "polygon" && !dragWithPrimary && !zoomWithPrimary && !zoomOutWithPrimary && !r.locked && r.highlighted && r.points.map(function (_ref9, i) {
+        var _ref10 = _slicedToArray(_ref9, 2),
+            px = _ref10[0],
+            py = _ref10[1];
 
-      return [(p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2];
-    }).map(function (pa, i) {
-      var proj = mat.clone().inverse().applyToPoint(pa[0] * iw, pa[1] * ih);
-      return React.createElement("div", Object.assign({
-        key: i
-      }, mouseEvents, {
-        onMouseDown: function onMouseDown(e) {
-          if (e.button === 0) return onAddPolygonPoint(r, pa, i + 1);
-          mouseEvents.onMouseDown(e);
-        },
-        className: classes.transformGrabber,
-        style: {
-          cursor: "copy",
-          left: proj.x - 4,
-          top: proj.y - 4,
-          border: "2px dotted #fff",
-          opacity: 0.5
-        }
-      }));
-    })));
-  }), showTags && regions.filter(function (r) {
-    return r.visible || r.visible === undefined;
-  }).map(function (region) {
-    var pbox = projectRegionBox(region);
-    var _layoutParams$current8 = layoutParams.current,
-        iw = _layoutParams$current8.iw,
-        ih = _layoutParams$current8.ih; // onIhIwChange(ih, iw);
+        var proj = mat.clone().inverse().applyToPoint(px * iw, py * ih);
+        return React.createElement("div", Object.assign({
+          key: i
+        }, mouseEvents, {
+          onMouseDown: function onMouseDown(e) {
+            if (e.button === 0 && (!r.open || i === 0)) return onBeginMovePolygonPoint(r, i);
+            mouseEvents.onMouseDown(e);
+          },
+          className: classes.transformGrabber,
+          style: {
+            cursor: !r.open ? "move" : i === 0 ? "pointer" : undefined,
+            pointerEvents: r.open && i === r.points.length - 1 ? "none" : undefined,
+            left: proj.x - 4,
+            top: proj.y - 4
+          }
+        }));
+      }), r.type === "polygon" && r.highlighted && !dragWithPrimary && !zoomWithPrimary && !zoomOutWithPrimary && !r.locked && !r.open && r.points.length > 1 && r.points.map(function (p1, i) {
+        return [p1, r.points[(i + 1) % r.points.length]];
+      }).map(function (_ref11) {
+        var _ref12 = _slicedToArray(_ref11, 2),
+            p1 = _ref12[0],
+            p2 = _ref12[1];
 
-    var margin = 8;
-    if (region.highlighted && region.type === "box") margin += 6;
-    var labelBoxHeight = region.editingLabels && !region.locked ? 170 : region.tags ? 60 : 50;
-    var displayOnTop = pbox.y > labelBoxHeight;
-    var coords = displayOnTop ? {
-      left: pbox.x,
-      top: pbox.y - margin / 2
-    } : {
-      left: pbox.x,
-      top: pbox.y + pbox.h + margin / 2
-    };
+        return [(p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2];
+      }).map(function (pa, i) {
+        var proj = mat.clone().inverse().applyToPoint(pa[0] * iw, pa[1] * ih);
+        return React.createElement("div", Object.assign({
+          key: i
+        }, mouseEvents, {
+          onMouseDown: function onMouseDown(e) {
+            if (e.button === 0) return onAddPolygonPoint(r, pa, i + 1);
+            mouseEvents.onMouseDown(e);
+          },
+          className: classes.transformGrabber,
+          style: {
+            cursor: "copy",
+            left: proj.x - 4,
+            top: proj.y - 4,
+            border: "2px dotted #fff",
+            opacity: 0.5
+          }
+        }));
+      })));
+    }), showTags && regions.filter(function (r) {
+      return r.visible || r.visible === undefined;
+    }).map(function (region) {
+      var pbox = projectRegionBox(region);
+      var _layoutParams$current8 = layoutParams.current,
+          iw = _layoutParams$current8.iw,
+          ih = _layoutParams$current8.ih; // onIhIwChange(ih, iw);
 
-    if (region.locked) {
+      var margin = 8;
+      if (region.highlighted && region.type === "box") margin += 6;
+      var labelBoxHeight = region.editingLabels && !region.locked ? 170 : region.tags ? 60 : 50;
+      var displayOnTop = pbox.y > labelBoxHeight;
+      var coords = displayOnTop ? {
+        left: pbox.x,
+        top: pbox.y - margin / 2
+      } : {
+        left: pbox.x,
+        top: pbox.y + pbox.h + margin / 2
+      };
+
+      if (region.locked) {
+        return React.createElement("div", {
+          style: _objectSpread({
+            position: "absolute"
+          }, coords, {
+            zIndex: 10 + (region.editingLabels ? 5 : 0)
+          })
+        }, React.createElement(Paper, {
+          style: _objectSpread({
+            position: "absolute",
+            left: 0
+          }, displayOnTop ? {
+            bottom: 0
+          } : {
+            top: 0
+          }, {
+            zIndex: 10,
+            backgroundColor: "#fff",
+            borderRadius: 4,
+            padding: 2,
+            paddingBottom: 0,
+            opacity: 0.5,
+            pointerEvents: "none"
+          })
+        }, React.createElement(LockIcon, {
+          style: {
+            width: 16,
+            height: 16,
+            color: "#333"
+          }
+        })));
+      }
+
       return React.createElement("div", {
         style: _objectSpread({
           position: "absolute"
         }, coords, {
-          zIndex: 10 + (region.editingLabels ? 5 : 0)
-        })
-      }, React.createElement(Paper, {
+          zIndex: 10 + (region.editingLabels ? 5 : 0),
+          width: 200
+        }),
+        onMouseDown: function onMouseDown(e) {
+          return e.preventDefault();
+        },
+        onMouseUp: function onMouseUp(e) {
+          return e.preventDefault();
+        },
+        onMouseEnter: function onMouseEnter(e) {
+          if (region.editingLabels) {
+            mouseEvents.onMouseUp(e);
+            e.button = 1;
+            mouseEvents.onMouseUp(e);
+          }
+        }
+      }, React.createElement("div", Object.assign({
         style: _objectSpread({
           position: "absolute",
           left: 0
@@ -755,124 +803,78 @@ export default (function (_ref) {
           bottom: 0
         } : {
           top: 0
-        }, {
-          zIndex: 10,
-          backgroundColor: "#fff",
-          borderRadius: 4,
-          padding: 2,
-          paddingBottom: 0,
-          opacity: 0.5,
-          pointerEvents: "none"
         })
-      }, React.createElement(LockIcon, {
-        style: {
-          width: 16,
-          height: 16,
-          color: "#333"
-        }
+      }, !region.editingLabels ? mouseEvents : {}), React.createElement(RegionLabel, {
+        allowedClasses: regionClsList,
+        allowedTags: regionTagList,
+        onOpen: onBeginRegionEdit,
+        onChange: onChangeRegion,
+        onClose: onCloseRegionEdit,
+        onDelete: onDeleteRegion,
+        editing: region.editingLabels,
+        region: region
       })));
-    }
-
-    return React.createElement("div", {
-      style: _objectSpread({
-        position: "absolute"
-      }, coords, {
-        zIndex: 10 + (region.editingLabels ? 5 : 0),
-        width: 200
-      }),
-      onMouseDown: function onMouseDown(e) {
-        return e.preventDefault();
-      },
-      onMouseUp: function onMouseUp(e) {
-        return e.preventDefault();
-      },
-      onMouseEnter: function onMouseEnter(e) {
-        if (region.editingLabels) {
-          mouseEvents.onMouseUp(e);
-          e.button = 1;
-          mouseEvents.onMouseUp(e);
-        }
-      }
-    }, React.createElement("div", Object.assign({
-      style: _objectSpread({
+    }), zoomWithPrimary && zoomOutWithPrimary && zoomBox !== null && React.createElement("div", {
+      style: {
         position: "absolute",
-        left: 0
-      }, displayOnTop ? {
-        bottom: 0
-      } : {
-        top: 0
-      })
-    }, !region.editingLabels ? mouseEvents : {}), React.createElement(RegionLabel, {
-      allowedClasses: regionClsList,
-      allowedTags: regionTagList,
-      onOpen: onBeginRegionEdit,
-      onChange: onChangeRegion,
-      onClose: onCloseRegionEdit,
-      onDelete: onDeleteRegion,
-      editing: region.editingLabels,
-      region: region
-    })));
-  }), zoomWithPrimary && zoomOutWithPrimary && zoomBox !== null && React.createElement("div", {
-    style: {
-      position: "absolute",
-      border: "1px solid #fff",
-      pointerEvents: "none",
-      left: zoomBox.x,
-      top: zoomBox.y,
-      width: zoomBox.w,
-      height: zoomBox.h
-    }
-  }), showPointDistances && React.createElement("svg", {
-    className: classes.pointDistanceIndicator,
-    style: {
-      pointerEvents: "none",
-      position: "absolute",
-      left: 0,
-      top: 0,
-      width: "100%",
-      height: "100%"
-    }
-  }, regions.filter(function (r1) {
-    return r1.type === "point";
-  }).flatMap(function (r1, i1) {
-    return regions.filter(function (r2, i2) {
-      return i2 > i1;
-    }).filter(function (r2) {
-      return r2.type === "point";
-    }).map(function (r2) {
-      var pr1 = projectRegionBox(r1);
-      var pr2 = projectRegionBox(r2);
-      var prm = {
-        x: (pr1.x + pr1.w / 2 + pr2.x + pr2.w / 2) / 2,
-        y: (pr1.y + pr1.h / 2 + pr2.y + pr2.h / 2) / 2
-      };
-      var displayDistance;
-
-      if (realSize) {
-        var w = realSize.w,
-            h = realSize.h,
-            unitName = realSize.unitName;
-        displayDistance = Math.sqrt(Math.pow(r1.x * w - r2.x * w, 2) + Math.pow(r1.y * h - r2.y * h, 2)).toFixed(pointDistancePrecision) + unitName;
-      } else {
-        displayDistance = (Math.sqrt(Math.pow(r1.x - r2.x, 2) + Math.pow(r1.y - r2.y, 2)) * 100).toFixed(pointDistancePrecision) + "%";
+        border: "1px solid #fff",
+        pointerEvents: "none",
+        left: zoomBox.x,
+        top: zoomBox.y,
+        width: zoomBox.w,
+        height: zoomBox.h
       }
+    }), showPointDistances && React.createElement("svg", {
+      className: classes.pointDistanceIndicator,
+      style: {
+        pointerEvents: "none",
+        position: "absolute",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%"
+      }
+    }, regions.filter(function (r1) {
+      return r1.type === "point";
+    }).flatMap(function (r1, i1) {
+      return regions.filter(function (r2, i2) {
+        return i2 > i1;
+      }).filter(function (r2) {
+        return r2.type === "point";
+      }).map(function (r2) {
+        var pr1 = projectRegionBox(r1);
+        var pr2 = projectRegionBox(r2);
+        var prm = {
+          x: (pr1.x + pr1.w / 2 + pr2.x + pr2.w / 2) / 2,
+          y: (pr1.y + pr1.h / 2 + pr2.y + pr2.h / 2) / 2
+        };
+        var displayDistance;
 
-      return React.createElement(Fragment, null, React.createElement("path", {
-        d: "M".concat(pr1.x + pr1.w / 2, ",").concat(pr1.y + pr1.h / 2, " L").concat(pr2.x + pr2.w / 2, ",").concat(pr2.y + pr2.h / 2)
-      }), React.createElement("text", {
-        x: prm.x,
-        y: prm.y
-      }, displayDistance));
-    });
-  })), React.createElement(PreventScrollToParents, Object.assign({
-    style: {
-      width: "100%",
-      height: "100%"
-    }
-  }, mouseEvents), React.createElement("canvas", {
-    className: classes.canvas,
-    ref: canvasEl
-  })), React.createElement("div", {
-    className: classes.zoomIndicator
-  }, (1 / mat.a * 100).toFixed(0), "%")));
+        if (realSize) {
+          var w = realSize.w,
+              h = realSize.h,
+              unitName = realSize.unitName;
+          displayDistance = Math.sqrt(Math.pow(r1.x * w - r2.x * w, 2) + Math.pow(r1.y * h - r2.y * h, 2)).toFixed(pointDistancePrecision) + unitName;
+        } else {
+          displayDistance = (Math.sqrt(Math.pow(r1.x - r2.x, 2) + Math.pow(r1.y - r2.y, 2)) * 100).toFixed(pointDistancePrecision) + "%";
+        }
+
+        return React.createElement(Fragment, null, React.createElement("path", {
+          d: "M".concat(pr1.x + pr1.w / 2, ",").concat(pr1.y + pr1.h / 2, " L").concat(pr2.x + pr2.w / 2, ",").concat(pr2.y + pr2.h / 2)
+        }), React.createElement("text", {
+          x: prm.x,
+          y: prm.y
+        }, displayDistance));
+      });
+    })), React.createElement(PreventScrollToParents, Object.assign({
+      style: {
+        width: "100%",
+        height: "100%"
+      }
+    }, mouseEvents), React.createElement("canvas", {
+      className: classes.canvas,
+      ref: canvasEl
+    }))) // </div>
+
+  );
 });

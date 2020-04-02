@@ -75,7 +75,6 @@ export default ({
   })
 
   useEffect(() => {
-    console.log("Hell")
     dispatchToReducer({type: "SELECT_TOOL", selectedTool: selectedTool})
   }, [selectedTool]);
 

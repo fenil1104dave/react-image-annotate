@@ -66,7 +66,6 @@ export default (function (_ref) {
       dispatchToReducer = _useReducer2[1];
 
   useEffect(function () {
-    console.log("Hell");
     dispatchToReducer({
       type: "SELECT_TOOL",
       selectedTool: selectedTool
