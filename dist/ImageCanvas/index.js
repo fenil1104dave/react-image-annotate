@@ -740,40 +740,36 @@ export default (function (_ref) {
       } : {
         left: pbox.x,
         top: pbox.y + pbox.h + margin / 2
-      };
-
-      if (region.locked) {
-        return React.createElement("div", {
-          style: _objectSpread({
-            position: "absolute"
-          }, coords, {
-            zIndex: 10 + (region.editingLabels ? 5 : 0)
-          })
-        }, React.createElement(Paper, {
-          style: _objectSpread({
-            position: "absolute",
-            left: 0
-          }, displayOnTop ? {
-            bottom: 0
-          } : {
-            top: 0
-          }, {
-            zIndex: 10,
-            backgroundColor: "#fff",
-            borderRadius: 4,
-            padding: 2,
-            paddingBottom: 0,
-            opacity: 0.5,
-            pointerEvents: "none"
-          })
-        }, React.createElement(LockIcon, {
-          style: {
-            width: 16,
-            height: 16,
-            color: "#333"
-          }
-        })));
-      }
+      }; // if (region.locked) {
+      //   return (
+      //     <div
+      //       style={{
+      //         position: "absolute",
+      //         ...coords,
+      //         zIndex: 10 + (region.editingLabels ? 5 : 0)
+      //       }}
+      //     >
+      //       <Paper
+      //         style={{
+      //           position: "absolute",
+      //           left: 0,
+      //           ...(displayOnTop ? { bottom: 0 } : { top: 0 }),
+      //           zIndex: 10,
+      //           backgroundColor: "#fff",
+      //           borderRadius: 4,
+      //           padding: 2,
+      //           paddingBottom: 0,
+      //           opacity: 0.5,
+      //           pointerEvents: "none"
+      //         }}
+      //       >
+      //         <LockIcon
+      //           style={{ width: 16, height: 16, color: "#333" }}
+      //         />
+      //       </Paper>
+      //     </div>
+      //   )
+      // }
 
       return React.createElement("div", {
         style: _objectSpread({
@@ -812,7 +808,8 @@ export default (function (_ref) {
         onClose: onCloseRegionEdit,
         onDelete: onDeleteRegion,
         editing: region.editingLabels,
-        region: region
+        region: region,
+        isEditingLocked: region.locked
       })));
     }), zoomWithPrimary && zoomOutWithPrimary && zoomBox !== null && React.createElement("div", {
       style: {

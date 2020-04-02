@@ -72,6 +72,14 @@ export default (function (_ref) {
     });
   }, [selectedTool]);
   useEffect(function () {
+    if (showTags !== state.showTags) {
+      dispatchToReducer({
+        type: "SELECT_TOOL",
+        selectedTool: "show-tags"
+      });
+    }
+  }, [showTags]);
+  useEffect(function () {
     dispatchToReducer({
       type: "CHANGE_CURRENT_MAT",
       currentMat: currentMat

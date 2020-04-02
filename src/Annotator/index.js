@@ -79,6 +79,12 @@ export default ({
   }, [selectedTool]);
 
   useEffect(() => {
+    if(showTags !== state.showTags) {
+      dispatchToReducer({type: "SELECT_TOOL", selectedTool: "show-tags"})
+    }
+  }, [showTags]);
+
+  useEffect(() => {
     dispatchToReducer({type: "CHANGE_CURRENT_MAT", currentMat: currentMat})
   }, [JSON.stringify(currentMat)]);
 

@@ -36,13 +36,14 @@ export default ({
   onDelete,
   onChange,
   onClose,
-  onOpen
+  onOpen,
+  isEditingLocked = false
 }: Props) => {
   const classes = useStyles()
 
   return (
     <Paper
-      onClick={() => (!editing ? onOpen(region) : null)}
+      onClick={() => (!editing && !isEditingLocked ? onOpen(region) : null)}
       className={classnames(classes.regionInfo, {
         highlighted: region.highlighted
       })}

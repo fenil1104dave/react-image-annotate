@@ -21,11 +21,13 @@ export default (function (_ref) {
       onDelete = _ref.onDelete,
       _onChange = _ref.onChange,
       onClose = _ref.onClose,
-      onOpen = _ref.onOpen;
+      onOpen = _ref.onOpen,
+      _ref$isEditingLocked = _ref.isEditingLocked,
+      isEditingLocked = _ref$isEditingLocked === void 0 ? false : _ref$isEditingLocked;
   var classes = useStyles();
   return React.createElement(Paper, {
     onClick: function onClick() {
-      return !editing ? onOpen(region) : null;
+      return !editing && !isEditingLocked ? onOpen(region) : null;
     },
     className: classnames(classes.regionInfo, {
       highlighted: region.highlighted
