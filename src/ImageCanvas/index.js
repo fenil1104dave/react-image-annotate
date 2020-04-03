@@ -103,7 +103,6 @@ export default ({
   onIhIwChange
 }: Props) => {
   const classes = useStyles()
-
   const canvasEl = useRef(null)
   const image = useRef(null)
   const layoutParams = useRef({})
@@ -202,6 +201,7 @@ export default ({
       canvasHeight: clientHeight
     }
 
+    // context.drawImage(image.current, clientWidth/2 - iw/2, clientHeight/2 - ih/2, iw, ih)
     context.drawImage(image.current, 0, 0, iw, ih)
 
     if (allowedArea) {
@@ -423,6 +423,26 @@ export default ({
           prevMousePosition.current.y - mousePosition.current.y
         )
 
+        // const { clientWidth, clientHeight } = canvasEl.current
+        // const horizontal_move_limit = ((1/mat.a) - 1) * clientWidth;
+        // const vertical_move_limit = ((1/mat.d) - 1) * clientHeight;
+        const horizontal_move_limit = ((1/mat.a) - 1) * (iw/(1/mat.a));
+        const vertical_move_limit = ((1/mat.d) - 1) * (ih/(1/mat.d));
+        // const horizontal_move_limit = iw/2;
+        // const vertical_move_limit = ih/2;
+
+        if(mat.e < 0){
+          mat.e = 0;
+        }else if(mat.e > horizontal_move_limit){
+          mat.e = horizontal_move_limit;
+        }
+
+        if(mat.f < 0){
+          mat.f = 0;
+        }else if(mat.f > vertical_move_limit){
+          mat.f = vertical_move_limit;
+        }
+
         changeMat(mat.clone())
         // changeForceRenderState(Math.random())
       }
@@ -526,6 +546,26 @@ export default ({
           e.deltaX,
           e.deltaY
         )
+        // ((1 / mat.b) - 1) * ih
+        // const horizontal_move_limit = iw/2;
+        // const horizontal_left_limit = iw/2;
+        // const vertical_move_limit = ih/2;
+        const horizontal_move_limit = ((1/mat.a) - 1) * (iw/(1/mat.a));
+        const vertical_move_limit = ((1/mat.d) - 1) * (ih/(1/mat.d));
+
+        if(mat.e < -10){
+          mat.e = -10;
+        }else if(mat.e > horizontal_move_limit){
+          mat.e = horizontal_move_limit;
+        }
+
+        if(mat.f < -10){
+          mat.f = -10;
+        }else if(mat.f > vertical_move_limit){
+          mat.f = vertical_move_limit;
+        }
+
+
         changeMat(mat.clone());
       }
       e.preventDefault()
@@ -931,9 +971,9 @@ export default ({
       >
         <canvas className={classes.canvas} ref={canvasEl} />
       </PreventScrollToParents>
-      {/*<div className={classes.zoomIndicator}>*/}
-      {/*  {((1 / mat.a) * 100).toFixed(0)}%*/}
-      {/*</div>*/}
+      <div className={classes.zoomIndicator}>
+        {((1 / mat.a) * 100).toFixed(0)}%
+      </div>
     </div>
     // </div>
   )
