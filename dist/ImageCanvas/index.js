@@ -185,7 +185,8 @@ export default (function (_ref) {
       fitScale: fitScale,
       canvasWidth: clientWidth,
       canvasHeight: clientHeight
-    };
+    }; // context.drawImage(image.current, clientWidth/2 - iw/2, clientHeight/2 - ih/2, iw, ih)
+
     context.drawImage(image.current, 0, 0, iw, ih);
 
     if (allowedArea) {
@@ -457,7 +458,26 @@ export default (function (_ref) {
       });
 
       if (dragging) {
-        mat.translate(prevMousePosition.current.x - mousePosition.current.x, prevMousePosition.current.y - mousePosition.current.y);
+        mat.translate(prevMousePosition.current.x - mousePosition.current.x, prevMousePosition.current.y - mousePosition.current.y); // const { clientWidth, clientHeight } = canvasEl.current
+        // const horizontal_move_limit = ((1/mat.a) - 1) * clientWidth;
+        // const vertical_move_limit = ((1/mat.d) - 1) * clientHeight;
+
+        var horizontal_move_limit = (1 / mat.a - 1) * (iw / (1 / mat.a));
+        var vertical_move_limit = (1 / mat.d - 1) * (ih / (1 / mat.d)); // const horizontal_move_limit = iw/2;
+        // const vertical_move_limit = ih/2;
+
+        if (mat.e < 0) {
+          mat.e = 0;
+        } else if (mat.e > horizontal_move_limit) {
+          mat.e = horizontal_move_limit;
+        }
+
+        if (mat.f < 0) {
+          mat.f = 0;
+        } else if (mat.f > vertical_move_limit) {
+          mat.f = vertical_move_limit;
+        }
+
         changeMat(mat.clone()); // changeForceRenderState(Math.random())
       }
 
@@ -566,7 +586,26 @@ export default (function (_ref) {
         prevMousePosition.current.y = mousePosition.current.y;
         mousePosition.current.x = e.deltaX + prevMousePosition.current.x;
         mousePosition.current.y = e.deltaY - prevMousePosition.current.y;
-        mat.translate(e.deltaX, e.deltaY);
+        mat.translate(e.deltaX, e.deltaY); // ((1 / mat.b) - 1) * ih
+        // const horizontal_move_limit = iw/2;
+        // const horizontal_left_limit = iw/2;
+        // const vertical_move_limit = ih/2;
+
+        var horizontal_move_limit = (1 / mat.a - 1) * (iw / (1 / mat.a));
+        var vertical_move_limit = (1 / mat.d - 1) * (ih / (1 / mat.d));
+
+        if (mat.e < -10) {
+          mat.e = -10;
+        } else if (mat.e > horizontal_move_limit) {
+          mat.e = horizontal_move_limit;
+        }
+
+        if (mat.f < -10) {
+          mat.f = -10;
+        } else if (mat.f > vertical_move_limit) {
+          mat.f = vertical_move_limit;
+        }
+
         changeMat(mat.clone());
       }
 
@@ -871,7 +910,9 @@ export default (function (_ref) {
     }, mouseEvents), React.createElement("canvas", {
       className: classes.canvas,
       ref: canvasEl
-    }))) // </div>
+    })), React.createElement("div", {
+      className: classes.zoomIndicator
+    }, (1 / mat.a * 100).toFixed(0), "%")) // </div>
 
   );
 });
