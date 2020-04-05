@@ -1,6 +1,6 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Sidebar from "../Sidebar";
@@ -63,6 +63,9 @@ export default (function (_ref) {
     };
   }
 
+  useEffect(function () {
+    state.onImagesChange(state.images);
+  }, [JSON.stringify(state.images)]);
   return React.createElement(Fullscreen, {
     enabled: state.fullScreen,
     onChange: function onChange(open) {

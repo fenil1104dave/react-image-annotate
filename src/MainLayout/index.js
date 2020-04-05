@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState } from "react"
+import React, {useEffect, useState} from "react"
 import Grid from "@material-ui/core/Grid"
 import { makeStyles } from "@material-ui/core/styles"
 import Sidebar from "../Sidebar"
@@ -51,6 +51,10 @@ export default ({ state, dispatch }: Props) => {
           })
       }
   }
+
+  useEffect(() => {
+    state.onImagesChange(state.images)
+  }, [JSON.stringify(state.images)]);
 
   return (
     <Fullscreen

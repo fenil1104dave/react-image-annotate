@@ -33,6 +33,7 @@ const getDefaultMat = () => Matrix.from(1, 0, 0, 1, -10, -10)
 
 export default ({
   images,
+  onImagesChange = () => {},
   allowedArea,
   selectedImage = images.length > 0 ? images[0].src : undefined,
   showPointDistances,
@@ -62,6 +63,7 @@ export default ({
     mode: null,
     taskDescription,
     images,
+    onImagesChange,
     labelImages: imageClsList.length > 0 || imageTagList.length > 0,
     regionClsList,
     regionTagList,
@@ -83,6 +85,12 @@ export default ({
       dispatchToReducer({type: "SELECT_TOOL", selectedTool: "show-tags"})
     }
   }, [showTags]);
+
+  useEffect(() => {
+    console.log("Annotator inside useeffect");
+    console.log(images);
+    dispatchToReducer({type: "CHANGE_IMAGES", images: images})
+  }, [JSON.stringify(images)]);
 
   useEffect(() => {
     dispatchToReducer({type: "CHANGE_CURRENT_MAT", currentMat: currentMat})

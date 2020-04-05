@@ -218,7 +218,7 @@ export default (function (_ref) {
 
     context.save();
     context.globalAlpha = mat.a * 0.5 + 0.5;
-    context.lineWidth = mat.a * 1 + 1;
+    context.lineWidth = mat.a * 0.5 + 0.5;
 
     if (context.globalAlpha > 0.6) {
       context.shadowColor = "black";
@@ -369,6 +369,8 @@ export default (function (_ref) {
 
       for (var _iterator = regions.filter(function (r) {
         return r.visible || r.visible === undefined;
+      }).slice().sort(function (a, b) {
+        return (a.zIndex || 0) - (b.zIndex || 0);
       })[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         _loop();
       }
@@ -404,9 +406,24 @@ export default (function (_ref) {
 
 
     mat.translate(mx, my).scaleU(scale);
-    if (mat.a > 2) mat.scaleU(2 / mat.a);
+    if (mat.a > 1) mat.scaleU(1 / mat.a);
     if (mat.a < 0.1) mat.scaleU(0.1 / mat.a);
     mat.translate(-mx, -my);
+    var horizontal_move_limit = (1 / mat.a - 1) * (iw / (1 / mat.a));
+    var vertical_move_limit = (1 / mat.d - 1) * (ih / (1 / mat.d));
+
+    if (mat.e < -10) {
+      mat.e = -10;
+    } else if (mat.e > horizontal_move_limit) {
+      mat.e = horizontal_move_limit;
+    }
+
+    if (mat.f < -10) {
+      mat.f = -10;
+    } else if (mat.f > vertical_move_limit) {
+      mat.f = vertical_move_limit;
+    }
+
     var newMatClone = mat.clone();
 
     if (!(Object.keys(oldMat).length === Object.keys(newMatClone).length && Object.keys(oldMat).every(function (key) {
@@ -809,6 +826,10 @@ export default (function (_ref) {
       //     </div>
       //   )
       // }
+
+      if (!region.showTags) {
+        return;
+      }
 
       return React.createElement("div", {
         style: _objectSpread({

@@ -99,3 +99,4 @@ export type Action =
   | {| type: "SELECT_TOOL", selectedTool: string |}
   | {| type: "CANCEL" |}
   | {| type: "CHANGE_CURRENT_MAT", currentMat: Matrix |}
+  | {| type: "CHANGE_IMAGES", images: any |}
