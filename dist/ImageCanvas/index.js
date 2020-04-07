@@ -3,6 +3,7 @@ import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
 import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
 import React, { Fragment, useRef, useState, useLayoutEffect } from "react";
 import { Matrix } from "transformation-matrix-js";
+import { cloneDeep } from "lodash";
 import getImageData from "get-image-data";
 import Crosshairs from "../Crosshairs";
 import { getEnclosingBox } from "./region-tools.js";
@@ -367,9 +368,9 @@ export default (function (_ref) {
         }
       };
 
-      for (var _iterator = regions.filter(function (r) {
+      for (var _iterator = cloneDeep(regions.filter(function (r) {
         return r.visible || r.visible === undefined;
-      }).slice().sort(function (a, b) {
+      })).sort(function (a, b) {
         return (a.zIndex || 0) - (b.zIndex || 0);
       })[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         _loop();

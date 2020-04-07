@@ -1,6 +1,7 @@
 // @flow
 import React, { Fragment, useRef, useState, useLayoutEffect } from "react"
 import { Matrix } from "transformation-matrix-js"
+import { cloneDeep } from "lodash"
 import getImageData from "get-image-data"
 import Crosshairs from "../Crosshairs"
 import type {
@@ -239,9 +240,9 @@ export default ({
       context.shadowColor = "black"
       context.shadowBlur = 4
     }
-    for (const region of regions.filter(
+    for (const region of cloneDeep(regions.filter(
       r => r.visible || r.visible === undefined
-    ).slice().sort(function (a, b) {
+    )).sort(function (a, b) {
       return (a.zIndex || 0) - (b.zIndex || 0)
     })) {
       switch (region.type) {

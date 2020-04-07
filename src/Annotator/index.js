@@ -87,10 +87,12 @@ export default ({
   }, [showTags]);
 
   useEffect(() => {
-    console.log("Annotator inside useeffect");
-    console.log(images);
     dispatchToReducer({type: "CHANGE_IMAGES", images: images})
   }, [JSON.stringify(images)]);
+
+  useEffect(() => {
+    dispatchToReducer({type: "SELECT_IMAGE", image: {src: selectedImage}})
+  }, [selectedImage]);
 
   useEffect(() => {
     dispatchToReducer({type: "CHANGE_CURRENT_MAT", currentMat: currentMat})
