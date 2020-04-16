@@ -242,7 +242,7 @@ export default ({
 
     context.save()
     context.globalAlpha = mat.a * 0.5 + 0.5
-    context.lineWidth = mat.a * 0.5 + 0.5
+    context.lineWidth = mat.a * 0.5 + 0.2
     if (context.globalAlpha > 0.6) {
       context.shadowColor = "black"
       context.shadowBlur = 4
