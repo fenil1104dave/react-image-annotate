@@ -61,7 +61,9 @@ type Props = {
   onAddPolygonPoint: (Polygon, point: [number, number], index: number) => any,
   onSelectRegion: Region => any,
   onBeginMovePoint: Point => any,
-  onImageLoaded: ({ width: number, height: number }) => any
+  onImageLoaded: ({ width: number, height: number }) => any,
+  handleScaleChange:({value:number}) => any,
+  setImageLoaded:() => any
 }
 
 const getDefaultMat = () => Matrix.from(1, 0, 0, 1, -10, -10)
@@ -101,7 +103,9 @@ export default ({
   onDeleteRegion,
   mat,
   changeMat,
-  onIhIwChange
+  onIhIwChange,
+  setImageLoaded,
+	handleScaleChange
 }: Props) => {
   const classes = useStyles()
   const canvasEl = useRef(null)
@@ -148,8 +152,11 @@ export default ({
   useLayoutEffect(() => {
     if (image.current === null) {
       image.current = new Image()
+      setImageLoaded(false)
       image.current.onload = () => {
         changeImageLoaded(true)
+        setImageLoaded(true)
+        handleScaleChange(100)
         onImageLoaded({
           width: image.current.naturalWidth,
           height: image.current.naturalHeight

@@ -49,7 +49,9 @@ export default ({
   currentMat = getDefaultMat(),
   changeMat,
   onIhIwChange = () => {},
-  onExit
+  onExit,
+  setImageLoaded = () =>{},
+	handleScaleChange=()=>{}
 }: Props) => {
 
   const [state, dispatchToReducer] = useReducer(reducer, {
@@ -73,7 +75,9 @@ export default ({
     changeMat,
     onIhIwChange,
     enabledTools,
-    history: []
+    history: [],
+    setImageLoaded,
+		handleScaleChange
   })
 
   useEffect(() => {
