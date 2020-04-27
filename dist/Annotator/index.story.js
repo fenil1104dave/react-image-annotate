@@ -8,7 +8,7 @@ import bikeImg2 from "./bike-pic2.png";
 import Annotator from "./";
 import { testRegions } from "../ImageCanvas/index.story";
 storiesOf("Annotator", module).add("Basic", function () {
-  return React.createElement(Annotator, {
+  return /*#__PURE__*/React.createElement(Annotator, {
     onExit: actionAddon("onExit"),
     middlewares: [function (store) {
       return function (next) {
@@ -39,11 +39,11 @@ storiesOf("Annotator", module).add("Basic", function () {
     }]
   });
 }).add("Shrunk Annotator (Test Fullscreen)", function () {
-  return React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     style: {
       padding: 100
     }
-  }, React.createElement(Annotator, {
+  }, /*#__PURE__*/React.createElement(Annotator, {
     onExit: actionAddon("onExit"),
     regionClsList: ["Alpha", "Beta", "Charlie", "Delta"],
     regionTagList: ["tag1", "tag2", "tag3"],
@@ -62,7 +62,7 @@ storiesOf("Annotator", module).add("Basic", function () {
     }]
   }));
 }).add("Annotator w/o No Region Labels or Image Labels", function () {
-  return React.createElement(Annotator, {
+  return /*#__PURE__*/React.createElement(Annotator, {
     onExit: actionAddon("onExit"),
     middlewares: [function (store) {
       return function (next) {
@@ -79,7 +79,7 @@ storiesOf("Annotator", module).add("Basic", function () {
     }]
   });
 }).add("Annotator with no enabled tools", function () {
-  return React.createElement(Annotator, {
+  return /*#__PURE__*/React.createElement(Annotator, {
     onExit: actionAddon("onExit"),
     enabledTools: [],
     showTags: false,
@@ -98,7 +98,7 @@ storiesOf("Annotator", module).add("Basic", function () {
     }]
   });
 }).add("Bounding Box Annotator with output to console.log", function () {
-  return React.createElement(Annotator, {
+  return /*#__PURE__*/React.createElement(Annotator, {
     onExit: function onExit(out) {
       window.lastOutput = out;
       console.log(out);
@@ -119,7 +119,7 @@ storiesOf("Annotator", module).add("Basic", function () {
     }]
   });
 }).add("Bounding Box Annotator with allowed area", function () {
-  return React.createElement(Annotator, {
+  return /*#__PURE__*/React.createElement(Annotator, {
     taskDescription: "## Annotate Hands\nDraw a bounding box around each hand.",
     enabledTools: ["select", "create-box"],
     regionClsList: ["Hand", "Face"],
@@ -138,7 +138,7 @@ storiesOf("Annotator", module).add("Basic", function () {
     }]
   });
 }).add("Car Annotation", function () {
-  return React.createElement(Annotator, _defineProperty({
+  return /*#__PURE__*/React.createElement(Annotator, _defineProperty({
     onExit: actionAddon("onExit"),
     middlewares: [function (store) {
       return function (next) {
@@ -284,11 +284,11 @@ storiesOf("Annotator", module).add("Basic", function () {
     console.log(JSON.stringify(out.images));
   }));
 }).add("Annotator blocks scroll from propagating", function () {
-  return React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     style: {
       height: "200vh"
     }
-  }, React.createElement(Annotator, {
+  }, /*#__PURE__*/React.createElement(Annotator, {
     onExit: actionAddon("onExit"),
     showTags: false,
     middlewares: [function (store) {
@@ -304,7 +304,7 @@ storiesOf("Annotator", module).add("Basic", function () {
       name: "Seve's Desk",
       regions: testRegions
     }]
-  }), React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", {
     style: {
       color: "red"
     }

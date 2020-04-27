@@ -18,14 +18,14 @@ export default (function (_ref) {
       mouseOver = _useState2[0],
       changeMouseOver = _useState2[1];
 
-  return React.createElement(Container, Object.assign({}, otherProps, {
+  return /*#__PURE__*/React.createElement(Container, Object.assign({}, otherProps, {
     onMouseEnter: function onMouseEnter(e) {
       return changeMouseOver(true);
     },
     onMouseLeave: function onMouseLeave(e) {
       return changeMouseOver(false);
     }
-  }), React.createElement(RemoveScroll, {
+  }), /*#__PURE__*/React.createElement(RemoveScroll, {
     enabled: mouseOver,
     removeScrollBar: false
   }, children));

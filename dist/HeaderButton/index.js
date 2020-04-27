@@ -4,9 +4,9 @@ export var HeaderButtonContext = createContext();
 export default (function (_ref) {
   var name = _ref.name,
       Icon = _ref.Icon;
-  return React.createElement(HeaderButtonContext.Consumer, null, function (_ref2) {
+  return /*#__PURE__*/React.createElement(HeaderButtonContext.Consumer, null, function (_ref2) {
     var onHeaderButtonClick = _ref2.onHeaderButtonClick;
-    return React.createElement(Button, {
+    return /*#__PURE__*/React.createElement(Button, {
       onClick: function onClick() {
         return onHeaderButtonClick(name);
       },
@@ -14,9 +14,9 @@ export default (function (_ref) {
         width: 80,
         margin: 2
       }
-    }, React.createElement("div", null, React.createElement(Icon, {
+    }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Icon, {
       style: {}
-    }), React.createElement("div", {
+    }), /*#__PURE__*/React.createElement("div", {
       style: {
         fontWeight: "bold"
       }

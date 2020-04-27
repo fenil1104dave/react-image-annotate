@@ -16,32 +16,32 @@ export default (function (_ref) {
       inFullScreen = _ref.inFullScreen,
       multipleImages = _ref.multipleImages;
   var classes = useStyles();
-  return React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     className: classes.header
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: classes.fileInfo
-  }, title), React.createElement("div", {
+  }, title), /*#__PURE__*/React.createElement("div", {
     className: classes.headerActions
-  }, React.createElement(HeaderButtonContext.Provider, {
+  }, /*#__PURE__*/React.createElement(HeaderButtonContext.Provider, {
     value: {
       onHeaderButtonClick: onHeaderButtonClick
     }
-  }, multipleImages && React.createElement(React.Fragment, null, React.createElement(HeaderButton, {
+  }, multipleImages && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(HeaderButton, {
     name: "Prev",
     Icon: BackIcon
-  }), React.createElement(HeaderButton, {
+  }), /*#__PURE__*/React.createElement(HeaderButton, {
     name: "Next",
     Icon: NextIcon
-  })), React.createElement(HeaderButton, {
+  })), /*#__PURE__*/React.createElement(HeaderButton, {
     name: "Settings",
     Icon: SettingsIcon
-  }), inFullScreen ? React.createElement(HeaderButton, {
+  }), inFullScreen ? /*#__PURE__*/React.createElement(HeaderButton, {
     name: "Window",
     Icon: FullscreenIcon
-  }) : React.createElement(HeaderButton, {
+  }) : /*#__PURE__*/React.createElement(HeaderButton, {
     name: "Fullscreen",
     Icon: FullscreenIcon
-  }), React.createElement(HeaderButton, {
+  }), /*#__PURE__*/React.createElement(HeaderButton, {
     name: "Save",
     Icon: ExitIcon
   }))));

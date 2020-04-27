@@ -18,26 +18,26 @@ export default (function (_ref) {
   var images = _ref.images,
       onSelect = _ref.onSelect;
   var classes = useStyles();
-  return React.createElement(SidebarBoxContainer, {
+  return /*#__PURE__*/React.createElement(SidebarBoxContainer, {
     title: "Images",
     subTitle: "(".concat(images.length, ")"),
-    icon: React.createElement(CollectionsIcon, {
+    icon: /*#__PURE__*/React.createElement(CollectionsIcon, {
       style: {
         color: grey[700]
       }
     })
-  }, React.createElement("div", null, React.createElement(List, null, images.map(function (img, i) {
-    return React.createElement(ListItem, {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(List, null, images.map(function (img, i) {
+    return /*#__PURE__*/React.createElement(ListItem, {
       button: true,
       onClick: function onClick() {
         return onSelect(img);
       },
       dense: true,
       key: i
-    }, React.createElement("img", {
+    }, /*#__PURE__*/React.createElement("img", {
       className: classes.img,
       src: img.src
-    }), React.createElement(ListItemText, {
+    }), /*#__PURE__*/React.createElement(ListItemText, {
       primary: img.name,
       secondary: "".concat((img.regions || []).length, " Labels")
     }));

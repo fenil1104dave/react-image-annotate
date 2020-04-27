@@ -23,88 +23,88 @@ export default (function (_ref) {
       _ref$enabledTools = _ref.enabledTools,
       enabledTools = _ref$enabledTools === void 0 ? ["select", "create-point", "create-box", "create-polygon", "create-circle"] : _ref$enabledTools;
   var classes = useStyles();
-  return React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     className: classes.iconTools
-  }, React.createElement(SelectedTool.Provider, {
+  }, /*#__PURE__*/React.createElement(SelectedTool.Provider, {
     value: {
       enabledTools: enabledTools,
       selectedTool: selectedTool,
       onClickTool: onClickTool
     }
-  }, React.createElement(SmallToolButton, {
+  }, /*#__PURE__*/React.createElement(SmallToolButton, {
     id: "select",
     name: "Select Region",
-    icon: React.createElement(FontAwesomeIcon, {
+    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faMousePointer
     })
-  }), React.createElement(SmallToolButton, {
+  }), /*#__PURE__*/React.createElement(SmallToolButton, {
     alwaysShowing: true,
     id: "pan",
     name: "Drag/Pan",
-    icon: React.createElement(FontAwesomeIcon, {
+    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faHandPaper
     })
-  }), React.createElement(SmallToolButton, {
+  }), /*#__PURE__*/React.createElement(SmallToolButton, {
     alwaysShowing: true,
     id: "zoom",
     name: "Zoom In",
-    icon: React.createElement(FontAwesomeIcon, {
+    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faSearchPlus
     })
-  }), React.createElement(SmallToolButton, {
+  }), /*#__PURE__*/React.createElement(SmallToolButton, {
     alwaysShowing: true,
     id: "zoom-out",
     name: "Zoom Out",
-    icon: React.createElement(FontAwesomeIcon, {
+    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faSearchMinus
     })
-  }), React.createElement(SmallToolButton, {
+  }), /*#__PURE__*/React.createElement(SmallToolButton, {
     alwaysShowing: true,
     togglable: true,
     id: "show-tags",
     selected: showTags,
     name: "Show Tags",
-    icon: React.createElement(FontAwesomeIcon, {
+    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faTag
     })
-  }), React.createElement(SmallToolButton, {
+  }), /*#__PURE__*/React.createElement(SmallToolButton, {
     id: "create-point",
     name: "Add Point",
-    icon: React.createElement(FontAwesomeIcon, {
+    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faCrosshairs
     })
-  }), React.createElement(SmallToolButton, {
+  }), /*#__PURE__*/React.createElement(SmallToolButton, {
     id: "create-box",
     name: "Add Bounding Box",
-    icon: React.createElement(FontAwesomeIcon, {
+    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faVectorSquare
     })
-  }), React.createElement(SmallToolButton, {
+  }), /*#__PURE__*/React.createElement(SmallToolButton, {
     id: "create-polygon",
     name: "Add Polygon",
-    icon: React.createElement(FontAwesomeIcon, {
+    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faDrawPolygon
     })
-  }), React.createElement(SmallToolButton, {
+  }), /*#__PURE__*/React.createElement(SmallToolButton, {
     id: "create-circle",
     name: "Add Circle",
-    icon: React.createElement(FontAwesomeIcon, {
+    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faCircle

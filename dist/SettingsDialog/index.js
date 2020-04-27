@@ -10,14 +10,14 @@ export default (function (_ref) {
   var open = _ref.open,
       onClose = _ref.onClose;
   var settings = useSettings();
-  return React.createElement(Dialog, {
+  return /*#__PURE__*/React.createElement(Dialog, {
     open: open,
     onClose: onClose
-  }, React.createElement(DialogTitle, null, "Settings"), React.createElement(DialogContent, {
+  }, /*#__PURE__*/React.createElement(DialogTitle, null, "Settings"), /*#__PURE__*/React.createElement(DialogContent, {
     style: {
       minWidth: 400
     }
-  }, React.createElement(Survey, {
+  }, /*#__PURE__*/React.createElement(Survey, {
     variant: "flat",
     noActions: true,
     defaultAnswers: settings,
@@ -31,7 +31,7 @@ export default (function (_ref) {
         name: "showCrosshairs"
       }]
     }
-  })), React.createElement(DialogActions, null, React.createElement(Button, {
+  })), /*#__PURE__*/React.createElement(DialogActions, null, /*#__PURE__*/React.createElement(Button, {
     onClick: onClose
   }, "Close")));
 });

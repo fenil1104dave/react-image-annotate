@@ -85,20 +85,20 @@ var events = (_events = {
   onBeginRegionEdit: action("onBeginRegionEdit")
 }, _defineProperty(_events, "onChangeRegion", action("onChangeRegion")), _defineProperty(_events, "onCloseRegionEdit", action("onCloseRegionEdit")), _defineProperty(_events, "onSelectRegion", action("onSelectRegion")), _defineProperty(_events, "onBeginBoxTransform", action("onBeginBoxTransform")), _defineProperty(_events, "onBeginMovePolygonPoint", action("onBeginMovePolygonPoint")), _defineProperty(_events, "onAddPolygonPoint", action("onAddPolygonPoint")), _defineProperty(_events, "onClosePolygon", action("onClosePolygon")), _defineProperty(_events, "onBeginMovePoint", action("onBeginMovePoint")), _defineProperty(_events, "onDeleteRegion", action("onDeleteRegion")), _events);
 storiesOf("ImageCanvas", module).add("Basic", function () {
-  return React.createElement(ImageCanvas, Object.assign({
+  return /*#__PURE__*/React.createElement(ImageCanvas, Object.assign({
     regions: testRegions,
     imageSrc: exampleImage,
     showTags: true
   }, events));
 }).add("Zoom Tool Selected", function () {
-  return React.createElement(ImageCanvas, Object.assign({
+  return /*#__PURE__*/React.createElement(ImageCanvas, Object.assign({
     showTags: true,
     regions: testRegions,
     imageSrc: exampleImage,
     zoomWithPrimary: true
   }, events));
 }).add("Allowed Area", function () {
-  return React.createElement(ImageCanvas, Object.assign({
+  return /*#__PURE__*/React.createElement(ImageCanvas, Object.assign({
     showTags: true,
     regions: [],
     imageSrc: exampleImage,

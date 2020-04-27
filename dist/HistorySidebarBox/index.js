@@ -23,28 +23,28 @@ export default (function (_ref) {
   var history = _ref.history,
       onRestoreHistory = _ref.onRestoreHistory;
   var classes = useStyles();
-  return React.createElement(SidebarBoxContainer, {
+  return /*#__PURE__*/React.createElement(SidebarBoxContainer, {
     title: "History",
-    icon: React.createElement(HistoryIcon, {
+    icon: /*#__PURE__*/React.createElement(HistoryIcon, {
       style: {
         color: grey[700]
       }
     }),
     expandedByDefault: true
-  }, React.createElement(List, null, history.length === 0 && React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(List, null, history.length === 0 && /*#__PURE__*/React.createElement("div", {
     className: classes.emptyText
   }, "No History Yet"), history.map(function (_ref2, i) {
     var name = _ref2.name,
         time = _ref2.time;
-    return React.createElement(ListItem, {
+    return /*#__PURE__*/React.createElement(ListItem, {
       button: true,
       dense: true,
       key: i
-    }, React.createElement(ListItemText, {
+    }, /*#__PURE__*/React.createElement(ListItemText, {
       primary: name,
       secondary: moment(time).format("LT")
-    }), i === 0 && React.createElement(ListItemSecondaryAction, {
+    }), i === 0 && /*#__PURE__*/React.createElement(ListItemSecondaryAction, {
       onClick: onRestoreHistory
-    }, React.createElement(IconButton, null, React.createElement(UndoIcon, null))));
+    }, /*#__PURE__*/React.createElement(IconButton, null, /*#__PURE__*/React.createElement(UndoIcon, null))));
   })));
 });

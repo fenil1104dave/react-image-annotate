@@ -63,7 +63,7 @@ export default (function (_ref) {
       _ref$expandedByDefaul = _ref.expandedByDefault,
       expandedByDefault = _ref$expandedByDefaul === void 0 ? false : _ref$expandedByDefaul;
   var classes = useStyles();
-  var content = React.createElement("div", {
+  var content = /*#__PURE__*/React.createElement("div", {
     className: classnames(classes.expandedContent, noScroll && "noScroll")
   }, children);
 
@@ -72,20 +72,20 @@ export default (function (_ref) {
       expanded = _useState2[0],
       changeExpanded = _useState2[1];
 
-  return React.createElement(Paper, {
+  return /*#__PURE__*/React.createElement(Paper, {
     className: classes.container
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: classes.header
-  }, icon, React.createElement("div", {
+  }, icon, /*#__PURE__*/React.createElement("div", {
     className: classes.title
-  }, title, " ", React.createElement("span", null, subTitle)), React.createElement(IconButton, {
+  }, title, " ", /*#__PURE__*/React.createElement("span", null, subTitle)), /*#__PURE__*/React.createElement(IconButton, {
     onClick: function onClick() {
       return changeExpanded(!expanded);
     },
     className: classes.expandButton
-  }, React.createElement(ExpandIcon, {
+  }, /*#__PURE__*/React.createElement(ExpandIcon, {
     className: classnames("icon", expanded && "expanded")
-  }))), noScroll ? expanded ? content : null : React.createElement(Collapse, {
+  }))), noScroll ? expanded ? content : null : /*#__PURE__*/React.createElement(Collapse, {
     in: expanded
   }, content));
 });
