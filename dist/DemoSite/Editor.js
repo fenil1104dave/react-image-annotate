@@ -97,17 +97,17 @@ var Editor = function Editor(_ref) {
       currentJSONValue = _useState8[0],
       changeCurrentJSONValue = _useState8[1];
 
-  return React.createElement("div", null, React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: c.editBar
-  }, React.createElement("h3", null, "React Image Annotate"), React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h3", null, "React Image Annotate"), /*#__PURE__*/React.createElement("div", {
     style: {
       flexGrow: 1
     }
-  }), React.createElement("div", null, React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       display: "inline-flex"
     }
-  }, React.createElement(Select, {
+  }, /*#__PURE__*/React.createElement(Select, {
     className: c.select,
     value: {
       label: selectedExample,
@@ -123,27 +123,27 @@ var Editor = function Editor(_ref) {
       changeSelectedExample(selectedOption.value);
       changeCurrentJSONValue(JSON.stringify(selectedOption.value === "Custom" ? loadSavedInput() : examples[selectedOption.value](), null, "  "));
     }
-  })), React.createElement(Button, {
+  })), /*#__PURE__*/React.createElement(Button, {
     className: "button",
     disabled: !lastOutput,
     onClick: function onClick() {
       return changeOutputOpen(true);
     }
-  }, "View Output"), React.createElement(Button, {
+  }, "View Output"), /*#__PURE__*/React.createElement(Button, {
     className: "button",
     variant: "outlined",
     disabled: Boolean(currentError),
     onClick: function onClick() {
       return onOpenAnnotator(selectedExample === "Custom" ? loadSavedInput() : examples[selectedExample]);
     }
-  }, "Open Annotator"))), React.createElement("div", {
+  }, "Open Annotator"))), /*#__PURE__*/React.createElement("div", {
     className: c.contentArea,
     style: currentError ? {
       border: "2px solid #f00"
     } : {
       border: "2px solid #fff"
     }
-  }, React.createElement("div", null, React.createElement(MonacoEditor, {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(MonacoEditor, {
     value: currentJSONValue,
     language: "javascript",
     onChange: function onChange(code) {
@@ -158,23 +158,23 @@ var Editor = function Editor(_ref) {
     },
     width: "100%",
     height: "550px"
-  }))), React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("div", {
     className: c.specificationArea
-  }, React.createElement("h2", null, "React Image Annotate Format"), React.createElement(Code, {
+  }, /*#__PURE__*/React.createElement("h2", null, "React Image Annotate Format"), /*#__PURE__*/React.createElement(Code, {
     language: "javascript"
-  }, "\n{\n  taskDescription?: string, // markdown\n  regionTagList?: Array<string>,\n  regionClsList?: Array<string>,\n  imageTagList?: Array<string>,\n  imageClsList?: Array<string>,\n  // all tools are enabled by default\n  enabledTools?: Array< \"select\" | \"create-point\" | \"create-box\" | \"create-polygon\">,\n  selectedImage?: string, // initial selected image\n  images: Array<{\n    src: string,\n    thumbnailSrc?: string, // use this if you are using high-res images\n    name: string,\n    regions?: Array<{\n      id: string | number,\n      cls?: string,\n      color?: string,\n      tags?: Array<string>,\n\n      // Point\n      type: \"point\",\n      x: number, // [0-1] % of image width\n      y: number, // [0-1] % of image height\n\n      // Bounding Box\n      type: \"box\",\n      x: number, // [0-1] % of image width\n      y: number, // [0-1] % of image height\n      w: number, // [0-1] % of image width\n      h: number, // [0-1] % of image height\n\n      // Polygon\n      type: \"polygon\",\n      open?: boolean, // should last and first points be connected, default: true\n      points: Array<[number, number]> // [0-1] % of image width/height\n    }>\n  }>,\n}\n")), React.createElement(Dialog, {
+  }, "\n{\n  taskDescription?: string, // markdown\n  regionTagList?: Array<string>,\n  regionClsList?: Array<string>,\n  imageTagList?: Array<string>,\n  imageClsList?: Array<string>,\n  // all tools are enabled by default\n  enabledTools?: Array< \"select\" | \"create-point\" | \"create-box\" | \"create-polygon\">,\n  selectedImage?: string, // initial selected image\n  images: Array<{\n    src: string,\n    thumbnailSrc?: string, // use this if you are using high-res images\n    name: string,\n    regions?: Array<{\n      id: string | number,\n      cls?: string,\n      color?: string,\n      tags?: Array<string>,\n\n      // Point\n      type: \"point\",\n      x: number, // [0-1] % of image width\n      y: number, // [0-1] % of image height\n\n      // Bounding Box\n      type: \"box\",\n      x: number, // [0-1] % of image width\n      y: number, // [0-1] % of image height\n      w: number, // [0-1] % of image width\n      h: number, // [0-1] % of image height\n\n      // Polygon\n      type: \"polygon\",\n      open?: boolean, // should last and first points be connected, default: true\n      points: Array<[number, number]> // [0-1] % of image width/height\n    }>\n  }>,\n}\n")), /*#__PURE__*/React.createElement(Dialog, {
     fullScreen: true,
     open: outputDialogOpen
-  }, React.createElement(DialogTitle, null, "React Image Annotate Output"), React.createElement(DialogContent, {
+  }, /*#__PURE__*/React.createElement(DialogTitle, null, "React Image Annotate Output"), /*#__PURE__*/React.createElement(DialogContent, {
     style: {
       minWidth: 400
     }
-  }, React.createElement(MonacoEditor, {
+  }, /*#__PURE__*/React.createElement(MonacoEditor, {
     value: JSON.stringify(lastOutput, null, "  "),
     language: "javascript",
     width: "100%",
     height: "550px"
-  })), React.createElement(DialogActions, null, React.createElement(Button, {
+  })), /*#__PURE__*/React.createElement(DialogActions, null, /*#__PURE__*/React.createElement(Button, {
     onClick: function onClick() {
       return changeOutputOpen(false);
     }

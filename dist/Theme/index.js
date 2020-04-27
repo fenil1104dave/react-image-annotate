@@ -20,9 +20,9 @@ var theme = createMuiTheme({
 export default (function (_ref) {
   var children = _ref.children;
   var classes = useStyles();
-  return React.createElement(ThemeProvider, {
+  return /*#__PURE__*/React.createElement(ThemeProvider, {
     theme: theme
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: classes.container
   }, children));
 });

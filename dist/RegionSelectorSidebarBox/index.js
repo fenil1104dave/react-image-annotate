@@ -21,14 +21,14 @@ var Chip = function Chip(_ref) {
   var color = _ref.color,
       text = _ref.text;
   var classes = useStyles();
-  return React.createElement("span", {
+  return /*#__PURE__*/React.createElement("span", {
     className: classes.chip
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "color",
     style: {
       backgroundColor: color
     }
-  }), React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", {
     className: "text"
   }, text));
 };
@@ -51,7 +51,7 @@ var Row = function Row(_ref2) {
       mouseOver = _useState2[0],
       changeMouseOver = _useState2[1];
 
-  return React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     onClick: onClick,
     onMouseEnter: function onMouseEnter() {
       return changeMouseOver(true);
@@ -63,35 +63,35 @@ var Row = function Row(_ref2) {
       header: header,
       highlighted: highlighted
     })
-  }, React.createElement(Grid, {
+  }, /*#__PURE__*/React.createElement(Grid, {
     container: true,
     alignItems: "center"
-  }, React.createElement(Grid, {
+  }, /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 2
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       textAlign: "right",
       paddingRight: 10
     }
-  }, order)), React.createElement(Grid, {
+  }, order)), /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 5
-  }, classification), React.createElement(Grid, {
+  }, classification), /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 2
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       textAlign: "right",
       paddingRight: 6
     }
-  }, area)), React.createElement(Grid, {
+  }, area)), /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 1
-  }, trash), React.createElement(Grid, {
+  }, trash), /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 1
-  }, lock), React.createElement(Grid, {
+  }, lock), /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 1
   }, visible)));
@@ -103,48 +103,48 @@ export default (function (_ref3) {
       onChangeRegion = _ref3.onChangeRegion,
       onSelectRegion = _ref3.onSelectRegion;
   var classes = useStyles();
-  return React.createElement(SidebarBoxContainer, {
+  return /*#__PURE__*/React.createElement(SidebarBoxContainer, {
     title: "Regions",
     subTitle: "",
-    icon: React.createElement(RegionIcon, {
+    icon: /*#__PURE__*/React.createElement(RegionIcon, {
       style: {
         color: grey[700]
       }
     }),
     expandedByDefault: true
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: classes.container
-  }, React.createElement(Row, {
+  }, /*#__PURE__*/React.createElement(Row, {
     header: true,
     highlighted: false,
-    order: React.createElement(ReorderIcon, {
+    order: /*#__PURE__*/React.createElement(ReorderIcon, {
       className: "icon"
     }),
-    classification: React.createElement("div", {
+    classification: /*#__PURE__*/React.createElement("div", {
       style: {
         paddingLeft: 10
       }
     }, "Class"),
-    area: React.createElement(PieChartIcon, {
+    area: /*#__PURE__*/React.createElement(PieChartIcon, {
       className: "icon"
     }),
-    trash: React.createElement(TrashIcon, {
+    trash: /*#__PURE__*/React.createElement(TrashIcon, {
       className: "icon"
     }),
-    lock: React.createElement(LockIcon, {
+    lock: /*#__PURE__*/React.createElement(LockIcon, {
       className: "icon"
     }),
-    visible: React.createElement(VisibleIcon, {
+    visible: /*#__PURE__*/React.createElement(VisibleIcon, {
       className: "icon"
     })
-  }), React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", {
     style: {
       borderTop: "1px solid ".concat(grey[200]),
       marginTop: 2,
       marginBottom: 2
     }
   }), regions.map(function (r, i) {
-    return React.createElement(Row, {
+    return /*#__PURE__*/React.createElement(Row, {
       header: false,
       highlighted: r.highlighted,
       onClick: function onClick() {
@@ -152,25 +152,25 @@ export default (function (_ref3) {
       },
       key: r.id,
       order: "#".concat(i + 1),
-      classification: React.createElement(Chip, {
+      classification: /*#__PURE__*/React.createElement(Chip, {
         text: r.cls || "",
         color: r.color || "#ddd"
       }),
       area: "",
-      trash: React.createElement(TrashIcon, {
+      trash: /*#__PURE__*/React.createElement(TrashIcon, {
         onClick: function onClick() {
           return onDeleteRegion(r);
         },
         className: "icon2"
       }),
-      lock: r.locked ? React.createElement(LockIcon, {
+      lock: r.locked ? /*#__PURE__*/React.createElement(LockIcon, {
         onClick: function onClick() {
           return onChangeRegion(_objectSpread({}, r, {
             locked: false
           }));
         },
         className: "icon2"
-      }) : React.createElement(UnlockIcon, {
+      }) : /*#__PURE__*/React.createElement(UnlockIcon, {
         onClick: function onClick() {
           return onChangeRegion(_objectSpread({}, r, {
             locked: true
@@ -178,14 +178,14 @@ export default (function (_ref3) {
         },
         className: "icon2"
       }),
-      visible: r.visible || r.visible === undefined ? React.createElement(VisibleIcon, {
+      visible: r.visible || r.visible === undefined ? /*#__PURE__*/React.createElement(VisibleIcon, {
         onClick: function onClick() {
           return onChangeRegion(_objectSpread({}, r, {
             visible: false
           }));
         },
         className: "icon2"
-      }) : React.createElement(VisibleOffIcon, {
+      }) : /*#__PURE__*/React.createElement(VisibleOffIcon, {
         onClick: function onClick() {
           return onChangeRegion(_objectSpread({}, r, {
             visible: true

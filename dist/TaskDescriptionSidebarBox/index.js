@@ -39,17 +39,17 @@ var useStyles = makeStyles({
 export default (function (_ref) {
   var description = _ref.description;
   var classes = useStyles();
-  return React.createElement(SidebarBoxContainer, {
+  return /*#__PURE__*/React.createElement(SidebarBoxContainer, {
     title: "Task Description",
-    icon: React.createElement(DescriptionIcon, {
+    icon: /*#__PURE__*/React.createElement(DescriptionIcon, {
       style: {
         color: grey[700]
       }
     }),
     expandedByDefault: true
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: classes.markdownContainer
-  }, React.createElement(Markdown, {
+  }, /*#__PURE__*/React.createElement(Markdown, {
     source: description
   })));
 });

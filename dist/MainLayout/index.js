@@ -66,27 +66,27 @@ export default (function (_ref) {
   useEffect(function () {
     state.onImagesChange(state.images);
   }, [JSON.stringify(state.images)]);
-  return React.createElement(Fullscreen, {
+  return /*#__PURE__*/React.createElement(Fullscreen, {
     enabled: state.fullScreen,
     onChange: function onChange(open) {
       if (!open) {
         action("HEADER_BUTTON_CLICKED", "buttonName")("Exit Fullscreen");
       }
     }
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: classnames(classes.container, state.fullScreen && "Fullscreen")
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: classes.workspace
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: classes.imageCanvasContainer
-  }, !state.selectedImage ? React.createElement("div", {
+  }, !state.selectedImage ? /*#__PURE__*/React.createElement("div", {
     className: classes.noImageSelected
-  }, "No Image Selected") : React.createElement("div", {
+  }, "No Image Selected") : /*#__PURE__*/React.createElement("div", {
     style: {
       height: "100%",
       width: "100%"
     }
-  }, React.createElement(ImageCanvas, Object.assign({}, settings, (_Object$assign = {
+  }, /*#__PURE__*/React.createElement(ImageCanvas, Object.assign({}, settings, (_Object$assign = {
     key: state.selectedImage,
     showTags: state.showTags,
     allowedArea: state.allowedArea,
@@ -101,7 +101,7 @@ export default (function (_ref) {
     zoomWithPrimary: state.selectedTool === "zoom",
     zoomOutWithPrimary: state.selectedTool === "zoom-out",
     showPointDistances: state.showPointDistances
-  }, _defineProperty(_Object$assign, "pointDistancePrecision", state.pointDistancePrecision), _defineProperty(_Object$assign, "zoomHistory", state.zoomHistory), _defineProperty(_Object$assign, "changeZoomHistory", action("ZOOM_HISTORY", "region", "direction")), _defineProperty(_Object$assign, "resetZoomHistory", action("RESET_ZOOM_HISTORY")), _defineProperty(_Object$assign, "onMouseMove", action("MOUSE_MOVE")), _defineProperty(_Object$assign, "onMouseDown", action("MOUSE_DOWN")), _defineProperty(_Object$assign, "onMouseUp", action("MOUSE_UP")), _defineProperty(_Object$assign, "onChangeRegion", action("CHANGE_REGION", "region")), _defineProperty(_Object$assign, "onBeginRegionEdit", action("OPEN_REGION_EDITOR", "region")), _defineProperty(_Object$assign, "onCloseRegionEdit", action("CLOSE_REGION_EDITOR", "region")), _defineProperty(_Object$assign, "onDeleteRegion", action("DELETE_REGION", "region")), _defineProperty(_Object$assign, "onBeginCircleTransform", action("BEGIN_CIRCLE_TRANSFORM", "circle", "directions")), _defineProperty(_Object$assign, "onBeginBoxTransform", action("BEGIN_BOX_TRANSFORM", "box", "directions")), _defineProperty(_Object$assign, "onBeginMovePolygonPoint", action("BEGIN_MOVE_POLYGON_POINT", "polygon", "pointIndex")), _defineProperty(_Object$assign, "onAddPolygonPoint", action("ADD_POLYGON_POINT", "polygon", "point", "pointIndex")), _defineProperty(_Object$assign, "onSelectRegion", action("SELECT_REGION", "region")), _defineProperty(_Object$assign, "onBeginMovePoint", action("BEGIN_MOVE_POINT", "point")), _defineProperty(_Object$assign, "onImageLoaded", action("IMAGE_LOADED", "image")), _defineProperty(_Object$assign, "mat", Matrix.from(state.currentMat)), _defineProperty(_Object$assign, "changeMat", state.changeMat), _defineProperty(_Object$assign, "onIhIwChange", state.onIhIwChange), _Object$assign)))))), React.createElement(SettingsDialog, {
+  }, _defineProperty(_Object$assign, "pointDistancePrecision", state.pointDistancePrecision), _defineProperty(_Object$assign, "zoomHistory", state.zoomHistory), _defineProperty(_Object$assign, "changeZoomHistory", action("ZOOM_HISTORY", "region", "direction")), _defineProperty(_Object$assign, "resetZoomHistory", action("RESET_ZOOM_HISTORY")), _defineProperty(_Object$assign, "onMouseMove", action("MOUSE_MOVE")), _defineProperty(_Object$assign, "onMouseDown", action("MOUSE_DOWN")), _defineProperty(_Object$assign, "onMouseUp", action("MOUSE_UP")), _defineProperty(_Object$assign, "onChangeRegion", action("CHANGE_REGION", "region")), _defineProperty(_Object$assign, "onBeginRegionEdit", action("OPEN_REGION_EDITOR", "region")), _defineProperty(_Object$assign, "onCloseRegionEdit", action("CLOSE_REGION_EDITOR", "region")), _defineProperty(_Object$assign, "onDeleteRegion", action("DELETE_REGION", "region")), _defineProperty(_Object$assign, "onBeginCircleTransform", action("BEGIN_CIRCLE_TRANSFORM", "circle", "directions")), _defineProperty(_Object$assign, "onBeginBoxTransform", action("BEGIN_BOX_TRANSFORM", "box", "directions")), _defineProperty(_Object$assign, "onBeginMovePolygonPoint", action("BEGIN_MOVE_POLYGON_POINT", "polygon", "pointIndex")), _defineProperty(_Object$assign, "onAddPolygonPoint", action("ADD_POLYGON_POINT", "polygon", "point", "pointIndex")), _defineProperty(_Object$assign, "onSelectRegion", action("SELECT_REGION", "region")), _defineProperty(_Object$assign, "onBeginMovePoint", action("BEGIN_MOVE_POINT", "point")), _defineProperty(_Object$assign, "onImageLoaded", action("IMAGE_LOADED", "image")), _defineProperty(_Object$assign, "mat", Matrix.from(state.currentMat)), _defineProperty(_Object$assign, "changeMat", state.changeMat), _defineProperty(_Object$assign, "onIhIwChange", state.onIhIwChange), _defineProperty(_Object$assign, "setImageLoaded", state.setImageLoaded), _defineProperty(_Object$assign, "handleScaleChange", state.handleScaleChange), _Object$assign)))))), /*#__PURE__*/React.createElement(SettingsDialog, {
     open: state.settingsOpen,
     onClose: function onClose() {
       return dispatch({

@@ -3,13 +3,13 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import RemoveScrollOnChildren from "./";
 storiesOf("RemoveScrollOnChildren", module).add("Basic", function () {
-  return React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     style: {
       width: "100vh",
       textAlign: "center",
       height: "200vh"
     }
-  }, React.createElement(RemoveScrollOnChildren, null, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(RemoveScrollOnChildren, null, /*#__PURE__*/React.createElement("div", {
     style: {
       display: "inline-block",
       width: 100,

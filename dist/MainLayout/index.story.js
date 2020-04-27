@@ -7,7 +7,7 @@ import exampleImage from "../ImageCanvas/seves_desk.story.jpg";
 import moment from "moment";
 import MainLayout from "./";
 storiesOf("MainLayout", module).add("Basic", function () {
-  return React.createElement(MainLayout, {
+  return /*#__PURE__*/React.createElement(MainLayout, {
     state: {
       showTags: true,
       selectedImage: exampleImage,
@@ -45,7 +45,7 @@ storiesOf("MainLayout", module).add("Basic", function () {
     }
   });
 }).add("Completing a Polygon", function () {
-  return React.createElement(MainLayout, {
+  return /*#__PURE__*/React.createElement(MainLayout, {
     state: {
       showTags: false,
       selectedImage: exampleImage,
@@ -77,7 +77,7 @@ storiesOf("MainLayout", module).add("Basic", function () {
 }).add("Region Overlap Clicking", function () {
   var _ref;
 
-  return React.createElement(MainLayout, {
+  return /*#__PURE__*/React.createElement(MainLayout, {
     state: (_ref = {
       showTags: false,
       selectedImage: exampleImage,
@@ -117,7 +117,7 @@ storiesOf("MainLayout", module).add("Basic", function () {
 }).add("Point Distances", function () {
   var _ref2;
 
-  return React.createElement(MainLayout, {
+  return /*#__PURE__*/React.createElement(MainLayout, {
     state: (_ref2 = {
       showTags: false,
       showPointDistances: true,
@@ -157,7 +157,7 @@ storiesOf("MainLayout", module).add("Basic", function () {
 }).add("Point distances real units", function () {
   var _ref3;
 
-  return React.createElement(MainLayout, {
+  return /*#__PURE__*/React.createElement(MainLayout, {
     state: (_ref3 = {
       showTags: false,
       showPointDistances: true,

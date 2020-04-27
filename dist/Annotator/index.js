@@ -39,7 +39,11 @@ export default (function (_ref) {
       changeMat = _ref.changeMat,
       _ref$onIhIwChange = _ref.onIhIwChange,
       onIhIwChange = _ref$onIhIwChange === void 0 ? function () {} : _ref$onIhIwChange,
-      onExit = _ref.onExit;
+      onExit = _ref.onExit,
+      _ref$setImageLoaded = _ref.setImageLoaded,
+      setImageLoaded = _ref$setImageLoaded === void 0 ? function () {} : _ref$setImageLoaded,
+      _ref$handleScaleChang = _ref.handleScaleChange,
+      handleScaleChange = _ref$handleScaleChang === void 0 ? function () {} : _ref$handleScaleChang;
 
   var _useReducer = useReducer(reducer, {
     showTags: showTags,
@@ -62,7 +66,9 @@ export default (function (_ref) {
     changeMat: changeMat,
     onIhIwChange: onIhIwChange,
     enabledTools: enabledTools,
-    history: []
+    history: [],
+    setImageLoaded: setImageLoaded,
+    handleScaleChange: handleScaleChange
   }),
       _useReducer2 = _slicedToArray(_useReducer, 2),
       state = _useReducer2[0],
@@ -113,7 +119,7 @@ export default (function (_ref) {
     }
   };
 
-  return React.createElement(SettingsProvider, null, React.createElement(MainLayout, {
+  return /*#__PURE__*/React.createElement(SettingsProvider, null, /*#__PURE__*/React.createElement(MainLayout, {
     debug: true,
     state: state,
     dispatch: dispatch

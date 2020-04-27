@@ -25,37 +25,37 @@ export default (function (_ref) {
       _ref$isEditingLocked = _ref.isEditingLocked,
       isEditingLocked = _ref$isEditingLocked === void 0 ? false : _ref$isEditingLocked;
   var classes = useStyles();
-  return React.createElement(Paper, {
+  return /*#__PURE__*/React.createElement(Paper, {
     onClick: function onClick() {
       return !editing && !isEditingLocked ? onOpen(region) : null;
     },
     className: classnames(classes.regionInfo, {
       highlighted: region.highlighted
     })
-  }, !editing ? React.createElement("div", null, region.cls && React.createElement("div", {
+  }, !editing ? /*#__PURE__*/React.createElement("div", null, region.cls && /*#__PURE__*/React.createElement("div", {
     className: "name"
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "circle",
     style: {
       backgroundColor: region.color
     }
-  }), region.cls), region.tags && React.createElement("div", {
+  }), region.cls), region.tags && /*#__PURE__*/React.createElement("div", {
     className: "tags"
   }, region.tags.map(function (t) {
-    return React.createElement("div", {
+    return /*#__PURE__*/React.createElement("div", {
       key: t,
       className: "tag"
     }, t);
-  }))) : React.createElement("div", {
+  }))) : /*#__PURE__*/React.createElement("div", {
     style: {
       width: 200
     }
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       flexDirection: "row"
     }
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       backgroundColor: region.color,
@@ -67,11 +67,11 @@ export default (function (_ref) {
       fontWeight: "bold",
       textShadow: "0px 0px 5px rgba(0,0,0,0.4)"
     }
-  }, region.type), React.createElement("div", {
+  }, region.type), /*#__PURE__*/React.createElement("div", {
     style: {
       flexGrow: 1
     }
-  }), React.createElement(IconButton, {
+  }), /*#__PURE__*/React.createElement(IconButton, {
     onClick: function onClick() {
       return onDelete(region);
     },
@@ -82,17 +82,17 @@ export default (function (_ref) {
     },
     size: "small",
     variant: "outlined"
-  }, React.createElement(TrashIcon, {
+  }, /*#__PURE__*/React.createElement(TrashIcon, {
     style: {
       marginTop: -8,
       width: 16,
       height: 16
     }
-  }))), allowedClasses.length > 0 && React.createElement("div", {
+  }))), allowedClasses.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 6
     }
-  }, React.createElement(Select, {
+  }, /*#__PURE__*/React.createElement(Select, {
     placeholder: "Classification",
     onChange: function onChange(o) {
       return _onChange(_objectSpread({}, region, {
@@ -109,11 +109,11 @@ export default (function (_ref) {
         label: c
       };
     })
-  })), allowedTags.length > 0 && React.createElement("div", {
+  })), allowedTags.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 4
     }
-  }, React.createElement(Select, {
+  }, /*#__PURE__*/React.createElement(Select, {
     onChange: function onChange(newTags) {
       return _onChange(_objectSpread({}, region, {
         tags: newTags.map(function (t) {
@@ -135,21 +135,21 @@ export default (function (_ref) {
         label: c
       };
     })
-  })), React.createElement("div", {
+  })), /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 4,
       display: "flex"
     }
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       flexGrow: 1
     }
-  }), React.createElement(Button, {
+  }), /*#__PURE__*/React.createElement(Button, {
     onClick: function onClick() {
       return onClose(region);
     },
     size: "small",
     variant: "contained",
     color: "primary"
-  }, React.createElement(CheckIcon, null)))));
+  }, /*#__PURE__*/React.createElement(CheckIcon, null)))));
 });

@@ -1,6 +1,13 @@
 import _toConsumableArray from "@babel/runtime/helpers/esm/toConsumableArray";
 import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
 import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 import React, { Fragment, useRef, useState, useLayoutEffect } from "react";
 import { Matrix } from "transformation-matrix-js";
 import { cloneDeep } from "lodash";
@@ -72,7 +79,9 @@ export default (function (_ref) {
       onDeleteRegion = _ref.onDeleteRegion,
       mat = _ref.mat,
       changeMat = _ref.changeMat,
-      onIhIwChange = _ref.onIhIwChange;
+      onIhIwChange = _ref.onIhIwChange,
+      setImageLoaded = _ref.setImageLoaded,
+      handleScaleChange = _ref.handleScaleChange;
 
   var classes = useStyles();
   var canvasEl = useRef(null);
@@ -142,9 +151,12 @@ export default (function (_ref) {
   useLayoutEffect(function () {
     if (image.current === null) {
       image.current = new Image();
+      setImageLoaded(false);
 
       image.current.onload = function () {
         changeImageLoaded(true);
+        setImageLoaded(true);
+        handleScaleChange(100);
         onImageLoaded({
           width: image.current.naturalWidth,
           height: image.current.naturalHeight
@@ -219,16 +231,19 @@ export default (function (_ref) {
 
     context.save();
     context.globalAlpha = mat.a * 0.5 + 0.5;
-    context.lineWidth = mat.a * 0.5 + 0.5;
+    context.lineWidth = mat.a * 0.5 + 0.2;
 
     if (context.globalAlpha > 0.6) {
       context.shadowColor = "black";
       context.shadowBlur = 4;
     }
 
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
+    var _iterator = _createForOfIteratorHelper(cloneDeep(regions.filter(function (r) {
+      return r.visible || r.visible === undefined;
+    })).sort(function (a, b) {
+      return (a.zIndex || 0) - (b.zIndex || 0);
+    })),
+        _step;
 
     try {
       var _loop = function _loop() {
@@ -274,28 +289,19 @@ export default (function (_ref) {
               context.strokeStyle = region.color;
               context.beginPath();
               context.moveTo(region.points[0][0] * iw, region.points[0][1] * ih);
-              var _iteratorNormalCompletion2 = true;
-              var _didIteratorError2 = false;
-              var _iteratorError2 = undefined;
+
+              var _iterator2 = _createForOfIteratorHelper(region.points),
+                  _step2;
 
               try {
-                for (var _iterator2 = region.points[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
                   var _point = _step2.value;
                   context.lineTo(_point[0] * iw, _point[1] * ih);
                 }
               } catch (err) {
-                _didIteratorError2 = true;
-                _iteratorError2 = err;
+                _iterator2.e(err);
               } finally {
-                try {
-                  if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-                    _iterator2.return();
-                  }
-                } finally {
-                  if (_didIteratorError2) {
-                    throw _iteratorError2;
-                  }
-                }
+                _iterator2.f();
               }
 
               if (!region.open) context.closePath();
@@ -365,29 +371,19 @@ export default (function (_ref) {
               context.restore();
               break;
             }
+
+          default:
+            break;
         }
       };
 
-      for (var _iterator = cloneDeep(regions.filter(function (r) {
-        return r.visible || r.visible === undefined;
-      })).sort(function (a, b) {
-        return (a.zIndex || 0) - (b.zIndex || 0);
-      })[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
         _loop();
       }
     } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
+      _iterator.e(err);
     } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator.return != null) {
-          _iterator.return();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
+      _iterator.f();
     }
 
     context.restore();
@@ -651,7 +647,9 @@ export default (function (_ref) {
     }
   }
 
-  return (// <div>
+  return (
+    /*#__PURE__*/
+    // <div>
     // <div>
     //   <button onClick={resetPosition}>Reset Position</button>
     // </div>
@@ -664,7 +662,7 @@ export default (function (_ref) {
         overflow: "hidden",
         cursor: createWithPrimary ? "crosshair" : dragging ? "grabbing" : dragWithPrimary ? "grab" : zoomWithPrimary ? "zoom-in" : zoomOutWithPrimary ? "zoom-out" : undefined
       }
-    }, showCrosshairs && React.createElement(Crosshairs, {
+    }, showCrosshairs && /*#__PURE__*/React.createElement(Crosshairs, {
       mousePosition: mousePosition
     }), regions.filter(function (r) {
       return r.visible || r.visible === undefined;
@@ -676,7 +674,7 @@ export default (function (_ref) {
           iw = _layoutParams$current7.iw,
           ih = _layoutParams$current7.ih; // onIhIwChange(ih, iw);
 
-      return React.createElement(Fragment, null, React.createElement(PreventScrollToParents, null, React.createElement(HighlightBox, {
+      return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(PreventScrollToParents, null, /*#__PURE__*/React.createElement(HighlightBox, {
         region: r,
         mouseEvents: mouseEvents,
         dragWithPrimary: dragWithPrimary,
@@ -691,7 +689,7 @@ export default (function (_ref) {
             px = _ref6[0],
             py = _ref6[1];
 
-        return React.createElement("div", Object.assign({
+        return /*#__PURE__*/React.createElement("div", Object.assign({
           key: i,
           className: classes.transformGrabber
         }, mouseEvents, {
@@ -712,7 +710,7 @@ export default (function (_ref) {
             py = _ref8[1];
 
         var proj = mat.clone().inverse().applyToPoint(px * iw, py * ih);
-        return React.createElement("div", Object.assign({
+        return /*#__PURE__*/React.createElement("div", Object.assign({
           key: i,
           className: classes.transformGrabber
         }, mouseEvents, {
@@ -737,7 +735,7 @@ export default (function (_ref) {
             py = _ref10[1];
 
         var proj = mat.clone().inverse().applyToPoint(px * iw, py * ih);
-        return React.createElement("div", Object.assign({
+        return /*#__PURE__*/React.createElement("div", Object.assign({
           key: i
         }, mouseEvents, {
           onMouseDown: function onMouseDown(e) {
@@ -762,7 +760,7 @@ export default (function (_ref) {
         return [(p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2];
       }).map(function (pa, i) {
         var proj = mat.clone().inverse().applyToPoint(pa[0] * iw, pa[1] * ih);
-        return React.createElement("div", Object.assign({
+        return /*#__PURE__*/React.createElement("div", Object.assign({
           key: i
         }, mouseEvents, {
           onMouseDown: function onMouseDown(e) {
@@ -829,10 +827,10 @@ export default (function (_ref) {
       // }
 
       if (!region.showTags) {
-        return;
+        return "";
       }
 
-      return React.createElement("div", {
+      return /*#__PURE__*/React.createElement("div", {
         style: _objectSpread({
           position: "absolute"
         }, coords, {
@@ -852,7 +850,7 @@ export default (function (_ref) {
             mouseEvents.onMouseUp(e);
           }
         }
-      }, React.createElement("div", Object.assign({
+      }, /*#__PURE__*/React.createElement("div", Object.assign({
         style: _objectSpread({
           position: "absolute",
           left: 0
@@ -861,7 +859,7 @@ export default (function (_ref) {
         } : {
           top: 0
         })
-      }, !region.editingLabels ? mouseEvents : {}), React.createElement(RegionLabel, {
+      }, !region.editingLabels ? mouseEvents : {}), /*#__PURE__*/React.createElement(RegionLabel, {
         allowedClasses: regionClsList,
         allowedTags: regionTagList,
         onOpen: onBeginRegionEdit,
@@ -872,7 +870,7 @@ export default (function (_ref) {
         region: region,
         isEditingLocked: region.locked
       })));
-    }), zoomWithPrimary && zoomOutWithPrimary && zoomBox !== null && React.createElement("div", {
+    }), zoomWithPrimary && zoomOutWithPrimary && zoomBox !== null && /*#__PURE__*/React.createElement("div", {
       style: {
         position: "absolute",
         border: "1px solid #fff",
@@ -882,7 +880,7 @@ export default (function (_ref) {
         width: zoomBox.w,
         height: zoomBox.h
       }
-    }), showPointDistances && React.createElement("svg", {
+    }), showPointDistances && /*#__PURE__*/React.createElement("svg", {
       className: classes.pointDistanceIndicator,
       style: {
         pointerEvents: "none",
@@ -917,22 +915,22 @@ export default (function (_ref) {
           displayDistance = (Math.sqrt(Math.pow(r1.x - r2.x, 2) + Math.pow(r1.y - r2.y, 2)) * 100).toFixed(pointDistancePrecision) + "%";
         }
 
-        return React.createElement(Fragment, null, React.createElement("path", {
+        return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("path", {
           d: "M".concat(pr1.x + pr1.w / 2, ",").concat(pr1.y + pr1.h / 2, " L").concat(pr2.x + pr2.w / 2, ",").concat(pr2.y + pr2.h / 2)
-        }), React.createElement("text", {
+        }), /*#__PURE__*/React.createElement("text", {
           x: prm.x,
           y: prm.y
         }, displayDistance));
       });
-    })), React.createElement(PreventScrollToParents, Object.assign({
+    })), /*#__PURE__*/React.createElement(PreventScrollToParents, Object.assign({
       style: {
         width: "100%",
         height: "100%"
       }
-    }, mouseEvents), React.createElement("canvas", {
+    }, mouseEvents), /*#__PURE__*/React.createElement("canvas", {
       className: classes.canvas,
       ref: canvasEl
-    })), React.createElement("div", {
+    })), /*#__PURE__*/React.createElement("div", {
       className: classes.zoomIndicator
     }, (1 / mat.a * 100).toFixed(0), "%")) // </div>
 

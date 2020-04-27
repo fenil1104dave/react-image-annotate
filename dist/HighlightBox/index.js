@@ -44,7 +44,7 @@ export default (function (_ref) {
       r = _ref.region,
       pbox = _ref.pbox;
   var classes = useStyles();
-  return React.createElement("svg", Object.assign({
+  return /*#__PURE__*/React.createElement("svg", Object.assign({
     key: r.id,
     className: classnames(classes.highlightBox, {
       highlighted: r.highlighted
@@ -72,7 +72,7 @@ export default (function (_ref) {
       width: pbox.w + 10,
       height: pbox.h + 10
     })
-  }), React.createElement("path", {
+  }), /*#__PURE__*/React.createElement("path", {
     d: "M5,5 L".concat(pbox.w + 5, ",5 L").concat(pbox.w + 5, ",").concat(pbox.h + 5, " L5,").concat(pbox.h + 5, " Z")
   }));
 });

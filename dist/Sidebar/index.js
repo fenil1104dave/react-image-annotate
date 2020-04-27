@@ -24,26 +24,26 @@ export default (function (_ref) {
       onDeleteRegion = _ref.onDeleteRegion,
       _onRestoreHistory = _ref.onRestoreHistory;
   var classes = useStyles();
-  return React.createElement("div", null, debug && React.createElement(DebugBox, {
+  return /*#__PURE__*/React.createElement("div", null, debug && /*#__PURE__*/React.createElement(DebugBox, {
     state: debug,
     lastAction: debug.lastAction
-  }), React.createElement(TaskDescription, {
+  }), /*#__PURE__*/React.createElement(TaskDescription, {
     description: taskDescription
-  }), labelImages && React.createElement(TagsSidebarBox, {
+  }), labelImages && /*#__PURE__*/React.createElement(TagsSidebarBox, {
     currentImage: currentImage,
     imageClsList: imageClsList,
     imageTagList: imageTagList,
     onChangeImage: onChangeImage,
     expandedByDefault: true
-  }), React.createElement(ImageSelector, {
+  }), /*#__PURE__*/React.createElement(ImageSelector, {
     onSelect: onSelectImage,
     images: images
-  }), React.createElement(RegionSelector, {
+  }), /*#__PURE__*/React.createElement(RegionSelector, {
     regions: regions,
     onSelectRegion: onSelectRegion,
     onChangeRegion: onChangeRegion,
     onDeleteRegion: onDeleteRegion
-  }), React.createElement(History, {
+  }), /*#__PURE__*/React.createElement(History, {
     history: history,
     onRestoreHistory: function onRestoreHistory() {
       return _onRestoreHistory();

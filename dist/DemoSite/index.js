@@ -20,17 +20,17 @@ export default (function () {
       lastOutput = _useState6[0],
       changeLastOutput = _useState6[1];
 
-  return React.createElement("div", null, annotatorOpen ? React.createElement(ErrorBoundaryDialog, {
+  return /*#__PURE__*/React.createElement("div", null, annotatorOpen ? /*#__PURE__*/React.createElement(ErrorBoundaryDialog, {
     onClose: function onClose() {
       changeAnnotatorOpen(false);
     }
-  }, React.createElement(Annotator, Object.assign({}, annotatorProps, {
+  }, /*#__PURE__*/React.createElement(Annotator, Object.assign({}, annotatorProps, {
     onExit: function onExit(output) {
       delete output["lastAction"];
       changeLastOutput(output);
       changeAnnotatorOpen(false);
     }
-  }))) : React.createElement(Editor, {
+  }))) : /*#__PURE__*/React.createElement(Editor, {
     lastOutput: lastOutput,
     onOpenAnnotator: function onOpenAnnotator(props) {
       changeAnnotatorProps(props);

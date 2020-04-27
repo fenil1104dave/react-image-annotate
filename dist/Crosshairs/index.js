@@ -26,7 +26,7 @@ export default (function (_ref) {
       return clearInterval(interval);
     };
   });
-  return React.createElement(Fragment, null, React.createElement("div", {
+  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
     style: {
       position: "absolute",
       height: "100%",
@@ -36,7 +36,7 @@ export default (function (_ref) {
       pointerEvents: "none",
       top: 0
     }
-  }), React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", {
     style: {
       position: "absolute",
       width: "100%",

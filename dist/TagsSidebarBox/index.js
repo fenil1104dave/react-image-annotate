@@ -16,20 +16,20 @@ export default (function (_ref) {
       tags = _currentImage$tags === void 0 ? [] : _currentImage$tags,
       _currentImage$cls = currentImage.cls,
       cls = _currentImage$cls === void 0 ? null : _currentImage$cls;
-  return React.createElement(SidebarBoxContainer, {
+  return /*#__PURE__*/React.createElement(SidebarBoxContainer, {
     title: "Image Tags",
     expandedByDefault: true,
     noScroll: true,
-    icon: React.createElement(StyleIcon, {
+    icon: /*#__PURE__*/React.createElement(StyleIcon, {
       style: {
         color: grey[700]
       }
     })
-  }, imageClsList.length > 0 && React.createElement("div", {
+  }, imageClsList.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       padding: 8
     }
-  }, React.createElement(Select, {
+  }, /*#__PURE__*/React.createElement(Select, {
     placeholder: "Image Classification",
     onChange: function onChange(o) {
       return onChangeImage({
@@ -46,12 +46,12 @@ export default (function (_ref) {
         label: c
       };
     })
-  })), imageTagList.length > 0 && React.createElement("div", {
+  })), imageTagList.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       padding: 8,
       paddingTop: 0
     }
-  }, React.createElement(Select, {
+  }, /*#__PURE__*/React.createElement(Select, {
     isMulti: true,
     placeholder: "Image Tags",
     onChange: function onChange(o) {

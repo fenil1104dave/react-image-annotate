@@ -9,13 +9,13 @@ export default (function (_ref) {
   var region = image ? (image.regions || []).find(function (r) {
     return r.highlighted;
   }) : null;
-  return React.createElement(SidebarBoxContainer, {
+  return /*#__PURE__*/React.createElement(SidebarBoxContainer, {
     title: "Debug",
-    icon: React.createElement("span", null),
+    icon: /*#__PURE__*/React.createElement("span", null),
     expandedByDefault: true
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       padding: 4
     }
-  }, React.createElement("div", null, React.createElement("b", null, "region"), ":"), React.createElement("pre", null, JSON.stringify(region, null, "  ")), React.createElement("div", null, React.createElement("b", null, "lastAction"), ":"), React.createElement("pre", null, JSON.stringify(lastAction, null, "  ")), React.createElement("div", null, React.createElement("b", null, "mode"), ":"), React.createElement("pre", null, JSON.stringify(state.mode, null, "  "))));
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, "region"), ":"), /*#__PURE__*/React.createElement("pre", null, JSON.stringify(region, null, "  ")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, "lastAction"), ":"), /*#__PURE__*/React.createElement("pre", null, JSON.stringify(lastAction, null, "  ")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, "mode"), ":"), /*#__PURE__*/React.createElement("pre", null, JSON.stringify(state.mode, null, "  "))));
 });

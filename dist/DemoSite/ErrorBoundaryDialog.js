@@ -10,9 +10,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 
-var ErrorBoundaryDialog =
-/*#__PURE__*/
-function (_Component) {
+var ErrorBoundaryDialog = /*#__PURE__*/function (_Component) {
   _inherits(ErrorBoundaryDialog, _Component);
 
   function ErrorBoundaryDialog() {
@@ -46,10 +44,10 @@ function (_Component) {
     key: "render",
     value: function render() {
       if (this.state.hasError) {
-        return React.createElement(Dialog, {
+        return /*#__PURE__*/React.createElement(Dialog, {
           open: this.state.hasError,
           onClose: this.props.onClose
-        }, React.createElement(DialogTitle, null, "Error Loading Annotator"), React.createElement(DialogContent, null, React.createElement("pre", null, this.state.err)), React.createElement(DialogActions, null, React.createElement(Button, {
+        }, /*#__PURE__*/React.createElement(DialogTitle, null, "Error Loading Annotator"), /*#__PURE__*/React.createElement(DialogContent, null, /*#__PURE__*/React.createElement("pre", null, this.state.err)), /*#__PURE__*/React.createElement(DialogActions, null, /*#__PURE__*/React.createElement(Button, {
           onClick: this.props.onClose
         }, "Close")));
       }
