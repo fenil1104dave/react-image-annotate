@@ -371,9 +371,6 @@ export default (function (_ref) {
               context.restore();
               break;
             }
-
-          default:
-            break;
         }
       };
 
@@ -827,7 +824,7 @@ export default (function (_ref) {
       // }
 
       if (!region.showTags) {
-        return "";
+        return;
       }
 
       return /*#__PURE__*/React.createElement("div", {
