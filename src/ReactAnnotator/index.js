@@ -212,7 +212,7 @@ export default (props: any) => {
 			}}
 		>
 			<Row style={{ backgroundColor: '#02435D' }} className="p-3">
-				<AppBar />
+				<AppBar scale={parseInt(scale)} setScale={handleScaleChange} />
 			</Row>
 			<div className="d-flex" style={{ height: window.innerHeight }}>
 				<LeftSideBar onClick={handleClick} active={activeImg} data={data} />
@@ -238,16 +238,16 @@ export default (props: any) => {
 									showTags={showTags}
 									selectedImage={img} //"https://image.shutterstock.com/image-photo/beautiful-landscape-mountain-layer-morning-600w-753385105.jpg"
 									taskDescription="Draw region around the defects"
-									images={afterSawingImages}
+									// images={afterSawingImages}
 									onImagesChange={setAfterSawingImages}
 									setImageLoaded={setImage2Loaded}
-									// images={[
-									// 	{
-									// 		src: `${BACKEND_URL}${img2}`,
-									// 		name: img2,
-									// 		regions: this.state.regions,
-									// 	},
-									// ]}
+									images={[
+										{
+											src: img,
+											name: img,
+											regions: [],
+										},
+									]}
 									// images={[{ src: data.viaKey, name: name }]}
 									// regionClsList={["Man Face", "Woman Face"]}
 									// onExit={handleVIAEditor}

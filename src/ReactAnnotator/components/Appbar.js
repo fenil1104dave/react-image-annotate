@@ -9,7 +9,7 @@ import ZoomIn from '../../assets/images/reviewScreen/zoomIn.svg'
 import ZoomOut from '../../assets/images/reviewScreen/zoomOut.svg'
 import { Col, CustomInput, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
-const Appbar = () => {
+const Appbar = ({ scale, setScale }) => {
 	const [dropdownOpen, setDropdownOpen] = useState(false)
 
 	const toggle = () => setDropdownOpen((prevState) => !prevState)
@@ -21,8 +21,28 @@ const Appbar = () => {
 				<img className="px-4" src={RightArrow} alt="RightArrow" />
 				<img className="px-4" src={BookMarkIcon} alt="BookMarkIcon" />
 				<img className="px-4" src={MessageIcon} alt="MessageIcon" />
-				<img className="px-4" src={ZoomIn} alt="ZoomIn" />
-				<img className="px-4" src={ZoomOut} alt="ZoomOut" />
+				<img
+					className="px-4"
+					src={ZoomIn}
+					alt="ZoomIn"
+					style={{
+						cursor: 'pointer',
+					}}
+					onClick={() => {
+						if (scale + 25 <= 1000) setScale(scale + 25)
+					}}
+				/>
+				<img
+					className="px-4"
+					src={ZoomOut}
+					alt="ZoomOut"
+					style={{
+						cursor: 'pointer',
+					}}
+					onClick={() => {
+						if (scale - 25 >= 100) setScale(scale - 25)
+					}}
+				/>
 				<div className="d-flex px-4">
 					<span
 						style={{
@@ -33,12 +53,20 @@ const Appbar = () => {
 					>
 						-
 					</span>
-					<input type="range" />
+					<input
+						type="range"
+						value={scale}
+						min={100}
+						max={1000}
+						step={1}
+						onChange={(e) => setScale(e.target.value)}
+					/>
 					<span
 						style={{
 							color: '#D5D5D5',
 							padding: '0 0 0 2%',
 							fontSize: '15px',
+							cursor: 'pointer',
 						}}
 					>
 						+

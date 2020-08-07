@@ -75,14 +75,14 @@ export default ({ state, dispatch }: Props) => {
 				{/*  />*/}
 				{/*</div>*/}
 				<div className={classes.workspace}>
-					{/* <div className={classes.iconToolsContainer}>
-           <IconTools
-            enabledTools={state.enabledTools}
-             showTags={state.showTags}
-             selectedTool={state.selectedTool}
-              onClickTool={action("SELECT_TOOL", "selectedTool")}
-          />
-          </div> */}
+					<div className={classes.iconToolsContainer}>
+						<IconTools
+							enabledTools={state.enabledTools}
+							showTags={state.showTags}
+							selectedTool={state.selectedTool}
+							onClickTool={action('SELECT_TOOL', 'selectedTool')}
+						/>
+					</div>
 					<div className={classes.imageCanvasContainer}>
 						{!state.selectedImage ? (
 							<div className={classes.noImageSelected}>No Image Selected</div>
@@ -104,7 +104,6 @@ export default ({ state, dispatch }: Props) => {
 									zoomWithPrimary={state.selectedTool === 'zoom'}
 									zoomOutWithPrimary={state.selectedTool === 'zoom-out'}
 									showPointDistances={state.showPointDistances}
-									pointDistancePrecision={state.pointDistancePrecision}
 									zoomHistory={state.zoomHistory}
 									changeZoomHistory={action('ZOOM_HISTORY', 'region', 'direction')}
 									resetZoomHistory={action('RESET_ZOOM_HISTORY')}
