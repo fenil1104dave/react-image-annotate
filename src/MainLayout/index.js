@@ -80,14 +80,14 @@ export default ({ state, dispatch }: Props) => {
         {/*  />*/}
         {/*</div>*/}
         <div className={classes.workspace}>
-          {/*<div className={classes.iconToolsContainer}>*/}
-          {/*  <IconTools*/}
-          {/*    enabledTools={state.enabledTools}*/}
-          {/*    showTags={state.showTags}*/}
-          {/*    selectedTool={state.selectedTool}*/}
-          {/*    onClickTool={action("SELECT_TOOL", "selectedTool")}*/}
-          {/*  />*/}
-          {/*</div>*/}
+          <div className={classes.iconToolsContainer}>
+           <IconTools
+            enabledTools={state.enabledTools}
+             showTags={state.showTags}
+             selectedTool={state.selectedTool}
+              onClickTool={action("SELECT_TOOL", "selectedTool")}
+          />
+          </div>
           <div className={classes.imageCanvasContainer}>
             {!state.selectedImage ? (
               <div className={classes.noImageSelected}>No Image Selected</div>
@@ -153,25 +153,25 @@ export default ({ state, dispatch }: Props) => {
               </div>
             )}
           </div>
-          {/*<div className={classes.sidebarContainer}>*/}
-          {/*  <Sidebar*/}
-          {/*    debug={window.localStorage.$ANNOTATE_DEBUG_MODE && state}*/}
-          {/*    taskDescription={state.taskDescription}*/}
-          {/*    images={state.images}*/}
-          {/*    regions={currentImage ? currentImage.regions || [] : []}*/}
-          {/*    history={state.history}*/}
-          {/*    currentImage={currentImage}*/}
-          {/*    labelImages={state.labelImages}*/}
-          {/*    imageClsList={state.imageClsList}*/}
-          {/*    imageTagList={state.imageTagList}*/}
-          {/*    onChangeImage={action("CHANGE_IMAGE", "delta")}*/}
-          {/*    onSelectRegion={action("SELECT_REGION", "region")}*/}
-          {/*    onDeleteRegion={action("DELETE_REGION", "region")}*/}
-          {/*    onSelectImage={action("SELECT_IMAGE", "image")}*/}
-          {/*    onChangeRegion={action("CHANGE_REGION", "region")}*/}
-          {/*    onRestoreHistory={action("RESTORE_HISTORY")}*/}
-          {/*  />*/}
-          {/*</div>*/}
+          {/* <div className={classes.sidebarContainer}>
+            <Sidebar
+              debug={window.localStorage.$ANNOTATE_DEBUG_MODE && state}
+              taskDescription={state.taskDescription}
+              images={state.images}
+              regions={currentImage ? currentImage.regions || [] : []}
+              history={state.history}
+              currentImage={currentImage}
+              labelImages={state.labelImages}
+              imageClsList={state.imageClsList}
+              imageTagList={state.imageTagList}
+              onChangeImage={action("CHANGE_IMAGE", "delta")}
+              onSelectRegion={action("SELECT_REGION", "region")}
+              onDeleteRegion={action("DELETE_REGION", "region")}
+              onSelectImage={action("SELECT_IMAGE", "image")}
+              onChangeRegion={action("CHANGE_REGION", "region")}
+              onRestoreHistory={action("RESTORE_HISTORY")}
+            />
+          </div> */}
         </div>
         <SettingsDialog
           open={state.settingsOpen}

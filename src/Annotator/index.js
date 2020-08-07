@@ -60,8 +60,8 @@ export default ({
     selectedImage,
     showPointDistances,
     pointDistancePrecision,
-    selectedTool,
-    // selectedTool: "select",
+    // selectedTool,
+    selectedTool: "create-polygon",
     mode: null,
     taskDescription,
     images,
@@ -102,6 +102,7 @@ export default ({
     dispatchToReducer({type: "CHANGE_CURRENT_MAT", currentMat: currentMat})
   }, [JSON.stringify(currentMat)]);
 
+  
   const dispatch = (action: Action) => {
     if (
       action.type === "HEADER_BUTTON_CLICKED" &&

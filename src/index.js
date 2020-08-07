@@ -1,13 +1,8 @@
-// @flow
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ReactAnnotator from './ReactAnnotator'
 
-import React from "react"
-import Annotator from "./Annotator"
-import Theme from "./Theme"
-
-export default (props: any) => {
-  return (
-    <Theme>
-      <Annotator {...props} />
-    </Theme>
-  )
-}
+ReactDOM.render(
+		<ReactAnnotator />,
+	document.getElementById('root')
+)

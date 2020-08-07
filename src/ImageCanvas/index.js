@@ -107,6 +107,7 @@ export default ({
   setImageLoaded,
 	handleScaleChange
 }: Props) => {
+
   const classes = useStyles()
   const canvasEl = useRef(null)
   const image = useRef(null)
@@ -273,6 +274,7 @@ export default ({
           break
         }
         case "box": {
+          console.log('asdadasdadad')
           context.save()
 
           context.shadowColor = "black"
@@ -831,7 +833,7 @@ export default ({
           .map(region => {
             const pbox = projectRegionBox(region)
             const { iw, ih } = layoutParams.current
-            // onIhIwChange(ih, iw);
+            onIhIwChange(ih, iw);
             let margin = 8
             if (region.highlighted && region.type === "box") margin += 6
             const labelBoxHeight =
@@ -848,36 +850,36 @@ export default ({
                   top: pbox.y - margin / 2
                 }
               : { left: pbox.x, top: pbox.y + pbox.h + margin / 2 }
-            // if (region.locked) {
-            //   return (
-            //     <div
-            //       style={{
-            //         position: "absolute",
-            //         ...coords,
-            //         zIndex: 10 + (region.editingLabels ? 5 : 0)
-            //       }}
-            //     >
-            //       <Paper
-            //         style={{
-            //           position: "absolute",
-            //           left: 0,
-            //           ...(displayOnTop ? { bottom: 0 } : { top: 0 }),
-            //           zIndex: 10,
-            //           backgroundColor: "#fff",
-            //           borderRadius: 4,
-            //           padding: 2,
-            //           paddingBottom: 0,
-            //           opacity: 0.5,
-            //           pointerEvents: "none"
-            //         }}
-            //       >
-            //         <LockIcon
-            //           style={{ width: 16, height: 16, color: "#333" }}
-            //         />
-            //       </Paper>
-            //     </div>
-            //   )
-            // }
+            if (region.locked) {
+              return (
+                <div
+                  style={{
+                    position: "absolute",
+                    ...coords,
+                    zIndex: 10 + (region.editingLabels ? 5 : 0)
+                  }}
+                >
+                  <Paper
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      ...(displayOnTop ? { bottom: 0 } : { top: 0 }),
+                      zIndex: 10,
+                      backgroundColor: "#fff",
+                      borderRadius: 4,
+                      padding: 2,
+                      paddingBottom: 0,
+                      opacity: 0.5,
+                      pointerEvents: "none"
+                    }}
+                  >
+                    <LockIcon
+                      style={{ width: 16, height: 16, color: "#333" }}
+                    />
+                  </Paper>
+                </div>
+              )
+            }
             if (!region.showTags) {
               return;
             }
