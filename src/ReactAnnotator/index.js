@@ -1,19 +1,44 @@
 // @flow
 
-import React,{useEffect,useState,useCallback} from "react"
-import Annotator from "../Annotator"
-import Theme from "../Theme"
-import {defaultData} from '../Annotator/data'
+import React, { useEffect, useState, useCallback } from 'react'
+import Annotator from '../Annotator'
+import { Row } from 'reactstrap'
 import cloneDeep from 'lodash/cloneDeep'
-																			const BACKEND_URL = 'https://stm-api.sixsense.ai'
+import RightSidebar from '../ReactAnnotator/components/RightSidebar'
+import LeftSideBar from '../ReactAnnotator/components/LeftSidebar'
+import AppBar from './components/Appbar'
+import useNativeLazyLoading from '@charlietango/use-native-lazy-loading'
+import { useInView } from 'react-intersection-observer'
+import Test1 from '../assets/images/reviewScreen/testImg/test1.bmp'
+import Test2 from '../assets/images/reviewScreen/testImg/test2.bmp'
+import Test3 from '../assets/images/reviewScreen/testImg/test3.bmp'
+
+const data = [
+	{
+		img: Test1,
+		name: '84PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
+	},
+	{
+		img: Test2,
+		name: '84PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
+	},
+	{
+		img: Test3,
+		name: '84PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
+	},
+]
 
 export default (props: any) => {
-  const inferenceData = {
-	  data:[]
-  }
-  
-	const [scale, setScale] = useState(100)
+	const inferenceData = {
+		data: [],
+	}
 
+	const [scale, setScale] = useState(100)
+	const [activeImg, setActiveImg] = useState(1)
+
+	const handleClick = useCallback((index) => {
+		setActiveImg(index)
+	}, [])
 	const [currentMat, setMat] = useState({ a: 1, b: 0, c: 0, d: 1, e: -10, f: -10 })
 	const [ih, changeIh] = useState(0)
 	const [iw, changeIw] = useState(0)
@@ -66,8 +91,8 @@ export default (props: any) => {
 			regions.push(region)
 		}
 		return regions
-  }, [inferenceData])
-  
+	}, [inferenceData])
+
 	const [afterSawingImages, setAfterSawingImages] = useState([])
 
 	// useEffect(() => {
@@ -152,38 +177,91 @@ export default (props: any) => {
 			newMat.f = vertical_move_limit
 		}
 		changeMat(newMat)
-  }
-  const [image2Loaded, setImage2Loaded] = useState(false)
+	}
+	const [image2Loaded, setImage2Loaded] = useState(false)
 	const onIhIwChange = (ih, iw) => {
 		changeIh(ih)
 		changeIw(iw)
-  }
-  
-  const img2 = 'https://image.shutterstock.com/image-photo/beautiful-landscape-mountain-layer-morning-600w-753385105.jpg'
-  return (
-    <Theme>
-      <Annotator {...props} selectedTool="pan"
-				showTags={showTags}
-				selectedImage={img2} //"https://image.shutterstock.com/image-photo/beautiful-landscape-mountain-layer-morning-600w-753385105.jpg"
-				taskDescription="Draw region around the defects"
-				images={afterSawingImages}
-				onImagesChange={setAfterSawingImages}
-				setImageLoaded={setImage2Loaded}
-				// images={[
-				// 	{
-				// 		src: `${BACKEND_URL}${img2}`,
-				// 		name: img2,
-				// 		regions: this.state.regions,
-				// 	},
-				// ]}
-				// images={[{ src: data.viaKey, name: name }]}
-				// regionClsList={["Man Face", "Woman Face"]}
-				// onExit={handleVIAEditor}
-				currentMat={currentMat}
-				changeMat={changeMat}
-				handleScaleChange={handleScaleChange} />
-    </Theme>
-  )
+	}
+
+	const supportsLazyLoading = useNativeLazyLoading()
+	const [ref, inView] = useInView({
+		triggerOnce: true,
+		rootMargin: '200px 0px',
+	})
+	useEffect(() => {
+		const parentEle = document.getElementById('ImageDisplay')
+		const ele = document.getElementById(activeImg)
+		parentEle.scrollTo({
+			top: ele.offsetTop,
+			behavior: 'smooth',
+		})
+	})
+
+	const handleScroll = (event) => {
+		const parentEle = document.getElementById('ImageDisplay')
+		const activeImg = Math.ceil(
+			(event.target.scrollTop + window.innerHeight / 2) / (parentEle.scrollHeight / data.length)
+		)
+	}
+	return (
+		<div
+			className="m-0 p-0"
+			style={{
+				overflow: 'hidden',
+			}}
+		>
+			<Row style={{ backgroundColor: '#02435D' }} className="p-3">
+				<AppBar />
+			</Row>
+			<div className="d-flex" style={{ height: window.innerHeight }}>
+				<LeftSideBar onClick={handleClick} active={activeImg} data={data} />
+				<div
+					ref={!supportsLazyLoading ? ref : undefined}
+					//data-inview={inView}
+					onScroll={handleScroll}
+					id="ImageDisplay"
+					style={{
+						backgroundColor: '#E5E5E5',
+						overflow: 'scroll',
+					}}
+				>
+					{data.map(({ img, name }, index) => (
+						<div key={index} className="m-3" id={index + 1}>
+							<div className="px-3 py-2" style={{ color: '#02435D', opacity: 0.5 }}>
+								{name}
+							</div>
+							{inView || supportsLazyLoading ? (
+								<Annotator
+									{...props}
+									selectedTool="pan"
+									showTags={showTags}
+									selectedImage={img} //"https://image.shutterstock.com/image-photo/beautiful-landscape-mountain-layer-morning-600w-753385105.jpg"
+									taskDescription="Draw region around the defects"
+									images={afterSawingImages}
+									onImagesChange={setAfterSawingImages}
+									setImageLoaded={setImage2Loaded}
+									// images={[
+									// 	{
+									// 		src: `${BACKEND_URL}${img2}`,
+									// 		name: img2,
+									// 		regions: this.state.regions,
+									// 	},
+									// ]}
+									// images={[{ src: data.viaKey, name: name }]}
+									// regionClsList={["Man Face", "Woman Face"]}
+									// onExit={handleVIAEditor}
+									currentMat={currentMat}
+									changeMat={changeMat}
+									handleScaleChange={handleScaleChange}
+								/>
+							) : null}
+						</div>
+					))}
+				</div>
+
+				<RightSidebar />
+			</div>
+		</div>
+	)
 }
-
-

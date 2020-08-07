@@ -1,0 +1,16 @@
+{
+	"printWidth": 120,
+	"semi": false,
+	"singleQuote": true,
+	"trailingComma": "es5",
+	"jsxBracketSameLine": false,
+	"useTabs": true,
+	"overrides": [
+		{
+			"files": "*.{js,jsx}",
+			"options": {
+				"tabWidth": 4
+			}
+		}
+	]
+}
