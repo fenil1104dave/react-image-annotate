@@ -153,7 +153,14 @@ export default ({
 				}}
 			>
 				<Row style={{ backgroundColor: '#02435D' }} className="p-3">
-					<AppBar scale={parseInt(scale)} setScale={handleScaleChange} />
+					<AppBar
+						enabledTools={state.enabledTools}
+						showTags={state.showTags}
+						selectedTool={state.selectedTool}
+						onClickTool={action('SELECT_TOOL', 'selectedTool')}
+						scale={parseInt(scale)}
+						setScale={handleScaleChange}
+					/>
 				</Row>
 				<div className="d-flex" style={{ height: window.innerHeight }}>
 					<LeftSideBar

@@ -76,12 +76,12 @@ export default ({ state, dispatch }: Props) => {
 				{/*</div>*/}
 				<div className={classes.workspace}>
 					<div className={classes.iconToolsContainer}>
-						<IconTools
+						{/* <IconTools
 							enabledTools={state.enabledTools}
 							showTags={state.showTags}
 							selectedTool={state.selectedTool}
 							onClickTool={action('SELECT_TOOL', 'selectedTool')}
-						/>
+						/> */}
 					</div>
 					<div className={classes.imageCanvasContainer}>
 						{!state.selectedImage ? (

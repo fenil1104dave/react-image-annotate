@@ -7,16 +7,29 @@ import CloseIcon from '../../assets/images/reviewScreen/close.svg'
 import RectangleIcon from '../../assets/images/reviewScreen/rectangle.svg'
 import ZoomIn from '../../assets/images/reviewScreen/zoomIn.svg'
 import ZoomOut from '../../assets/images/reviewScreen/zoomOut.svg'
+//import IconTools from '../IconTools'
+//import { SelectedTool } from '../SmallToolButton'
 import { Col, CustomInput, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
-const Appbar = ({ scale, setScale }) => {
+const Appbar = ({ scale, setScale, showTags, selectedTool, onClickTool, enabledTools = ['create-box'] }) => {
 	const [dropdownOpen, setDropdownOpen] = useState(false)
 
 	const toggle = () => setDropdownOpen((prevState) => !prevState)
 	return (
 		<>
+			{/* <SelectedTool.Provider value={{ enabledTools, selectedTool, onClickTool }}> */}
 			<Col className="d-flex" lg={11}>
-				<img className="pr-4" src={RectangleIcon} alt="RectangleIcon" />{' '}
+				<img
+					className="pr-4"
+					onClick={() => onClickTool('create-box')}
+					disabled={false}
+					aria-label="Add Bounding Box"
+					src={RectangleIcon}
+					alt="RectangleIcon"
+					style={{
+						cursor: 'pointer',
+					}}
+				/>{' '}
 				<img className="px-4" src={LeftArrow} alt="LeftArrow" />
 				<img className="px-4" src={RightArrow} alt="RightArrow" />
 				<img className="px-4" src={BookMarkIcon} alt="BookMarkIcon" />
@@ -124,6 +137,7 @@ const Appbar = ({ scale, setScale }) => {
 			<Col>
 				<img className="pl-5" src={CloseIcon} alt="CloseIcon" />
 			</Col>
+			{/* </SelectedTool.Provider> */}
 		</>
 	)
 }
