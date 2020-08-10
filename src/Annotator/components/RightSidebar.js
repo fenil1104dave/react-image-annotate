@@ -11,7 +11,7 @@ const RightSidebar = () => {
 
 	const toggle = () => setDropdownOpen((prevState) => !prevState)
 	return (
-		<Col style={{ backgroundColor: '#FFFFFF' }}>
+		<div style={{ backgroundColor: '#FFFFFF', width: '33%' }}>
 			<div className="clearfix">
 				<Button
 					className="mx-1 my-4"
@@ -79,7 +79,7 @@ const RightSidebar = () => {
 			<AIPredictedTags />
 			<GroundTruth />
 			<Metadata />
-		</Col>
+		</div>
 	)
 }
 

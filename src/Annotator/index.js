@@ -1,18 +1,17 @@
 // @flow
 
-import React, { useReducer, useEffect } from 'react'
+import React, { useReducer, useEffect, useState } from 'react'
 import MainLayout from '../MainLayout'
 import type { ToolEnum, Image, Mode, MainLayoutState, Action } from '../MainLayout/types'
 import SettingsProvider from '../SettingsProvider'
 import RightSidebar from './components/RightSidebar'
 import LeftSideBar from './components/LeftSidebar'
 import AppBar from './components/Appbar'
-import useNativeLazyLoading from '@charlietango/use-native-lazy-loading'
-import { useInView } from 'react-intersection-observer'
 import reducer from './reducer'
 import { Matrix } from 'transformation-matrix-js'
 import { Row } from 'reactstrap'
-import IconTools from '../IconTools'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, FormGroup, Label, Input } from 'reactstrap'
+import DropDownIcon from '../assets/images/reviewScreen/dropdown.svg'
 
 type Props = {
 	taskDescription: string,
@@ -147,6 +146,8 @@ export default ({
 					}: any)
 			  )
 			: dispatch({ type, ...args[0] })
+	const [dropdownOpen, setDropdownOpen] = useState(false)
+	const toggle = () => setDropdownOpen((prevState) => !prevState)
 
 	return (
 		<SettingsProvider>
@@ -178,9 +179,44 @@ export default ({
 						id="ImageDisplay"
 						style={{
 							backgroundColor: '#E5E5E5',
-							overflow: 'scroll',
+							overflowY: 'scroll',
+							width: '800px',
 						}}
 					>
+						<div
+							className="px-3 py-2 d-flex"
+							//  style={{ color: '#02435D', opacity: 0.5 }}
+						>
+							{/* {currentImage.name} */}
+							<Dropdown className="mx-3" isOpen={dropdownOpen} toggle={toggle}>
+								<DropdownToggle
+									style={{
+										width: '100%',
+										textAlign: 'left',
+										backgroundColor: '#F0F4F6',
+										color: '#02435D',
+									}}
+								>
+									<div className="d-flex justify-content-between">
+										<span className="mr-3">Select Record Level Tags</span>
+										<img src={DropDownIcon} alt="icon" />
+									</div>
+								</DropdownToggle>
+								<DropdownMenu>
+									<DropdownItem header>Nothing Added yet</DropdownItem>
+								</DropdownMenu>
+							</Dropdown>
+							<FormGroup className="mx-3" check>
+								<Label check>
+									<Input type="checkbox" name="check1" /> Not Sure
+								</Label>
+							</FormGroup>
+							<FormGroup className="mx-3" check>
+								<Label check>
+									<Input type="checkbox" name="check1" /> No Defect
+								</Label>
+							</FormGroup>
+						</div>
 						{state.images.map((img, index) => (
 							<MainLayout debug state={state} dispatch={dispatch} img={img} index={index} />
 						))}

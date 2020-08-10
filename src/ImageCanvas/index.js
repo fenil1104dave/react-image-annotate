@@ -584,7 +584,7 @@ export default ({
 			style={{
 				width: '100%',
 				height: '100%',
-				maxHeight: 'calc(100vh - 68px)',
+				maxHeight: 'calc(100vh - 20px)',
 				position: 'relative',
 				overflow: 'hidden',
 				cursor: createWithPrimary

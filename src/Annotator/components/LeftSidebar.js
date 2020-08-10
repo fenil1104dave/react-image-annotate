@@ -9,7 +9,7 @@ const LeftSideBar = ({ data, onClick, active }) => {
 			style={{
 				width: '120px',
 				backgroundColor: '#FFFFFF',
-				overflow: 'scroll',
+				overflowY: 'scroll',
 			}}
 		>
 			<div className="p-3">
