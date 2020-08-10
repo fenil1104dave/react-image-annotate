@@ -10,15 +10,15 @@ import Test3 from '../assets/images/reviewScreen/testImg/test3.bmp'
 const data = [
 	{
 		src: Test1,
-		name: '84PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
+		name: '184PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
 	},
 	{
 		src: Test2,
-		name: '84PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
+		name: '284PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
 	},
 	{
 		src: Test3,
-		name: '84PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
+		name: '384PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
 	},
 ]
 
@@ -179,14 +179,14 @@ export default (props: any) => {
 		changeIw(iw)
 	}
 
-	useEffect(() => {
-		const parentEle = document.getElementById('ImageDisplay')
-		const ele = document.getElementById(activeImg)
-		parentEle.scrollTo({
-			top: ele.offsetTop,
-			behavior: 'smooth',
-		})
-	})
+	// useEffect(() => {
+	// 	const parentEle = document.getElementById('ImageDisplay')
+	// 	const ele = document.getElementById(activeImg)
+	// 	parentEle.scrollTo({
+	// 		top: ele.offsetTop,
+	// 		behavior: 'smooth',
+	// 	})
+	// })
 
 	return (
 		<Annotator

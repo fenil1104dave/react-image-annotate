@@ -104,12 +104,6 @@ export default ({
 		dispatchToReducer({ type: 'CHANGE_CURRENT_MAT', currentMat: currentMat })
 	}, [JSON.stringify(currentMat)])
 
-	const supportsLazyLoading = useNativeLazyLoading()
-	const [ref, inView] = useInView({
-		triggerOnce: true,
-		rootMargin: '200px 0px',
-	})
-
 	const handleScroll = (event) => {
 		const parentEle = document.getElementById('ImageDisplay')
 		const activeImg = Math.ceil(
@@ -170,8 +164,6 @@ export default ({
 						data={images}
 					/>
 					<div
-						ref={!supportsLazyLoading ? ref : undefined}
-						//data-inview={inView}
 						onScroll={handleScroll}
 						id="ImageDisplay"
 						style={{
@@ -179,18 +171,10 @@ export default ({
 							overflow: 'scroll',
 						}}
 					>
-						{images.map(({ img, name }, index) => (
-							<div key={index} className="m-3" id={index}>
-								<div className="px-3 py-2" style={{ color: '#02435D', opacity: 0.5 }}>
-									{name}
-								</div>
-								{inView || supportsLazyLoading ? (
-									<MainLayout debug state={state} dispatch={dispatch} />
-								) : null}
-							</div>
+						{state.images.map((img, index) => (
+							<MainLayout debug state={state} dispatch={dispatch} img={img} index={index} />
 						))}
 					</div>
-
 					<RightSidebar />
 				</div>
 			</div>
