@@ -4,8 +4,8 @@ import React, { useReducer, useEffect } from 'react'
 import MainLayout from '../MainLayout'
 import type { ToolEnum, Image, Mode, MainLayoutState, Action } from '../MainLayout/types'
 import SettingsProvider from '../SettingsProvider'
-import RightSidebar from '../ReactAnnotator/components/RightSidebar'
-import LeftSideBar from '../ReactAnnotator/components/LeftSidebar'
+import RightSidebar from './components/RightSidebar'
+import LeftSideBar from './components/LeftSidebar'
 import AppBar from './components/Appbar'
 import useNativeLazyLoading from '@charlietango/use-native-lazy-loading'
 import { useInView } from 'react-intersection-observer'
@@ -55,6 +55,7 @@ export default ({
 	handleScaleChange = () => {},
 	scale,
 	handleClick,
+	activeImg,
 }: Props) => {
 	const [state, dispatchToReducer] = useReducer(reducer, {
 		showTags,
@@ -103,6 +104,15 @@ export default ({
 	useEffect(() => {
 		dispatchToReducer({ type: 'CHANGE_CURRENT_MAT', currentMat: currentMat })
 	}, [JSON.stringify(currentMat)])
+
+	useEffect(() => {
+		const parentEle = document.getElementById('ImageDisplay')
+		const ele = document.getElementById(activeImg)
+		parentEle.scrollTo({
+			top: ele.offsetTop - 60,
+			behavior: 'smooth',
+		})
+	})
 
 	const handleScroll = (event) => {
 		const parentEle = document.getElementById('ImageDisplay')

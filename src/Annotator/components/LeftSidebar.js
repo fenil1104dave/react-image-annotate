@@ -16,13 +16,7 @@ const LeftSideBar = ({ data, onClick, active }) => {
 				<Input placeholder="search" />
 			</div>
 			{data.map((e, index) => (
-				<ThumbnailCard
-					active={index + 1 === active}
-					onClick={onClick}
-					key={index}
-					index={index + 1}
-					img={e.img}
-				/>
+				<ThumbnailCard active={index === active} onClick={onClick} key={index} index={index} img={e.src} />
 			))}
 		</div>
 	)

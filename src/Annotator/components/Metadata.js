@@ -26,6 +26,18 @@ const Metadata = () => {
 						color: '#9F9F9F',
 					}}
 				>
+					Image Record Name
+				</Col>
+				<Col style={{ fontWeight: 500, color: '#434343' }}>
+					84PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp
+				</Col>
+			</Row>
+			<Row className="my-2">
+				<Col
+					style={{
+						color: '#9F9F9F',
+					}}
+				>
 					Folder
 				</Col>
 				<Col style={{ fontWeight: 500, color: '#434343' }}>B-001</Col>
@@ -59,6 +71,29 @@ const Metadata = () => {
 					Row & Column
 				</Col>
 				<Col style={{ fontWeight: 500, color: '#434343' }}>R003C001 </Col>
+			</Row>
+			<Row className="my-2">
+				<Col
+					style={{
+						color: '#9F9F9F',
+					}}
+				>
+					Machine ID
+				</Col>
+				<Col style={{ fontWeight: 500, color: '#434343' }}>KLA345</Col>
+			</Row>
+			<Row className="my-2">
+				<Col
+					style={{
+						color: '#9F9F9F',
+					}}
+				>
+					Processing Time
+				</Col>
+				<Col style={{ fontWeight: 500, color: '#434343' }}>1/20/2020 19:49:28</Col>
+			</Row>
+			<Row className="my-2 px-3">
+				<Col style={{ fontWeight: 500, color: '#434343', textAlign: 'right' }}>Show More</Col>
 			</Row>
 		</div>
 	)

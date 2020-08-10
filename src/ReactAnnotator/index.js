@@ -28,7 +28,7 @@ export default (props: any) => {
 	}
 
 	const [scale, setScale] = useState(100)
-	const [activeImg, setActiveImg] = useState(1)
+	const [activeImg, setActiveImg] = useState(0)
 
 	const handleClick = useCallback((index) => {
 		setActiveImg(index)
