@@ -23,6 +23,8 @@ export default ({
 	togglable?: boolean,
 }) => {
 	const { enabledTools, selectedTool, onClickTool } = useContext(SelectedTool)
+	console.log('selectedTool', selectedTool)
+	console.log('enabledTools', enabledTools)
 	if (!enabledTools.includes(id) && !alwaysShowing) return null
 	selected = selected || selectedTool === id
 	return (
