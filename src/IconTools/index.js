@@ -40,7 +40,12 @@ type Props = {
 	onClickTool: (string) => any,
 }
 
-export default ({ showTags, selectedTool, onClickTool, enabledTools = ['create-box'] }: Props) => {
+export default ({
+	showTags,
+	selectedTool,
+	onClickTool,
+	enabledTools = ['select', 'create-point', 'create-box', 'create-polygon', 'create-circle'],
+}: Props) => {
 	const classes = useStyles()
 	return (
 		<div className={classes.iconTools}>

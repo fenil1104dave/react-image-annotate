@@ -2,23 +2,29 @@
 
 import React, { useEffect, useState, useCallback } from 'react'
 import Annotator from '../Annotator'
+import { Row } from 'reactstrap'
 import cloneDeep from 'lodash/cloneDeep'
+import RightSidebar from '../ReactAnnotator/components/RightSidebar'
+import LeftSideBar from '../ReactAnnotator/components/LeftSidebar'
+import AppBar from './components/Appbar'
 import Test1 from '../assets/images/reviewScreen/testImg/test1.bmp'
 import Test2 from '../assets/images/reviewScreen/testImg/test2.bmp'
 import Test3 from '../assets/images/reviewScreen/testImg/test3.bmp'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, FormGroup, Label, Input } from 'reactstrap'
+import DropDownIcon from '../assets/images/reviewScreen/dropdown.svg'
 
 const data = [
 	{
 		src: Test1,
-		name: '184PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
+		name: '84PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
 	},
 	{
 		src: Test2,
-		name: '284PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
+		name: '84PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
 	},
 	{
 		src: Test3,
-		name: '384PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
+		name: '84PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
 	},
 ]
 
@@ -28,7 +34,7 @@ export default (props: any) => {
 	}
 
 	const [scale, setScale] = useState(100)
-	const [activeImg, setActiveImg] = useState(0)
+	const [activeImg, setActiveImg] = useState(1)
 
 	const handleClick = useCallback((index) => {
 		setActiveImg(index)
@@ -173,40 +179,94 @@ export default (props: any) => {
 		}
 		changeMat(newMat)
 	}
-	const [image2Loaded, setImage2Loaded] = useState(false)
 	const onIhIwChange = (ih, iw) => {
 		changeIh(ih)
 		changeIw(iw)
 	}
 
-	// useEffect(() => {
-	// 	const parentEle = document.getElementById('ImageDisplay')
-	// 	const ele = document.getElementById(activeImg)
-	// 	parentEle.scrollTo({
-	// 		top: ele.offsetTop,
-	// 		behavior: 'smooth',
-	// 	})
-	// })
+	const [selectedTool, setSelectedTool] = useState('pan')
+	const handleToolChange = (tool) => {
+		setSelectedTool(tool)
+	}
+
+	const [dropdownOpen, setDropdownOpen] = useState(false)
+	const toggle = () => setDropdownOpen((prevState) => !prevState)
 
 	return (
-		<Annotator
-			{...props}
-			selectedTool="pan"
-			activeImg={activeImg}
-			showTags={showTags}
-			taskDescription="Draw region around the defects"
-			// images={afterSawingImages}
-			onImagesChange={setAfterSawingImages}
-			setImageLoaded={setImage2Loaded}
-			// images={[{ src: data.viaKey, name: name }]}
-			// regionClsList={["Man Face", "Woman Face"]}
-			// onExit={handleVIAEditor}
-			currentMat={currentMat}
-			changeMat={changeMat}
-			handleScaleChange={handleScaleChange}
-			scale={scale}
-			handleClick={handleClick}
-			images={data}
-		/>
+		<div
+			className="m-0 p-0"
+			style={{
+				overflow: 'hidden',
+			}}
+		>
+			<Row style={{ backgroundColor: '#02435D' }} className="p-3">
+				<AppBar
+					showTags={showTags}
+					onClickTool={handleToolChange}
+					scale={parseInt(scale)}
+					setScale={handleScaleChange}
+				/>
+			</Row>
+			<div className="d-flex">
+				<LeftSideBar onClick={handleClick} active={activeImg} data={data} />
+				<div
+					id="ImageDisplay"
+					style={{
+						backgroundColor: '#E5E5E5',
+						width: '800px',
+					}}
+				>
+					<div className="m-3">
+						<div
+							className="px-3 py-2 d-flex"
+							//  style={{ color: '#02435D', opacity: 0.5 }}
+						>
+							{/* {currentImage.name} */}
+							<Dropdown className="mx-3" isOpen={dropdownOpen} toggle={toggle}>
+								<DropdownToggle
+									style={{
+										width: '100%',
+										textAlign: 'left',
+										backgroundColor: '#F0F4F6',
+										color: '#02435D',
+									}}
+								>
+									<div className="d-flex justify-content-between">
+										<span className="mr-3">Select Record Level Tags</span>
+										<img src={DropDownIcon} alt="icon" />
+									</div>
+								</DropdownToggle>
+								<DropdownMenu>
+									<DropdownItem header>Nothing Added yet</DropdownItem>
+								</DropdownMenu>
+							</Dropdown>
+							<FormGroup className="mx-3" check>
+								<Label check>
+									<Input type="checkbox" name="check1" /> Not Sure
+								</Label>
+							</FormGroup>
+							<FormGroup className="mx-3" check>
+								<Label check>
+									<Input type="checkbox" name="check1" /> No Defect
+								</Label>
+							</FormGroup>
+						</div>
+						<Annotator
+							{...props}
+							selectedTool={selectedTool}
+							showTags={showTags}
+							taskDescription="Draw region around the defects"
+							onImagesChange={setAfterSawingImages}
+							images={data}
+							selectedImage={data[activeImg].src}
+							currentMat={currentMat}
+							changeMat={changeMat}
+							handleScaleChange={handleScaleChange}
+						/>
+					</div>
+				</div>
+				<RightSidebar />
+			</div>
+		</div>
 	)
 }

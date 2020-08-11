@@ -1,4 +1,4 @@
-/* eslint-disable default-case */
+/* eslint-disable no-unused-vars */
 // @flow
 import React, { Fragment, useRef, useState, useLayoutEffect } from 'react'
 import { Matrix } from 'transformation-matrix-js'
@@ -100,7 +100,6 @@ export default ({
 	onIhIwChange,
 	setImageLoaded,
 	handleScaleChange,
-	inView,
 }: Props) => {
 	const classes = useStyles()
 	const canvasEl = useRef(null)
@@ -171,7 +170,10 @@ export default ({
 		context.save()
 		context.transform(...mat.clone().inverse().toArray())
 
-		const fitScale = Math.max(image.current.naturalWidth / clientWidth, image.current.naturalHeight / clientHeight)
+		const fitScale = Math.max(
+			image.current.naturalWidth / (clientWidth - 20),
+			image.current.naturalHeight / (clientHeight - 20)
+		)
 
 		const [iw, ih] = [image.current.naturalWidth / fitScale, image.current.naturalHeight / fitScale]
 		onIhIwChange(ih, iw)
@@ -184,7 +186,7 @@ export default ({
 			canvasHeight: clientHeight,
 		}
 
-		// context.drawImage(image.current, clientWidth / 2 - iw / 2, clientHeight / 2 - ih / 2, iw, ih)
+		// context.drawImage(image.current, clientWidth/2 - iw/2, clientHeight/2 - ih/2, iw, ih)
 		context.drawImage(image.current, 0, 0, iw, ih)
 
 		if (allowedArea) {
@@ -584,7 +586,7 @@ export default ({
 			style={{
 				width: '100%',
 				height: '100%',
-				maxHeight: 'calc(100vh - 20px)',
+				maxHeight: 'calc(100vh - 68px)',
 				position: 'relative',
 				overflow: 'hidden',
 				cursor: createWithPrimary

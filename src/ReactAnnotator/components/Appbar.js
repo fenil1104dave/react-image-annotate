@@ -7,20 +7,17 @@ import CloseIcon from '../../assets/images/reviewScreen/close.svg'
 import RectangleIcon from '../../assets/images/reviewScreen/rectangle.svg'
 import ZoomIn from '../../assets/images/reviewScreen/zoomIn.svg'
 import ZoomOut from '../../assets/images/reviewScreen/zoomOut.svg'
-import IconTools from '../IconTools'
-//import { SelectedTool } from '../SmallToolButton'
 import { Col, CustomInput, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
-const Appbar = ({ scale, setScale, showTags, selectedTool, onClickTool, enabledTools = ['create-box'] }) => {
+const Appbar = ({ scale, setScale, onClickTool }) => {
 	const [dropdownOpen, setDropdownOpen] = useState(false)
 
 	const toggle = () => setDropdownOpen((prevState) => !prevState)
 	return (
 		<>
-			{/* <SelectedTool.Provider value={{ enabledTools, selectedTool, onClickTool }}> */}
 			<Col className="d-flex" lg={11}>
 				<img
-					className="pr-4"
+					className="pr-3"
 					onClick={() => onClickTool('create-box')}
 					disabled={false}
 					aria-label="Add Bounding Box"
@@ -30,33 +27,39 @@ const Appbar = ({ scale, setScale, showTags, selectedTool, onClickTool, enabledT
 						cursor: 'pointer',
 					}}
 				/>{' '}
-				<img className="px-4" src={LeftArrow} alt="LeftArrow" />
-				<img className="px-4" src={RightArrow} alt="RightArrow" />
-				<img className="px-4" src={BookMarkIcon} alt="BookMarkIcon" />
-				<img className="px-4" src={MessageIcon} alt="MessageIcon" />
+				<img className="px-3" src={LeftArrow} alt="LeftArrow" />
+				<img className="px-3" src={RightArrow} alt="RightArrow" />
+				<img className="px-3" src={BookMarkIcon} alt="BookMarkIcon" />
+				<img className="px-3" src={MessageIcon} alt="MessageIcon" />
 				<img
-					className="px-4"
-					src={ZoomIn}
-					alt="ZoomIn"
-					style={{
-						cursor: 'pointer',
-					}}
-					onClick={() => {
-						if (scale + 25 <= 1000) setScale(scale + 25)
-					}}
-				/>
-				<img
-					className="px-4"
+					className="px-3"
 					src={ZoomOut}
 					alt="ZoomOut"
 					style={{
 						cursor: 'pointer',
 					}}
-					onClick={() => {
-						if (scale - 25 >= 100) setScale(scale - 25)
-					}}
+					onClick={() => onClickTool('zoom-out')}
+					disabled={false}
+					aria-label="Zoom Out"
+					// onClick={() => {
+					// 	if (scale - 25 >= 100) setScale(scale - 25)
+					// }}
 				/>
-				<div className="d-flex px-4">
+				<img
+					className="px-3"
+					src={ZoomIn}
+					alt="ZoomIn"
+					style={{
+						cursor: 'pointer',
+					}}
+					onClick={() => onClickTool('zoom')}
+					disabled={false}
+					aria-label="Zoom In"
+					// onClick={() => {
+					// 	if (scale + 25 <= 1000) setScale(scale + 25)
+					// }}
+				/>
+				<div className="d-flex px-3">
 					<span
 						style={{
 							color: '#D5D5D5',
@@ -86,7 +89,7 @@ const Appbar = ({ scale, setScale, showTags, selectedTool, onClickTool, enabledT
 					</span>
 				</div>
 				<div
-					className="px-4"
+					className="px-3"
 					style={{
 						color: '#FFFFFF',
 					}}
@@ -99,7 +102,7 @@ const Appbar = ({ scale, setScale, showTags, selectedTool, onClickTool, enabledT
 					/>
 				</div>
 				<div
-					className="px-4"
+					className="px-3"
 					style={{
 						color: '#FFFFFF',
 					}}
@@ -107,14 +110,14 @@ const Appbar = ({ scale, setScale, showTags, selectedTool, onClickTool, enabledT
 					<CustomInput type="switch" id="exampleCustomSwitch" name="customSwitch" label="Scan Mode" />
 				</div>
 				<div
-					className="px-4"
+					className="px-3"
 					style={{
 						color: '#FFFFFF',
 					}}
 				>
 					<CustomInput type="switch" id="exampleCustomSwitch" name="customSwitch" label="Show Regions" />
 				</div>
-				<div className="px-4">
+				<div className="px-3">
 					<Dropdown isOpen={dropdownOpen} toggle={toggle}>
 						<DropdownToggle
 							style={{
@@ -137,7 +140,6 @@ const Appbar = ({ scale, setScale, showTags, selectedTool, onClickTool, enabledT
 			<Col>
 				<img className="pl-5" src={CloseIcon} alt="CloseIcon" />
 			</Col>
-			{/* </SelectedTool.Provider> */}
 		</>
 	)
 }
