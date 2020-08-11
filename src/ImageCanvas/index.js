@@ -850,9 +850,9 @@ export default ({
 								</div>
 							)
 						}
-						if (!region.showTags) {
-							return
-						}
+						// if (!region.showTags) {
+						// 	return
+						// }
 						return (
 							<div
 								style={{

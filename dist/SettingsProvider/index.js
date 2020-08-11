@@ -1,7 +1,7 @@
 import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
 import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
 import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react';
 var defaultSettings = {
   showCrosshairs: false
 };
@@ -14,9 +14,9 @@ var pullSettingsFromLocalStorage = function pullSettingsFromLocalStorage() {
   for (var i = 0; i < window.localStorage.length; i++) {
     var key = window.localStorage.key(i);
 
-    if (key.startsWith("settings_")) {
+    if (key.startsWith('settings_')) {
       try {
-        settings[key.replace("settings_", "")] = JSON.parse(window.localStorage.getItem(key));
+        settings[key.replace('settings_', '')] = JSON.parse(window.localStorage.getItem(key));
       } catch (e) {}
     }
   }
@@ -42,7 +42,7 @@ export default (function (_ref) {
     window.localStorage.setItem("settings_".concat(setting), JSON.stringify(value));
   };
 
-  return /*#__PURE__*/React.createElement(SettingsContext.Provider, {
+  return React.createElement(SettingsContext.Provider, {
     value: _objectSpread({}, state, {
       changeSetting: changeSetting
     })

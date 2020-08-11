@@ -63,6 +63,7 @@ export type MainLayoutState = {|
 	zoomHistory: Array<{ state: MainLayoutState, name: string }>,
 	currentMat: Matrix,
 	changeMat: any,
+	regions: any,
 |}
 
 export type Action =

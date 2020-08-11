@@ -1,14 +1,14 @@
 import _toConsumableArray from "@babel/runtime/helpers/esm/toConsumableArray";
 import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
 import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
-import { moveRegion } from "../ImageCanvas/region-tools.js";
-import { setIn, updateIn } from "seamless-immutable";
-import moment from "moment";
-import { Matrix } from "transformation-matrix-js";
-import isEqual from "lodash/isEqual";
+import { moveRegion } from '../ImageCanvas/region-tools.js';
+import { setIn, updateIn } from 'seamless-immutable';
+import moment from 'moment';
+import { Matrix } from 'transformation-matrix-js';
+import isEqual from 'lodash/isEqual';
 
 var getRandomId = function getRandomId() {
-  return Math.random().toString().split(".")[1];
+  return Math.random().toString().split('.')[1];
 };
 
 var getRandomInt = function getRandomInt(min, max) {
@@ -23,14 +23,16 @@ var getRandomColor = function getRandomColor() {
 };
 
 var typesToSaveWithHistory = {
-  BEGIN_BOX_TRANSFORM: "Transform/Move Box",
-  BEGIN_CIRCLE_TRANSFORM: "Transform/Move Circle",
-  BEGIN_MOVE_POINT: "Move Point",
-  DELETE_REGION: "Delete Region"
+  BEGIN_BOX_TRANSFORM: 'Transform/Move Box',
+  BEGIN_CIRCLE_TRANSFORM: 'Transform/Move Circle',
+  BEGIN_MOVE_POINT: 'Move Point',
+  DELETE_REGION: 'Delete Region'
 };
 export default (function (state, action) {
-  if (!action.type.includes("MOUSE")) {
-    state = setIn(state, ["lastAction"], action);
+  // console.log("state", state)
+  // console.log("action", action)
+  if (!action.type.includes('MOUSE')) {
+    state = setIn(state, ['lastAction'], action);
   }
 
   var currentImageIndex = state.images.findIndex(function (img) {
@@ -39,7 +41,7 @@ export default (function (state, action) {
   if (currentImageIndex === -1) currentImageIndex = null;
 
   var getRegionIndex = function getRegionIndex(region) {
-    var regionId = typeof region === "string" ? region : region.id;
+    var regionId = typeof region === 'string' ? region : region.id;
     if (currentImageIndex === null) return null;
     var regionIndex = (state.images[currentImageIndex].regions || []).findIndex(function (r) {
       return r.id === regionId;
@@ -63,11 +65,11 @@ export default (function (state, action) {
     if (!region) return state;
 
     if (obj !== null) {
-      return setIn(state, ["images", currentImageIndex, "regions", regionIndex], _objectSpread({}, state.images[currentImageIndex].regions[regionIndex], obj));
+      return setIn(state, ['images', currentImageIndex, 'regions', regionIndex], _objectSpread({}, state.images[currentImageIndex].regions[regionIndex], obj));
     } else {
       // delete region
       var regions = state.images[currentImageIndex].regions;
-      return setIn(state, ["images", currentImageIndex, "regions"], (regions || []).filter(function (r) {
+      return setIn(state, ['images', currentImageIndex, 'regions'], (regions || []).filter(function (r) {
         return r.id !== region.id;
       }));
     }
@@ -75,7 +77,7 @@ export default (function (state, action) {
 
   var unselectRegions = function unselectRegions(state) {
     if (currentImageIndex === null) return state;
-    return setIn(state, ["images", currentImageIndex, "regions"], (state.images[currentImageIndex].regions || []).map(function (r) {
+    return setIn(state, ['images', currentImageIndex, 'regions'], (state.images[currentImageIndex].regions || []).map(function (r) {
       return _objectSpread({}, r, {
         highlighted: false
       });
@@ -83,7 +85,7 @@ export default (function (state, action) {
   };
 
   var saveToHistory = function saveToHistory(state, name) {
-    return updateIn(state, ["history"], function (h) {
+    return updateIn(state, ['history'], function (h) {
       return [{
         time: moment().toDate(),
         state: state,
@@ -98,7 +100,7 @@ export default (function (state, action) {
 
   var closeEditors = function closeEditors(state) {
     if (currentImageIndex === null) return state;
-    return setIn(state, ["images", currentImageIndex, "regions"], (state.images[currentImageIndex].regions || []).map(function (r) {
+    return setIn(state, ['images', currentImageIndex, 'regions'], (state.images[currentImageIndex].regions || []).map(function (r) {
       return _objectSpread({}, r, {
         editingLabels: false
       });
@@ -106,46 +108,46 @@ export default (function (state, action) {
   };
 
   var setNewImage = function setNewImage(newImage) {
-    return setIn(state, ["selectedImage"], newImage);
+    return setIn(state, ['selectedImage'], newImage);
   };
 
   switch (action.type) {
-    case "@@INIT":
+    case '@@INIT':
       {
         return state;
       }
 
-    case "SELECT_IMAGE":
+    case 'SELECT_IMAGE':
       {
         return setNewImage(action.image.src);
       }
 
-    case "IMAGE_LOADED":
+    case 'IMAGE_LOADED':
       {
-        return setIn(state, ["images", currentImageIndex, "pixelSize"], {
+        return setIn(state, ['images', currentImageIndex, 'pixelSize'], {
           w: action.image.width,
           h: action.image.height
         });
       }
 
-    case "CHANGE_REGION":
+    case 'CHANGE_REGION':
       {
         var regionIndex = getRegionIndex(action.region);
         if (regionIndex === null) return state;
         var oldRegion = state.images[currentImageIndex].regions[regionIndex];
 
         if (oldRegion.cls !== action.region.cls) {
-          state = saveToHistory(state, "Change Region Classification");
+          state = saveToHistory(state, 'Change Region Classification');
         }
 
         if (!isEqual(oldRegion.tags, action.region.tags)) {
-          state = saveToHistory(state, "Change Region Tags");
+          state = saveToHistory(state, 'Change Region Tags');
         }
 
-        return setIn(state, ["images", currentImageIndex, "regions", regionIndex], action.region);
+        return setIn(state, ['images', currentImageIndex, 'regions', regionIndex], action.region);
       }
 
-    case "RESTORE_HISTORY":
+    case 'RESTORE_HISTORY':
       {
         if (state.history.length > 0) {
           return state.history[0].state;
@@ -154,28 +156,28 @@ export default (function (state, action) {
         return state;
       }
 
-    case "CHANGE_IMAGES":
+    case 'CHANGE_IMAGES':
       {
         // This is used when the parent component wants to modify the images hash
-        return setIn(state, ["images"], action.images);
+        return setIn(state, ['images'], action.images);
       }
 
-    case "CHANGE_IMAGE":
+    case 'CHANGE_IMAGE':
       {
         if (currentImageIndex === null) return state;
         var delta = action.delta;
 
         for (var _i = 0, _Object$keys = Object.keys(delta); _i < _Object$keys.length; _i++) {
           var key = _Object$keys[_i];
-          if (key === "cls") saveToHistory(state, "Change Image Class");
-          if (key === "tags") saveToHistory(state, "Change Image Tags");
-          state = setIn(state, ["images", currentImageIndex, key], delta[key]);
+          if (key === 'cls') saveToHistory(state, 'Change Image Class');
+          if (key === 'tags') saveToHistory(state, 'Change Image Tags');
+          state = setIn(state, ['images', currentImageIndex, key], delta[key]);
         }
 
         return state;
       }
 
-    case "SELECT_REGION":
+    case 'SELECT_REGION':
       {
         var region = action.region;
 
@@ -190,32 +192,32 @@ export default (function (state, action) {
           });
         });
 
-        return setIn(state, ["images", currentImageIndex, "regions"], regions);
+        return setIn(state, ['images', currentImageIndex, 'regions'], regions);
       }
 
-    case "BEGIN_MOVE_POINT":
+    case 'BEGIN_MOVE_POINT':
       {
         state = closeEditors(state);
-        return setIn(state, ["mode"], {
-          mode: "MOVE_REGION",
+        return setIn(state, ['mode'], {
+          mode: 'MOVE_REGION',
           regionId: action.point.id
         });
       }
 
-    case "BEGIN_CIRCLE_TRANSFORM":
+    case 'BEGIN_CIRCLE_TRANSFORM':
       {
         var circle = action.circle,
             directions = action.directions;
         state = closeEditors(state);
 
-        if (directions === "MOVE_REGION") {
-          return setIn(state, ["mode"], {
-            mode: "MOVE_REGION",
+        if (directions === 'MOVE_REGION') {
+          return setIn(state, ['mode'], {
+            mode: 'MOVE_REGION',
             regionId: circle.id
           });
         } else {
-          return setIn(state, ["mode"], {
-            mode: "RESIZE_CIRCLE",
+          return setIn(state, ['mode'], {
+            mode: 'RESIZE_CIRCLE',
             regionId: circle.id,
             original: {
               x: circle.x,
@@ -227,20 +229,20 @@ export default (function (state, action) {
         }
       }
 
-    case "BEGIN_BOX_TRANSFORM":
+    case 'BEGIN_BOX_TRANSFORM':
       {
         var box = action.box,
             _directions = action.directions;
         state = closeEditors(state);
 
         if (_directions[0] === 0 && _directions[1] === 0) {
-          return setIn(state, ["mode"], {
-            mode: "MOVE_REGION",
+          return setIn(state, ['mode'], {
+            mode: 'MOVE_REGION',
             regionId: box.id
           });
         } else {
-          return setIn(state, ["mode"], {
-            mode: "RESIZE_BOX",
+          return setIn(state, ['mode'], {
+            mode: 'RESIZE_BOX',
             regionId: box.id,
             freedom: _directions,
             original: {
@@ -253,29 +255,29 @@ export default (function (state, action) {
         }
       }
 
-    case "BEGIN_MOVE_POLYGON_POINT":
+    case 'BEGIN_MOVE_POLYGON_POINT':
       {
         var polygon = action.polygon,
             pointIndex = action.pointIndex;
         state = closeEditors(state);
 
-        if (state.mode && state.mode.mode === "DRAW_POLYGON" && pointIndex === 0) {
+        if (state.mode && state.mode.mode === 'DRAW_POLYGON' && pointIndex === 0) {
           return setIn(modifyRegion(polygon, {
             points: polygon.points.slice(0, -1),
             open: false
-          }), ["mode"], null);
+          }), ['mode'], null);
         } else {
-          state = saveToHistory(state, "Move Polygon Point");
+          state = saveToHistory(state, 'Move Polygon Point');
         }
 
-        return setIn(state, ["mode"], {
-          mode: "MOVE_POLYGON_POINT",
+        return setIn(state, ['mode'], {
+          mode: 'MOVE_POLYGON_POINT',
           regionId: polygon.id,
           pointIndex: pointIndex
         });
       }
 
-    case "ADD_POLYGON_POINT":
+    case 'ADD_POLYGON_POINT':
       {
         var _polygon = action.polygon,
             point = action.point,
@@ -288,12 +290,12 @@ export default (function (state, action) {
         var points = _toConsumableArray(_polygon.points);
 
         points.splice(_pointIndex, 0, point);
-        return setIn(state, ["images", currentImageIndex, "regions", _regionIndex2], _objectSpread({}, _polygon, {
+        return setIn(state, ['images', currentImageIndex, 'regions', _regionIndex2], _objectSpread({}, _polygon, {
           points: points
         }));
       }
 
-    case "MOUSE_MOVE":
+    case 'MOUSE_MOVE':
       {
         var x = action.x,
             y = action.y;
@@ -301,7 +303,7 @@ export default (function (state, action) {
         if (currentImageIndex === null) return state;
 
         switch (state.mode.mode) {
-          case "MOVE_POLYGON_POINT":
+          case 'MOVE_POLYGON_POINT':
             {
               var _state$mode = state.mode,
                   _pointIndex2 = _state$mode.pointIndex,
@@ -310,20 +312,20 @@ export default (function (state, action) {
               var _regionIndex3 = getRegionIndex(regionId);
 
               if (_regionIndex3 === null) return state;
-              return setIn(state, ["images", currentImageIndex, "regions", _regionIndex3, "points", _pointIndex2], [x, y]);
+              return setIn(state, ['images', currentImageIndex, 'regions', _regionIndex3, 'points', _pointIndex2], [x, y]);
             }
 
-          case "MOVE_REGION":
+          case 'MOVE_REGION':
             {
               var _regionId = state.mode.regionId;
 
               var _regionIndex4 = getRegionIndex(_regionId);
 
               if (_regionIndex4 === null) return state;
-              return setIn(state, ["images", currentImageIndex, "regions", _regionIndex4], moveRegion(state.images[currentImageIndex].regions[_regionIndex4], x, y));
+              return setIn(state, ['images', currentImageIndex, 'regions', _regionIndex4], moveRegion(state.images[currentImageIndex].regions[_regionIndex4], x, y));
             }
 
-          case "RESIZE_BOX":
+          case 'RESIZE_BOX':
             {
               var _state$mode2 = state.mode,
                   _regionId2 = _state$mode2.regionId,
@@ -346,14 +348,14 @@ export default (function (state, action) {
               var dh = yFree === 0 ? oh : yFree === -1 ? oh + (oy - dy) : Math.max(0, oh + (y - oy - oh)); // determine if we should switch the freedom
 
               if (dw <= 0.001) {
-                state = setIn(state, ["mode", "freedom"], [xFree * -1, yFree]);
+                state = setIn(state, ['mode', 'freedom'], [xFree * -1, yFree]);
               }
 
               if (dh <= 0.001) {
-                state = setIn(state, ["mode", "freedom"], [xFree, yFree * -1]);
+                state = setIn(state, ['mode', 'freedom'], [xFree, yFree * -1]);
               }
 
-              return setIn(state, ["images", currentImageIndex, "regions", _regionIndex5], _objectSpread({}, _box, {
+              return setIn(state, ['images', currentImageIndex, 'regions', _regionIndex5], _objectSpread({}, _box, {
                 x: dx,
                 w: dw,
                 y: dy,
@@ -361,7 +363,7 @@ export default (function (state, action) {
               }));
             }
 
-          case "RESIZE_CIRCLE":
+          case 'RESIZE_CIRCLE':
             {
               var _regionId3 = state.mode.regionId;
 
@@ -370,14 +372,14 @@ export default (function (state, action) {
                   _region = _getRegion4[0],
                   _regionIndex6 = _getRegion4[1];
 
-              if (!_region) return setIn(state, ["mode"], null);
-              return setIn(state, ["images", currentImageIndex, "regions", _regionIndex6], _objectSpread({}, _region, {
+              if (!_region) return setIn(state, ['mode'], null);
+              return setIn(state, ['images', currentImageIndex, 'regions', _regionIndex6], _objectSpread({}, _region, {
                 xr: action.x,
                 yr: action.y
               }));
             }
 
-          case "DRAW_POLYGON":
+          case 'DRAW_POLYGON':
             {
               var _regionId4 = state.mode.regionId;
 
@@ -386,15 +388,15 @@ export default (function (state, action) {
                   _region2 = _getRegion6[0],
                   _regionIndex7 = _getRegion6[1];
 
-              if (!_region2) return setIn(state, ["mode"], null);
-              return setIn(state, ["images", currentImageIndex, "regions", _regionIndex7, "points", _region2.points.length - 1], [x, y]);
+              if (!_region2) return setIn(state, ['mode'], null);
+              return setIn(state, ['images', currentImageIndex, 'regions', _regionIndex7, 'points', _region2.points.length - 1], [x, y]);
             }
         }
 
         return state;
       }
 
-    case "MOUSE_DOWN":
+    case 'MOUSE_DOWN':
       {
         var _x = action.x,
             _y = action.y;
@@ -412,11 +414,11 @@ export default (function (state, action) {
           }
 
           switch (state.selectedTool) {
-            case "create-point":
+            case 'create-point':
               {
-                state = saveToHistory(state, "Create Point");
+                state = saveToHistory(state, 'Create Point');
                 newRegion = {
-                  type: "point",
+                  type: 'point',
                   x: _x,
                   y: _y,
                   highlighted: true,
@@ -427,11 +429,11 @@ export default (function (state, action) {
                 break;
               }
 
-            case "create-box":
+            case 'create-box':
               {
-                state = saveToHistory(state, "Create Box");
+                state = saveToHistory(state, 'Create Box');
                 newRegion = {
-                  type: "box",
+                  type: 'box',
                   x: _x,
                   y: _x,
                   w: 0.01,
@@ -442,8 +444,8 @@ export default (function (state, action) {
                   id: getRandomId()
                 };
                 state = unselectRegions(state);
-                state = setIn(state, ["mode"], {
-                  mode: "RESIZE_BOX",
+                state = setIn(state, ['mode'], {
+                  mode: 'RESIZE_BOX',
                   editLabelEditorAfter: true,
                   regionId: newRegion.id,
                   freedom: [1, 1],
@@ -457,30 +459,30 @@ export default (function (state, action) {
                 break;
               }
 
-            case "create-polygon":
+            case 'create-polygon':
               {
-                if (state.mode && state.mode.mode === "DRAW_POLYGON") break;
-                state = saveToHistory(state, "Create Polygon");
+                if (state.mode && state.mode.mode === 'DRAW_POLYGON') break;
+                state = saveToHistory(state, 'Create Polygon');
                 newRegion = {
-                  type: "polygon",
+                  type: 'polygon',
                   points: [[_x, _y], [_x, _y]],
                   open: true,
                   highlighted: true,
                   color: getRandomColor(),
                   id: getRandomId()
                 };
-                state = setIn(state, ["mode"], {
-                  mode: "DRAW_POLYGON",
+                state = setIn(state, ['mode'], {
+                  mode: 'DRAW_POLYGON',
                   regionId: newRegion.id
                 });
                 break;
               }
 
-            case "create-circle":
+            case 'create-circle':
               {
-                state = saveToHistory(state, "Create Circle");
+                state = saveToHistory(state, 'Create Circle');
                 newRegion = {
-                  type: "circle",
+                  type: 'circle',
                   x: _x,
                   y: _y,
                   xr: 0.00000000001,
@@ -491,8 +493,8 @@ export default (function (state, action) {
                   id: getRandomId()
                 };
                 state = unselectRegions(state);
-                state = setIn(state, ["mode"], {
-                  mode: "RESIZE_CIRCLE",
+                state = setIn(state, ['mode'], {
+                  mode: 'RESIZE_CIRCLE',
                   editLabelEditorAfter: true,
                   regionId: newRegion.id,
                   original: {
@@ -508,12 +510,13 @@ export default (function (state, action) {
         }
 
         if (newRegion) {
+          console.log('newRegion', newRegion);
           state = unselectRegions(state);
         }
 
         if (state.mode) {
           switch (state.mode.mode) {
-            case "DRAW_POLYGON":
+            case 'DRAW_POLYGON':
               {
                 var _getRegion7 = getRegion(state.mode.regionId),
                     _getRegion8 = _slicedToArray(_getRegion7, 2),
@@ -521,7 +524,7 @@ export default (function (state, action) {
                     _regionIndex8 = _getRegion8[1];
 
                 if (!_polygon2) break;
-                state = setIn(state, ["images", currentImageIndex, "regions", _regionIndex8], _objectSpread({}, _polygon2, {
+                state = setIn(state, ['images', currentImageIndex, 'regions', _regionIndex8], _objectSpread({}, _polygon2, {
                   points: _polygon2.points.concat([[_x, _y]])
                 }));
               }
@@ -534,17 +537,17 @@ export default (function (state, action) {
           });
         }).concat(newRegion ? [newRegion] : []);
 
-        return setIn(state, ["images", currentImageIndex, "regions"], _regions);
+        return setIn(state, ['images', currentImageIndex, 'regions'], _regions);
       }
 
-    case "MOUSE_UP":
+    case 'MOUSE_UP':
       {
         var _x2 = action.x,
             _y2 = action.y;
         if (!state.mode) return state;
 
         switch (state.mode.mode) {
-          case "RESIZE_BOX":
+          case 'RESIZE_BOX':
             {
               if (state.mode.editLabelEditorAfter) {
                 return _objectSpread({}, modifyRegion(state.mode.regionId, {
@@ -555,7 +558,7 @@ export default (function (state, action) {
               }
             }
 
-          case "RESIZE_CIRCLE":
+          case 'RESIZE_CIRCLE':
             {
               if (state.mode.editLabelEditorAfter) {
                 return _objectSpread({}, modifyRegion(state.mode.regionId, {
@@ -566,8 +569,8 @@ export default (function (state, action) {
               }
             }
 
-          case "MOVE_REGION":
-          case "MOVE_POLYGON_POINT":
+          case 'MOVE_REGION':
+          case 'MOVE_POLYGON_POINT':
             {
               return _objectSpread({}, state, {
                 mode: null
@@ -578,17 +581,17 @@ export default (function (state, action) {
         return state;
       }
 
-    case "CHANGE_REGION":
+    case 'CHANGE_REGION':
       {
         var _region4 = action.region;
 
         var _regionIndex9 = getRegionIndex(action.region);
 
         if (_regionIndex9 === null) return state;
-        return setIn(state, ["images", currentImageIndex, "regions", _regionIndex9], _region4);
+        return setIn(state, ['images', currentImageIndex, 'regions', _regionIndex9], _region4);
       }
 
-    case "OPEN_REGION_EDITOR":
+    case 'OPEN_REGION_EDITOR':
       {
         var _region5 = action.region;
 
@@ -604,42 +607,42 @@ export default (function (state, action) {
           highlighted: true,
           editingLabels: true
         }));
-        return setIn(state, ["images", currentImageIndex, "regions"], newRegions);
+        return setIn(state, ['images', currentImageIndex, 'regions'], newRegions);
       }
 
-    case "CLOSE_REGION_EDITOR":
+    case 'CLOSE_REGION_EDITOR':
       {
         var _region6 = action.region;
 
         var _regionIndex11 = getRegionIndex(action.region);
 
         if (_regionIndex11 === null) return state;
-        return setIn(state, ["images", currentImageIndex, "regions", _regionIndex11], _objectSpread({}, (state.images[currentImageIndex].regions || [])[_regionIndex11], {
+        return setIn(state, ['images', currentImageIndex, 'regions', _regionIndex11], _objectSpread({}, (state.images[currentImageIndex].regions || [])[_regionIndex11], {
           editingLabels: false
         }));
       }
 
-    case "DELETE_REGION":
+    case 'DELETE_REGION':
       {
         var _regionIndex12 = getRegionIndex(action.region);
 
         if (_regionIndex12 === null) return state;
-        return setIn(state, ["images", currentImageIndex, "regions"], (state.images[currentImageIndex].regions || []).filter(function (r) {
+        return setIn(state, ['images', currentImageIndex, 'regions'], (state.images[currentImageIndex].regions || []).filter(function (r) {
           return r.id !== action.region.id;
         }));
       }
 
-    case "ZOOM_HISTORY":
+    case 'ZOOM_HISTORY':
       {
         var _region7 = action.region,
             direction = action.direction;
 
-        if (direction == "ADD_NEW") {
-          return updateIn(state, ["zoomHistory"], function (zh) {
+        if (direction == 'ADD_NEW') {
+          return updateIn(state, ['zoomHistory'], function (zh) {
             return [_region7].concat((zh || []).slice());
           });
         } else {
-          return updateIn(state, ["zoomHistory"], function (zh) {
+          return updateIn(state, ['zoomHistory'], function (zh) {
             var newRegion = (zh || []).slice();
             newRegion = newRegion.asMutable({
               deep: true
@@ -650,58 +653,58 @@ export default (function (state, action) {
         }
       }
 
-    case "RESET_ZOOM_HISTORY":
+    case 'RESET_ZOOM_HISTORY':
       {
-        return setIn(state, ["zoomHistory"], []);
+        return setIn(state, ['zoomHistory'], []);
       }
 
-    case "HEADER_BUTTON_CLICKED":
+    case 'HEADER_BUTTON_CLICKED':
       {
         var buttonName = action.buttonName.toLowerCase();
 
         switch (buttonName) {
-          case "prev":
+          case 'prev':
             {
               if (currentImageIndex === null) return state;
               if (currentImageIndex === 0) return state;
               return setNewImage(state.images[currentImageIndex - 1].src);
             }
 
-          case "next":
+          case 'next':
             {
               if (currentImageIndex === null) return state;
               if (currentImageIndex === state.images.length - 1) return state;
               return setNewImage(state.images[currentImageIndex + 1].src);
             }
 
-          case "settings":
+          case 'settings':
             {
-              return setIn(state, ["settingsOpen"], !state.settingsOpen);
+              return setIn(state, ['settingsOpen'], !state.settingsOpen);
             }
 
-          case "help":
-            {
-              return state;
-            }
-
-          case "fullscreen":
-            {
-              return setIn(state, ["fullScreen"], true);
-            }
-
-          case "exit fullscreen":
-          case "window":
-            {
-              return setIn(state, ["fullScreen"], false);
-            }
-
-          case "hotkeys":
+          case 'help':
             {
               return state;
             }
 
-          case "exit":
-          case "done":
+          case 'fullscreen':
+            {
+              return setIn(state, ['fullScreen'], true);
+            }
+
+          case 'exit fullscreen':
+          case 'window':
+            {
+              return setIn(state, ['fullScreen'], false);
+            }
+
+          case 'hotkeys':
+            {
+              return state;
+            }
+
+          case 'exit':
+          case 'done':
             {
               return state;
             }
@@ -710,41 +713,41 @@ export default (function (state, action) {
         return state; // return setIn(state, [""]
       }
 
-    case "SELECT_TOOL":
+    case 'SELECT_TOOL':
       {
-        state = setIn(state, ["mode"], null);
+        state = setIn(state, ['mode'], null);
 
-        if (action.selectedTool === "show-tags") {
-          return setIn(state, ["showTags"], !state.showTags);
+        if (action.selectedTool === 'show-tags') {
+          return setIn(state, ['showTags'], !state.showTags);
         }
 
-        return setIn(state, ["selectedTool"], action.selectedTool);
+        return setIn(state, ['selectedTool'], action.selectedTool);
       }
 
-    case "CHANGE_CURRENT_MAT":
+    case 'CHANGE_CURRENT_MAT':
       {
-        return setIn(state, ["currentMat"], action.currentMat);
+        return setIn(state, ['currentMat'], action.currentMat);
       }
 
-    case "CANCEL":
+    case 'CANCEL':
       {
         var _state = state,
             mode = _state.mode;
 
         if (mode) {
           switch (mode.mode) {
-            case "DRAW_POLYGON":
+            case 'DRAW_POLYGON':
               {
                 var _regionId5 = mode.regionId;
                 return modifyRegion(_regionId5, null);
               }
 
-            case "MOVE_POLYGON_POINT":
-            case "RESIZE_BOX":
-            case "RESIZE_CIRCLE":
-            case "MOVE_REGION":
+            case 'MOVE_POLYGON_POINT':
+            case 'RESIZE_BOX':
+            case 'RESIZE_CIRCLE':
+            case 'MOVE_REGION':
               {
-                return setIn(state, ["mode"], null);
+                return setIn(state, ['mode'], null);
               }
           }
         } // Close any open boxes
@@ -755,13 +758,13 @@ export default (function (state, action) {
         if (_regions2.some(function (r) {
           return r.editingLabels;
         })) {
-          return setIn(state, ["images", currentImageIndex, "regions"], _regions2.map(function (r) {
+          return setIn(state, ['images', currentImageIndex, 'regions'], _regions2.map(function (r) {
             return _objectSpread({}, r, {
               editingLabels: false
             });
           }));
         } else {
-          return setIn(state, ["images", currentImageIndex, "regions"], _regions2.map(function (r) {
+          return setIn(state, ['images', currentImageIndex, 'regions'], _regions2.map(function (r) {
             return _objectSpread({}, r, {
               highlighted: false
             });

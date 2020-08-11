@@ -1,7 +1,7 @@
-import React, { createContext, useContext } from "react";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-import { blue } from "@material-ui/core/colors";
+import React, { createContext, useContext } from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import { blue } from '@material-ui/core/colors';
 export var SelectedTool = createContext();
 export default (function (_ref) {
   var id = _ref.id,
@@ -19,10 +19,10 @@ export default (function (_ref) {
 
   if (!enabledTools.includes(id) && !alwaysShowing) return null;
   selected = selected || selectedTool === id;
-  return /*#__PURE__*/React.createElement(Tooltip, {
+  return React.createElement(Tooltip, {
     placement: "right",
     title: name
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(IconButton, {
+  }, React.createElement("div", null, React.createElement(IconButton, {
     disabled: !togglable ? selected : undefined,
     "aria-label": name,
     onClick: function onClick() {

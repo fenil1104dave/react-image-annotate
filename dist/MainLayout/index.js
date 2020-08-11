@@ -1,26 +1,14 @@
-import _defineProperty from "@babel/runtime/helpers/esm/defineProperty";
+import _toConsumableArray from "@babel/runtime/helpers/esm/toConsumableArray";
 import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
-import React, { useEffect, useState } from "react";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import Sidebar from "../Sidebar";
-import ImageCanvas from "../ImageCanvas";
-import Header from "../Header";
-import IconTools from "../IconTools";
-import styles from "./styles";
-import useKey from "use-key-hook";
-import classnames from "classnames";
-import { useSettings } from "../SettingsProvider";
-import SettingsDialog from "../SettingsDialog";
-import Fullscreen from "react-full-screen";
-import { Matrix } from "transformation-matrix-js";
-var useStyles = makeStyles(styles);
+import React, { useEffect, useState } from 'react';
+import ImageCanvas from '../ImageCanvas';
+import useKey from 'use-key-hook';
+import { useSettings } from '../SettingsProvider';
+import { Matrix } from 'transformation-matrix-js';
 export default (function (_ref) {
-  var _Object$assign;
-
   var state = _ref.state,
-      dispatch = _ref.dispatch;
-  var classes = useStyles();
+      dispatch = _ref.dispatch,
+      regions = _ref.regions;
   var settings = useSettings();
 
   var action = function action(type) {
@@ -48,7 +36,7 @@ export default (function (_ref) {
   });
   useKey(function () {
     return dispatch({
-      type: "CANCEL"
+      type: 'CANCEL'
     });
   }, {
     detectKeys: [27]
@@ -57,7 +45,7 @@ export default (function (_ref) {
   if (state.changeMat === undefined) {
     state.changeMat = function (mat) {
       dispatch({
-        type: "CHANGE_CURRENT_MAT",
+        type: 'CHANGE_CURRENT_MAT',
         currentMat: mat
       });
     };
@@ -66,48 +54,50 @@ export default (function (_ref) {
   useEffect(function () {
     state.onImagesChange(state.images);
   }, [JSON.stringify(state.images)]);
-  return /*#__PURE__*/React.createElement(Fullscreen, {
-    enabled: state.fullScreen,
-    onChange: function onChange(open) {
-      if (!open) {
-        action("HEADER_BUTTON_CLICKED", "buttonName")("Exit Fullscreen");
-      }
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: classnames(classes.container, state.fullScreen && "Fullscreen")
-  }, /*#__PURE__*/React.createElement("div", {
-    className: classes.workspace
-  }, /*#__PURE__*/React.createElement("div", {
-    className: classes.imageCanvasContainer
-  }, !state.selectedImage ? /*#__PURE__*/React.createElement("div", {
-    className: classes.noImageSelected
-  }, "No Image Selected") : /*#__PURE__*/React.createElement("div", {
+  var currentRegions = currentImage && currentImage.regions ? currentImage.regions : [];
+  return React.createElement("div", {
     style: {
-      height: "100%",
-      width: "100%"
-    }
-  }, /*#__PURE__*/React.createElement(ImageCanvas, Object.assign({}, settings, (_Object$assign = {
+      width: '760px',
+      height: '700px'
+    },
+    className: "m-3 px-2"
+  }, React.createElement(ImageCanvas, Object.assign({}, settings, {
     key: state.selectedImage,
     showTags: state.showTags,
     allowedArea: state.allowedArea,
     regionClsList: state.regionClsList,
     regionTagList: state.regionTagList,
-    regions: currentImage ? currentImage.regions || [] : [],
+    regions: [].concat(_toConsumableArray(currentRegions), _toConsumableArray(regions)),
     realSize: currentImage ? currentImage.realSize : undefined,
     imageSrc: state.selectedImage,
     pointDistancePrecision: state.pointDistancePrecision,
-    createWithPrimary: state.selectedTool.includes("create"),
-    dragWithPrimary: state.selectedTool === "pan",
-    zoomWithPrimary: state.selectedTool === "zoom",
-    zoomOutWithPrimary: state.selectedTool === "zoom-out",
-    showPointDistances: state.showPointDistances
-  }, _defineProperty(_Object$assign, "pointDistancePrecision", state.pointDistancePrecision), _defineProperty(_Object$assign, "zoomHistory", state.zoomHistory), _defineProperty(_Object$assign, "changeZoomHistory", action("ZOOM_HISTORY", "region", "direction")), _defineProperty(_Object$assign, "resetZoomHistory", action("RESET_ZOOM_HISTORY")), _defineProperty(_Object$assign, "onMouseMove", action("MOUSE_MOVE")), _defineProperty(_Object$assign, "onMouseDown", action("MOUSE_DOWN")), _defineProperty(_Object$assign, "onMouseUp", action("MOUSE_UP")), _defineProperty(_Object$assign, "onChangeRegion", action("CHANGE_REGION", "region")), _defineProperty(_Object$assign, "onBeginRegionEdit", action("OPEN_REGION_EDITOR", "region")), _defineProperty(_Object$assign, "onCloseRegionEdit", action("CLOSE_REGION_EDITOR", "region")), _defineProperty(_Object$assign, "onDeleteRegion", action("DELETE_REGION", "region")), _defineProperty(_Object$assign, "onBeginCircleTransform", action("BEGIN_CIRCLE_TRANSFORM", "circle", "directions")), _defineProperty(_Object$assign, "onBeginBoxTransform", action("BEGIN_BOX_TRANSFORM", "box", "directions")), _defineProperty(_Object$assign, "onBeginMovePolygonPoint", action("BEGIN_MOVE_POLYGON_POINT", "polygon", "pointIndex")), _defineProperty(_Object$assign, "onAddPolygonPoint", action("ADD_POLYGON_POINT", "polygon", "point", "pointIndex")), _defineProperty(_Object$assign, "onSelectRegion", action("SELECT_REGION", "region")), _defineProperty(_Object$assign, "onBeginMovePoint", action("BEGIN_MOVE_POINT", "point")), _defineProperty(_Object$assign, "onImageLoaded", action("IMAGE_LOADED", "image")), _defineProperty(_Object$assign, "mat", Matrix.from(state.currentMat)), _defineProperty(_Object$assign, "changeMat", state.changeMat), _defineProperty(_Object$assign, "onIhIwChange", state.onIhIwChange), _defineProperty(_Object$assign, "setImageLoaded", state.setImageLoaded), _defineProperty(_Object$assign, "handleScaleChange", state.handleScaleChange), _Object$assign)))))), /*#__PURE__*/React.createElement(SettingsDialog, {
-    open: state.settingsOpen,
-    onClose: function onClose() {
-      return dispatch({
-        type: "HEADER_BUTTON_CLICKED",
-        buttonName: "Settings"
-      });
-    }
+    createWithPrimary: state.selectedTool.includes('create'),
+    dragWithPrimary: state.selectedTool === 'pan',
+    zoomWithPrimary: state.selectedTool === 'zoom',
+    zoomOutWithPrimary: state.selectedTool === 'zoom-out',
+    showPointDistances: state.showPointDistances,
+    zoomHistory: state.zoomHistory,
+    changeZoomHistory: action('ZOOM_HISTORY', 'region', 'direction'),
+    resetZoomHistory: action('RESET_ZOOM_HISTORY'),
+    onMouseMove: action('MOUSE_MOVE'),
+    onMouseDown: action('MOUSE_DOWN'),
+    onMouseUp: action('MOUSE_UP'),
+    onChangeRegion: action('CHANGE_REGION', 'region'),
+    onBeginRegionEdit: action('OPEN_REGION_EDITOR', 'region'),
+    onCloseRegionEdit: action('CLOSE_REGION_EDITOR', 'region'),
+    onDeleteRegion: action('DELETE_REGION', 'region'),
+    onBeginCircleTransform: action('BEGIN_CIRCLE_TRANSFORM', 'circle', 'directions'),
+    onBeginBoxTransform: action('BEGIN_BOX_TRANSFORM', 'box', 'directions'),
+    onBeginMovePolygonPoint: action('BEGIN_MOVE_POLYGON_POINT', 'polygon', 'pointIndex'),
+    onAddPolygonPoint: action('ADD_POLYGON_POINT', 'polygon', 'point', 'pointIndex'),
+    onSelectRegion: action('SELECT_REGION', 'region'),
+    onBeginMovePoint: action('BEGIN_MOVE_POINT', 'point'),
+    onImageLoaded: action('IMAGE_LOADED', 'image'),
+    mat: Matrix.from(state.currentMat),
+    changeMat: state.changeMat,
+    onIhIwChange: state.onIhIwChange,
+    setImageLoaded: state.setImageLoaded,
+    handleScaleChange: state.handleScaleChange,
+    getRegionCoordinates: state.handleRegionChange
   })));
 });

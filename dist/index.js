@@ -1,6 +1,10 @@
-import React from "react";
-import Annotator from "./Annotator";
-import Theme from "./Theme";
+// import React from 'react'
+// import ReactDOM from 'react-dom'
+// import ReactAnnotator from './ReactAnnotator'
+// import 'bootstrap/dist/css/bootstrap.css'
+// ReactDOM.render(<ReactAnnotator />, document.getElementById('root'))
+import React from 'react';
+import Annotator from './Annotator';
 export default (function (props) {
-  return /*#__PURE__*/React.createElement(Theme, null, /*#__PURE__*/React.createElement(Annotator, props));
+  return React.createElement(Annotator, props);
 });

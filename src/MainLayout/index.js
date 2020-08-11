@@ -3,12 +3,11 @@
 import React, { useEffect, useState } from 'react'
 import ImageCanvas from '../ImageCanvas'
 
-import styles from './styles'
 import useKey from 'use-key-hook'
 import { useSettings } from '../SettingsProvider'
 import { Matrix } from 'transformation-matrix-js'
 
-export default ({ state, dispatch }: Props) => {
+export default ({ state, dispatch, regions }: Props) => {
 	const settings = useSettings()
 
 	const action = (type: string, ...params: Array<string>) => (...args: any) =>
@@ -40,10 +39,7 @@ export default ({ state, dispatch }: Props) => {
 		state.onImagesChange(state.images)
 	}, [JSON.stringify(state.images)])
 
-	const handleRegionChange = ({ X, Y, width, height }) => {
-		console.log(X, Y, width, height)
-	}
-
+	const currentRegions = currentImage && currentImage.regions ? currentImage.regions : []
 	return (
 		<div style={{ width: '760px', height: '700px' }} className="m-3 px-2">
 			<ImageCanvas
@@ -53,7 +49,7 @@ export default ({ state, dispatch }: Props) => {
 				allowedArea={state.allowedArea}
 				regionClsList={state.regionClsList}
 				regionTagList={state.regionTagList}
-				regions={currentImage ? currentImage.regions || [] : []}
+				regions={[...currentRegions, ...regions]}
 				realSize={currentImage ? currentImage.realSize : undefined}
 				imageSrc={state.selectedImage}
 				pointDistancePrecision={state.pointDistancePrecision}
@@ -84,7 +80,7 @@ export default ({ state, dispatch }: Props) => {
 				onIhIwChange={state.onIhIwChange}
 				setImageLoaded={state.setImageLoaded}
 				handleScaleChange={state.handleScaleChange}
-				getRegionCoordinates={handleRegionChange}
+				getRegionCoordinates={state.handleRegionChange}
 			/>
 		</div>
 	)

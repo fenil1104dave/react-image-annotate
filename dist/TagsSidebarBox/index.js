@@ -1,9 +1,9 @@
-import React from "react";
-import SidebarBoxContainer from "../SidebarBoxContainer";
-import { makeStyles } from "@material-ui/core/styles";
-import StyleIcon from "@material-ui/icons/Style";
-import { grey } from "@material-ui/core/colors";
-import Select from "react-select";
+import React from 'react';
+import SidebarBoxContainer from '../SidebarBoxContainer';
+import { makeStyles } from '@material-ui/core/styles';
+import StyleIcon from '@material-ui/icons/Style';
+import { grey } from '@material-ui/core/colors';
+import Select from 'react-select';
 var useStyles = makeStyles({});
 export default (function (_ref) {
   var currentImage = _ref.currentImage,
@@ -16,20 +16,20 @@ export default (function (_ref) {
       tags = _currentImage$tags === void 0 ? [] : _currentImage$tags,
       _currentImage$cls = currentImage.cls,
       cls = _currentImage$cls === void 0 ? null : _currentImage$cls;
-  return /*#__PURE__*/React.createElement(SidebarBoxContainer, {
+  return React.createElement(SidebarBoxContainer, {
     title: "Image Tags",
     expandedByDefault: true,
     noScroll: true,
-    icon: /*#__PURE__*/React.createElement(StyleIcon, {
+    icon: React.createElement(StyleIcon, {
       style: {
         color: grey[700]
       }
     })
-  }, imageClsList.length > 0 && /*#__PURE__*/React.createElement("div", {
+  }, imageClsList.length > 0 && React.createElement("div", {
     style: {
       padding: 8
     }
-  }, /*#__PURE__*/React.createElement(Select, {
+  }, React.createElement(Select, {
     placeholder: "Image Classification",
     onChange: function onChange(o) {
       return onChangeImage({
@@ -46,12 +46,12 @@ export default (function (_ref) {
         label: c
       };
     })
-  })), imageTagList.length > 0 && /*#__PURE__*/React.createElement("div", {
+  })), imageTagList.length > 0 && React.createElement("div", {
     style: {
       padding: 8,
       paddingTop: 0
     }
-  }, /*#__PURE__*/React.createElement(Select, {
+  }, React.createElement(Select, {
     isMulti: true,
     placeholder: "Image Tags",
     onChange: function onChange(o) {

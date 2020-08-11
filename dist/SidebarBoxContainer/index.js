@@ -1,31 +1,31 @@
 import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
-import React, { useState } from "react";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
-import ExpandIcon from "@material-ui/icons/ExpandMore";
-import IconButton from "@material-ui/core/IconButton";
-import Collapse from "@material-ui/core/Collapse";
-import { grey } from "@material-ui/core/colors";
-import classnames from "classnames";
+import React, { useState } from 'react';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import ExpandIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
+import Collapse from '@material-ui/core/Collapse';
+import { grey } from '@material-ui/core/colors';
+import classnames from 'classnames';
 var useStyles = makeStyles({
   container: {
     margin: 8
   },
   header: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 8,
     paddingLeft: 16,
     paddingRight: 16
   },
   title: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     flexGrow: 1,
     paddingLeft: 8,
     color: grey[800],
-    "& span": {
+    '& span': {
       color: grey[600],
       fontSize: 12
     }
@@ -34,22 +34,22 @@ var useStyles = makeStyles({
     padding: 0,
     width: 30,
     height: 30,
-    "& .icon": {
+    '& .icon': {
       marginTop: -6,
       width: 20,
       height: 20,
-      transition: "500ms transform",
-      "&.expanded": {
-        transform: "rotate(180deg)"
+      transition: '500ms transform',
+      '&.expanded': {
+        transform: 'rotate(180deg)'
       }
     }
   },
   expandedContent: {
     maxHeight: 300,
-    overflowY: "auto",
-    "&.noScroll": {
-      overflowY: "visible",
-      overflow: "visible"
+    overflowY: 'auto',
+    '&.noScroll': {
+      overflowY: 'visible',
+      overflow: 'visible'
     }
   }
 });
@@ -63,8 +63,8 @@ export default (function (_ref) {
       _ref$expandedByDefaul = _ref.expandedByDefault,
       expandedByDefault = _ref$expandedByDefaul === void 0 ? false : _ref$expandedByDefaul;
   var classes = useStyles();
-  var content = /*#__PURE__*/React.createElement("div", {
-    className: classnames(classes.expandedContent, noScroll && "noScroll")
+  var content = React.createElement("div", {
+    className: classnames(classes.expandedContent, noScroll && 'noScroll')
   }, children);
 
   var _useState = useState(expandedByDefault),
@@ -72,20 +72,20 @@ export default (function (_ref) {
       expanded = _useState2[0],
       changeExpanded = _useState2[1];
 
-  return /*#__PURE__*/React.createElement(Paper, {
+  return React.createElement(Paper, {
     className: classes.container
-  }, /*#__PURE__*/React.createElement("div", {
+  }, React.createElement("div", {
     className: classes.header
-  }, icon, /*#__PURE__*/React.createElement("div", {
+  }, icon, React.createElement("div", {
     className: classes.title
-  }, title, " ", /*#__PURE__*/React.createElement("span", null, subTitle)), /*#__PURE__*/React.createElement(IconButton, {
+  }, title, " ", React.createElement("span", null, subTitle)), React.createElement(IconButton, {
     onClick: function onClick() {
       return changeExpanded(!expanded);
     },
     className: classes.expandButton
-  }, /*#__PURE__*/React.createElement(ExpandIcon, {
-    className: classnames("icon", expanded && "expanded")
-  }))), noScroll ? expanded ? content : null : /*#__PURE__*/React.createElement(Collapse, {
+  }, React.createElement(ExpandIcon, {
+    className: classnames('icon', expanded && 'expanded')
+  }))), noScroll ? expanded ? content : null : React.createElement(Collapse, {
     in: expanded
   }, content));
 });

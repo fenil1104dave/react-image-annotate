@@ -1,17 +1,17 @@
-import { grey } from "@material-ui/core/colors";
+import { grey } from '@material-ui/core/colors';
 export default {
   regionInfo: {
     fontSize: 12,
-    cursor: "default",
-    transition: "opacity 200ms",
+    cursor: 'default',
+    transition: 'opacity 200ms',
     opacity: 0.7,
-    "&:hover": {
+    '&:hover': {
       opacity: 0.9,
-      cursor: "pointer"
+      cursor: 'pointer'
     },
-    "&.highlighted": {
+    '&.highlighted': {
       opacity: 0.9,
-      "&:hover": {
+      '&:hover': {
         opacity: 1
       }
     },
@@ -19,25 +19,25 @@ export default {
     fontWeight: 600,
     color: grey[900],
     padding: 8,
-    "& .name": {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      "& .circle": {
+    '& .name': {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      '& .circle': {
         marginRight: 4,
-        boxShadow: "0px 0px 2px rgba(0,0,0,0.4)",
+        boxShadow: '0px 0px 2px rgba(0,0,0,0.4)',
         width: 10,
         height: 10,
         borderRadius: 5
       }
     },
-    "& .tags": {
-      "& .tag": {
+    '& .tags': {
+      '& .tag': {
         color: grey[700],
-        display: "inline-block",
+        display: 'inline-block',
         margin: 1,
         fontSize: 10,
-        textDecoration: "underline"
+        textDecoration: 'underline'
       }
     }
   }

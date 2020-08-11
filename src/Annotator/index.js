@@ -46,6 +46,8 @@ export default ({
 	onExit,
 	setImageLoaded = () => {},
 	handleScaleChange = () => {},
+	regions = [],
+	handleRegionChange,
 }: Props) => {
 	const [state, dispatchToReducer] = useReducer(reducer, {
 		showTags,
@@ -71,8 +73,8 @@ export default ({
 		history: [],
 		setImageLoaded,
 		handleScaleChange,
+		handleRegionChange: handleRegionChange,
 	})
-
 	useEffect(() => {
 		dispatchToReducer({ type: 'SELECT_TOOL', selectedTool: selectedTool })
 	}, [selectedTool])
@@ -111,7 +113,7 @@ export default ({
 
 	return (
 		<SettingsProvider>
-			<MainLayout debug state={state} dispatch={dispatch} />
+			<MainLayout debug state={state} dispatch={dispatch} regions={regions} />
 		</SettingsProvider>
 	)
 }

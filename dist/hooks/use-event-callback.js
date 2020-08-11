@@ -1,4 +1,4 @@
-import { useRef, useCallback, useLayoutEffect, useEffect } from "react";
+import { useRef, useCallback, useLayoutEffect, useEffect } from 'react';
 export default (function (fn) {
   var ref = useRef();
   useLayoutEffect(function () {

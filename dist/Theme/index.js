@@ -1,5 +1,5 @@
-import React from "react";
-import { ThemeProvider, createMuiTheme, makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 var useStyles = makeStyles({
   container: {
     fontFamily: '"Inter", sans-serif'
@@ -12,7 +12,7 @@ var theme = createMuiTheme({
   overrides: {
     MuiButton: {
       root: {
-        textTransform: "none"
+        textTransform: 'none'
       }
     }
   }
@@ -20,9 +20,9 @@ var theme = createMuiTheme({
 export default (function (_ref) {
   var children = _ref.children;
   var classes = useStyles();
-  return /*#__PURE__*/React.createElement(ThemeProvider, {
+  return React.createElement(ThemeProvider, {
     theme: theme
-  }, /*#__PURE__*/React.createElement("div", {
+  }, React.createElement("div", {
     className: classes.container
   }, children));
 });

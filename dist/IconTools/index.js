@@ -1,17 +1,17 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowsAlt, faMousePointer, faExpandArrowsAlt, faTag, faPaintBrush, faCrosshairs, faDrawPolygon, faVectorSquare, faHandPaper, faSearch, faSearchPlus, faSearchMinus } from "@fortawesome/free-solid-svg-icons";
-import { faCircle } from "@fortawesome/free-regular-svg-icons";
-import SmallToolButton, { SelectedTool } from "../SmallToolButton";
-import { makeStyles } from "@material-ui/core/styles";
-import { grey } from "@material-ui/core/colors";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowsAlt, faMousePointer, faExpandArrowsAlt, faTag, faPaintBrush, faCrosshairs, faDrawPolygon, faVectorSquare, faHandPaper, faSearch, faSearchPlus, faSearchMinus } from '@fortawesome/free-solid-svg-icons';
+import { faCircle } from '@fortawesome/free-regular-svg-icons';
+import SmallToolButton, { SelectedTool } from '../SmallToolButton';
+import { makeStyles } from '@material-ui/core/styles';
+import { grey } from '@material-ui/core/colors';
 var useStyles = makeStyles({
   iconTools: {
-    display: "flex",
+    display: 'flex',
     padding: 4,
-    flexDirection: "column",
+    flexDirection: 'column',
     zIndex: 9,
-    boxShadow: "0px 0px 5px rgba(0,0,0,0.1)",
+    boxShadow: '0px 0px 5px rgba(0,0,0,0.1)',
     borderRight: "1px solid ".concat(grey[300]),
     backgroundColor: grey[100]
   }
@@ -21,90 +21,90 @@ export default (function (_ref) {
       selectedTool = _ref.selectedTool,
       onClickTool = _ref.onClickTool,
       _ref$enabledTools = _ref.enabledTools,
-      enabledTools = _ref$enabledTools === void 0 ? ["select", "create-point", "create-box", "create-polygon", "create-circle"] : _ref$enabledTools;
+      enabledTools = _ref$enabledTools === void 0 ? ['select', 'create-point', 'create-box', 'create-polygon', 'create-circle'] : _ref$enabledTools;
   var classes = useStyles();
-  return /*#__PURE__*/React.createElement("div", {
+  return React.createElement("div", {
     className: classes.iconTools
-  }, /*#__PURE__*/React.createElement(SelectedTool.Provider, {
+  }, React.createElement(SelectedTool.Provider, {
     value: {
       enabledTools: enabledTools,
       selectedTool: selectedTool,
       onClickTool: onClickTool
     }
-  }, /*#__PURE__*/React.createElement(SmallToolButton, {
+  }, React.createElement(SmallToolButton, {
     id: "select",
     name: "Select Region",
-    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
+    icon: React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faMousePointer
     })
-  }), /*#__PURE__*/React.createElement(SmallToolButton, {
+  }), React.createElement(SmallToolButton, {
     alwaysShowing: true,
     id: "pan",
     name: "Drag/Pan",
-    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
+    icon: React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faHandPaper
     })
-  }), /*#__PURE__*/React.createElement(SmallToolButton, {
+  }), React.createElement(SmallToolButton, {
     alwaysShowing: true,
     id: "zoom",
     name: "Zoom In",
-    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
+    icon: React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faSearchPlus
     })
-  }), /*#__PURE__*/React.createElement(SmallToolButton, {
+  }), React.createElement(SmallToolButton, {
     alwaysShowing: true,
     id: "zoom-out",
     name: "Zoom Out",
-    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
+    icon: React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faSearchMinus
     })
-  }), /*#__PURE__*/React.createElement(SmallToolButton, {
+  }), React.createElement(SmallToolButton, {
     alwaysShowing: true,
     togglable: true,
     id: "show-tags",
     selected: showTags,
     name: "Show Tags",
-    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
+    icon: React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faTag
     })
-  }), /*#__PURE__*/React.createElement(SmallToolButton, {
+  }), React.createElement(SmallToolButton, {
     id: "create-point",
     name: "Add Point",
-    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
+    icon: React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faCrosshairs
     })
-  }), /*#__PURE__*/React.createElement(SmallToolButton, {
+  }), React.createElement(SmallToolButton, {
     id: "create-box",
     name: "Add Bounding Box",
-    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
+    icon: React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faVectorSquare
     })
-  }), /*#__PURE__*/React.createElement(SmallToolButton, {
+  }), React.createElement(SmallToolButton, {
     id: "create-polygon",
     name: "Add Polygon",
-    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
+    icon: React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faDrawPolygon
     })
-  }), /*#__PURE__*/React.createElement(SmallToolButton, {
+  }), React.createElement(SmallToolButton, {
     id: "create-circle",
     name: "Add Circle",
-    icon: /*#__PURE__*/React.createElement(FontAwesomeIcon, {
+    icon: React.createElement(FontAwesomeIcon, {
       size: "xs",
       fixedWidth: true,
       icon: faCircle

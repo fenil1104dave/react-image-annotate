@@ -1,10 +1,10 @@
 import _objectSpread from "@babel/runtime/helpers/esm/objectSpread";
 import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
-import React, { useReducer, useEffect } from "react";
-import MainLayout from "../MainLayout";
-import SettingsProvider from "../SettingsProvider";
-import reducer from "./reducer";
-import { Matrix } from "transformation-matrix-js";
+import React, { useReducer, useEffect } from 'react';
+import MainLayout from '../MainLayout';
+import SettingsProvider from '../SettingsProvider';
+import reducer from './reducer';
+import { Matrix } from 'transformation-matrix-js';
 
 var getDefaultMat = function getDefaultMat() {
   return Matrix.from(1, 0, 0, 1, -10, -10);
@@ -20,11 +20,11 @@ export default (function (_ref) {
       showPointDistances = _ref.showPointDistances,
       pointDistancePrecision = _ref.pointDistancePrecision,
       _ref$selectedTool = _ref.selectedTool,
-      selectedTool = _ref$selectedTool === void 0 ? "select" : _ref$selectedTool,
+      selectedTool = _ref$selectedTool === void 0 ? 'select' : _ref$selectedTool,
       _ref$showTags = _ref.showTags,
       showTags = _ref$showTags === void 0 ? true : _ref$showTags,
       _ref$enabledTools = _ref.enabledTools,
-      enabledTools = _ref$enabledTools === void 0 ? ["select", "create-point", "create-box", "create-polygon", "create-circle"] : _ref$enabledTools,
+      enabledTools = _ref$enabledTools === void 0 ? ['select', 'create-point', 'create-box', 'create-polygon', 'create-circle'] : _ref$enabledTools,
       _ref$regionTagList = _ref.regionTagList,
       regionTagList = _ref$regionTagList === void 0 ? [] : _ref$regionTagList,
       _ref$regionClsList = _ref.regionClsList,
@@ -43,7 +43,10 @@ export default (function (_ref) {
       _ref$setImageLoaded = _ref.setImageLoaded,
       setImageLoaded = _ref$setImageLoaded === void 0 ? function () {} : _ref$setImageLoaded,
       _ref$handleScaleChang = _ref.handleScaleChange,
-      handleScaleChange = _ref$handleScaleChang === void 0 ? function () {} : _ref$handleScaleChang;
+      handleScaleChange = _ref$handleScaleChang === void 0 ? function () {} : _ref$handleScaleChang,
+      _ref$regions = _ref.regions,
+      regions = _ref$regions === void 0 ? [] : _ref$regions,
+      handleRegionChange = _ref.handleRegionChange;
 
   var _useReducer = useReducer(reducer, {
     showTags: showTags,
@@ -52,7 +55,7 @@ export default (function (_ref) {
     showPointDistances: showPointDistances,
     pointDistancePrecision: pointDistancePrecision,
     selectedTool: selectedTool,
-    // selectedTool: "select",
+    // selectedTool: 'create-polygon',
     mode: null,
     taskDescription: taskDescription,
     images: images,
@@ -68,7 +71,8 @@ export default (function (_ref) {
     enabledTools: enabledTools,
     history: [],
     setImageLoaded: setImageLoaded,
-    handleScaleChange: handleScaleChange
+    handleScaleChange: handleScaleChange,
+    handleRegionChange: handleRegionChange
   }),
       _useReducer2 = _slicedToArray(_useReducer, 2),
       state = _useReducer2[0],
@@ -76,27 +80,27 @@ export default (function (_ref) {
 
   useEffect(function () {
     dispatchToReducer({
-      type: "SELECT_TOOL",
+      type: 'SELECT_TOOL',
       selectedTool: selectedTool
     });
   }, [selectedTool]);
   useEffect(function () {
     if (showTags !== state.showTags) {
       dispatchToReducer({
-        type: "SELECT_TOOL",
-        selectedTool: "show-tags"
+        type: 'SELECT_TOOL',
+        selectedTool: 'show-tags'
       });
     }
   }, [showTags]);
   useEffect(function () {
     dispatchToReducer({
-      type: "CHANGE_IMAGES",
+      type: 'CHANGE_IMAGES',
       images: images
     });
   }, [JSON.stringify(images)]);
   useEffect(function () {
     dispatchToReducer({
-      type: "SELECT_IMAGE",
+      type: 'SELECT_IMAGE',
       image: {
         src: selectedImage
       }
@@ -104,13 +108,13 @@ export default (function (_ref) {
   }, [selectedImage]);
   useEffect(function () {
     dispatchToReducer({
-      type: "CHANGE_CURRENT_MAT",
+      type: 'CHANGE_CURRENT_MAT',
       currentMat: currentMat
     });
   }, [JSON.stringify(currentMat)]);
 
   var dispatch = function dispatch(action) {
-    if (action.type === "HEADER_BUTTON_CLICKED" && (action.buttonName === "Exit" || action.buttonName === "Done" || action.buttonName === "Save" || action.buttonName === "Complete")) {
+    if (action.type === 'HEADER_BUTTON_CLICKED' && (action.buttonName === 'Exit' || action.buttonName === 'Done' || action.buttonName === 'Save' || action.buttonName === 'Complete')) {
       onExit(_objectSpread({}, state, {
         history: undefined
       }));
@@ -119,9 +123,10 @@ export default (function (_ref) {
     }
   };
 
-  return /*#__PURE__*/React.createElement(SettingsProvider, null, /*#__PURE__*/React.createElement(MainLayout, {
+  return React.createElement(SettingsProvider, null, React.createElement(MainLayout, {
     debug: true,
     state: state,
-    dispatch: dispatch
+    dispatch: dispatch,
+    regions: regions
   }));
 });

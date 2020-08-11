@@ -3,7 +3,7 @@ import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
 import _toConsumableArray from "@babel/runtime/helpers/esm/toConsumableArray";
 export var getEnclosingBox = function getEnclosingBox(region, iw, ih) {
   switch (region.type) {
-    case "polygon":
+    case 'polygon':
       {
         var box = {
           x: Math.min.apply(Math, _toConsumableArray(region.points.map(function (_ref) {
@@ -40,7 +40,7 @@ export var getEnclosingBox = function getEnclosingBox(region, iw, ih) {
         return box;
       }
 
-    case "box":
+    case 'box':
       {
         return {
           x: region.x,
@@ -50,7 +50,7 @@ export var getEnclosingBox = function getEnclosingBox(region, iw, ih) {
         };
       }
 
-    case "point":
+    case 'point':
       {
         return {
           x: region.x,
@@ -60,7 +60,7 @@ export var getEnclosingBox = function getEnclosingBox(region, iw, ih) {
         };
       }
 
-    case "pixel":
+    case 'pixel':
       {
         if (region.sx !== undefined && region.sy !== undefined && region.w && region.h) {
           return {
@@ -108,7 +108,7 @@ export var getEnclosingBox = function getEnclosingBox(region, iw, ih) {
         }
       }
 
-    case "circle":
+    case 'circle':
       {
         var radius = Math.sqrt(Math.pow((region.xr - region.x) * iw, 2) + Math.pow((region.yr - region.y) * ih, 2));
         var _box2 = {
@@ -123,11 +123,11 @@ export var getEnclosingBox = function getEnclosingBox(region, iw, ih) {
       }
   }
 
-  throw new Error("unknown region");
+  throw new Error('unknown region');
 };
 export var moveRegion = function moveRegion(region, x, y) {
   switch (region.type) {
-    case "point":
+    case 'point':
       {
         return _objectSpread({}, region, {
           x: x,
@@ -135,7 +135,7 @@ export var moveRegion = function moveRegion(region, x, y) {
         });
       }
 
-    case "box":
+    case 'box':
       {
         return _objectSpread({}, region, {
           x: x - region.w / 2,
@@ -143,7 +143,7 @@ export var moveRegion = function moveRegion(region, x, y) {
         });
       }
 
-    case "circle":
+    case 'circle':
       {
         return _objectSpread({}, region, {
           x: x,

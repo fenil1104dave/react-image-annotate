@@ -192,6 +192,84 @@ export default (props: any) => {
 	const [dropdownOpen, setDropdownOpen] = useState(false)
 	const toggle = () => setDropdownOpen((prevState) => !prevState)
 
+	const [regions, setRegions] = useState([])
+	useEffect(() => {
+		let data = {
+			count: 1,
+			next: null,
+			previous: null,
+			results: [
+				{
+					id: 3,
+					file_set: 174,
+					ml_model: 1,
+					defects: [1, 2],
+					file_labels: [
+						{
+							id: 2,
+							file: 175,
+							file_set_label: 3,
+							is_user_feedback: false,
+							label: {
+								defects: [
+									{
+										defect_id: 1,
+										region_id: 'uuid-1',
+										coordinates: { x_max: 0.3, x_min: 0.1, y_max: 0.5, y_min: 0.2 },
+									},
+								],
+							},
+							created_by: 3,
+							created_ts: '2020-08-11T07:40:23.099104Z',
+							updated_by: 3,
+							updated_ts: '2020-08-11T09:35:18.226756Z',
+						},
+					],
+					created_by: 3,
+					created_ts: '2020-08-11T07:36:47.775962Z',
+					updated_by: 3,
+					updated_ts: '2020-08-11T07:36:47.776008Z',
+				},
+			],
+		}
+		if (data) {
+			console.log('ReviewData -> data', data)
+			const { results } = data
+			console.log('ReviewData -> results', results)
+			const regions = []
+			for (let i = 0; i < results.length; i++) {
+				const { file_labels } = results[i]
+				console.log('ReviewData -> file_labels', file_labels)
+				file_labels.forEach((fileLabel) => {
+					const { defects } = fileLabel.label
+					defects.forEach((defect) => {
+						console.log('ReviewData -> defect', defect)
+						const { coordinates } = defect
+						console.log('coordinates', coordinates)
+						const region = {
+							type: 'box',
+							x: coordinates.x_min,
+							y: coordinates.y_min,
+							w: coordinates.x_max - coordinates.x_min,
+							h: coordinates.x_max - coordinates.y_min,
+							id: i.toString(),
+							locked: true,
+							visible: true,
+							color: '#ff0',
+						}
+						regions.push(region)
+						console.log('region', region)
+					})
+				})
+			}
+			setRegions(regions)
+			console.log('regions', regions)
+		}
+	}, [data])
+	const handleRegionChange = ({ X, Y, width, height }) => {
+		console.log(X, Y, width, height)
+	}
+
 	return (
 		<div
 			className="m-0 p-0"
@@ -265,6 +343,8 @@ export default (props: any) => {
 							currentMat={currentMat}
 							changeMat={changeMat}
 							handleScaleChange={handleScaleChange}
+							regions={regions}
+							handleRegionChange={handleRegionChange}
 						/>
 					</div>
 				</div>

@@ -1,5 +1,5 @@
 import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from 'react';
 export default (function (_ref) {
   var mousePosition = _ref.mousePosition,
       x = _ref.x,
@@ -26,24 +26,24 @@ export default (function (_ref) {
       return clearInterval(interval);
     };
   });
-  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
+  return React.createElement(Fragment, null, React.createElement("div", {
     style: {
-      position: "absolute",
-      height: "100%",
+      position: 'absolute',
+      height: '100%',
       width: 1,
-      backgroundColor: "#f00",
+      backgroundColor: '#f00',
       left: x,
-      pointerEvents: "none",
+      pointerEvents: 'none',
       top: 0
     }
-  }), /*#__PURE__*/React.createElement("div", {
+  }), React.createElement("div", {
     style: {
-      position: "absolute",
-      width: "100%",
+      position: 'absolute',
+      width: '100%',
       height: 1,
-      backgroundColor: "#f00",
+      backgroundColor: '#f00',
       top: y,
-      pointerEvents: "none",
+      pointerEvents: 'none',
       left: 0
     }
   }));
