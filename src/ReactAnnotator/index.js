@@ -34,7 +34,7 @@ export default (props: any) => {
 	}
 
 	const [scale, setScale] = useState(100)
-	const [activeImg, setActiveImg] = useState(1)
+	const [activeImg, setActiveImg] = useState(0)
 
 	const handleClick = useCallback((index) => {
 		setActiveImg(index)
@@ -205,6 +205,9 @@ export default (props: any) => {
 					onClickTool={handleToolChange}
 					scale={parseInt(scale)}
 					setScale={handleScaleChange}
+					imgNavigation={setActiveImg}
+					activeImg={activeImg}
+					dataLength={data.length}
 				/>
 			</Row>
 			<div className="d-flex">

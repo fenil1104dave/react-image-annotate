@@ -8,14 +8,17 @@ import RectangleIcon from '../../assets/images/reviewScreen/rectangle.svg'
 import ZoomIn from '../../assets/images/reviewScreen/zoomIn.svg'
 import ZoomOut from '../../assets/images/reviewScreen/zoomOut.svg'
 import { Col, CustomInput, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
+import { IconButton } from '@material-ui/core'
 
-const Appbar = ({ scale, setScale, onClickTool }) => {
+const Appbar = ({ scale, setScale, onClickTool, imgNavigation, activeImg, dataLength }) => {
 	const [dropdownOpen, setDropdownOpen] = useState(false)
 
 	const toggle = () => setDropdownOpen((prevState) => !prevState)
 	return (
 		<>
-			<Col className="d-flex" lg={11}>
+			<Col className="d-flex" lg={10}>
 				<img
 					className="pr-3"
 					onClick={() => onClickTool('create-box')}
@@ -137,7 +140,31 @@ const Appbar = ({ scale, setScale, onClickTool }) => {
 					</Dropdown>
 				</div>
 			</Col>
-			<Col>
+			<Col className="d-flex">
+				<IconButton
+					disabled={activeImg === 0}
+					onClick={() => {
+						if (activeImg !== 0) {
+							imgNavigation(activeImg - 1)
+						}
+					}}
+					className="py-0"
+					style={{ color: '#FFFFFF' }}
+				>
+					<ArrowBackIosIcon />
+				</IconButton>
+				<IconButton
+					disabled={activeImg === dataLength - 1}
+					onClick={() => {
+						if (dataLength - 1 !== activeImg) {
+							imgNavigation(activeImg + 1)
+						}
+					}}
+					className="py-0"
+					style={{ color: '#FFFFFF' }}
+				>
+					<ArrowForwardIosIcon />
+				</IconButton>
 				<img className="pl-5" src={CloseIcon} alt="CloseIcon" />
 			</Col>
 		</>
