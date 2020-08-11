@@ -40,6 +40,10 @@ export default ({ state, dispatch }: Props) => {
 		state.onImagesChange(state.images)
 	}, [JSON.stringify(state.images)])
 
+	const handleRegionChange = ({ X, Y, width, height }) => {
+		console.log(X, Y, width, height)
+	}
+
 	return (
 		<div style={{ width: '760px', height: '700px' }} className="m-3 px-2">
 			<ImageCanvas
@@ -80,6 +84,7 @@ export default ({ state, dispatch }: Props) => {
 				onIhIwChange={state.onIhIwChange}
 				setImageLoaded={state.setImageLoaded}
 				handleScaleChange={state.handleScaleChange}
+				getRegionCoordinates={handleRegionChange}
 			/>
 		</div>
 	)
