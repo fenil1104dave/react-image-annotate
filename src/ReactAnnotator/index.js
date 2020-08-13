@@ -282,9 +282,6 @@ export default (props: any) => {
 			}
 		}
 	}, [])
-	const handleRegionChange = ({ X, Y, width, height }) => {
-		// console.log(X, Y, width, height)
-	}
 
 	const handleRegionSave = () => {
 		console.log(currentRegions)
@@ -365,7 +362,6 @@ export default (props: any) => {
 							changeMat={changeMat}
 							handleScaleChange={handleScaleChange}
 							regions={regions}
-							handleRegionChange={handleRegionChange}
 							setCurrentRegions={setCurrentRegions}
 						/>
 					</div>

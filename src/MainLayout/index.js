@@ -84,7 +84,6 @@ export default ({ state, dispatch, regions }: Props) => {
 				onIhIwChange={state.onIhIwChange}
 				setImageLoaded={state.setImageLoaded}
 				handleScaleChange={state.handleScaleChange}
-				getRegionCoordinates={state.handleRegionChange}
 			/>
 		</div>
 	)

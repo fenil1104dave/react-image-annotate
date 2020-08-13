@@ -47,7 +47,6 @@ export default ({
 	setImageLoaded = () => {},
 	handleScaleChange = () => {},
 	regions = [],
-	handleRegionChange,
 	setCurrentRegions,
 }: Props) => {
 	const [state, dispatchToReducer] = useReducer(reducer, {
@@ -74,7 +73,6 @@ export default ({
 		history: [],
 		setImageLoaded,
 		handleScaleChange,
-		handleRegionChange: handleRegionChange,
 		setCurrentRegions: setCurrentRegions,
 	})
 	useEffect(() => {

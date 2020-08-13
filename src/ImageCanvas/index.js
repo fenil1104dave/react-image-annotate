@@ -81,7 +81,6 @@ export default ({
 	showPointDistances,
 	allowedArea,
 	zoomHistory,
-
 	onImageLoaded,
 	changeZoomHistory,
 	resetZoomHistory,
@@ -100,7 +99,6 @@ export default ({
 	onIhIwChange,
 	setImageLoaded,
 	handleScaleChange,
-	getRegionCoordinates,
 }: Props) => {
 	const classes = useStyles()
 	const canvasEl = useRef(null)
@@ -257,15 +255,6 @@ export default ({
 					break
 				}
 				case 'box': {
-					getRegionCoordinates({
-						X: region.x * iw,
-						Y: region.y * ih,
-						width: region.w * iw,
-						height: region.h * ih,
-					})
-					// console.log(
-					// 	`(${region.x * iw}, ${region.y * ih}), width: ${region.w * iw}, height: ${region.h * ih}`
-					// )
 					context.save()
 
 					context.shadowColor = 'black'
