@@ -1,15 +1,26 @@
 // @flow
 
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import Grid from '@material-ui/core/Grid'
+import { makeStyles } from '@material-ui/core/styles'
+import Sidebar from '../Sidebar'
 import ImageCanvas from '../ImageCanvas'
-
+import Header from '../Header'
+import IconTools from '../IconTools'
+import styles from './styles'
+import type { MainLayoutState, Action } from './types'
 import useKey from 'use-key-hook'
+import classnames from 'classnames'
 import { useSettings } from '../SettingsProvider'
+import SettingsDialog from '../SettingsDialog'
+import Fullscreen from 'react-full-screen'
 import { Matrix } from 'transformation-matrix-js'
+
+const useStyles = makeStyles(styles)
 
 export default ({ state, dispatch, regions }: Props) => {
 	const settings = useSettings()
-
+	const classes = useStyles()
 	const action = (type: string, ...params: Array<string>) => (...args: any) =>
 		params.length > 0
 			? dispatch(
@@ -39,12 +50,23 @@ export default ({ state, dispatch, regions }: Props) => {
 		state.onImagesChange(state.images)
 	}, [JSON.stringify(state.images)])
 
-	useEffect(() => {
-		state.setCurrentRegions(currentImage && currentImage.regions ? currentImage.regions : [])
-	}, [currentImage])
+	// useEffect(() => {
+	// 	state.setCurrentRegions(currentImage && currentImage.regions ? currentImage.regions : [])
+	// }, [currentImage])
 
 	const currentRegions = currentImage && currentImage.regions ? currentImage.regions : []
+
 	return (
+		// <div className={classnames(classes.container, state.fullScreen && 'Fullscreen')}>
+		// 	<div className={classes.workspace}>
+		// 		<div className={classes.iconToolsContainer}>
+		// 			<IconTools
+		// 				enabledTools={state.enabledTools}
+		// 				showTags={state.showTags}
+		// 				selectedTool={state.selectedTool}
+		// 				onClickTool={action('SELECT_TOOL', 'selectedTool')}
+		// 			/>
+		// 		</div>
 		<div style={{ width: '760px', height: '700px' }} className="m-3 px-2">
 			<ImageCanvas
 				{...settings}
@@ -86,5 +108,26 @@ export default ({ state, dispatch, regions }: Props) => {
 				handleScaleChange={state.handleScaleChange}
 			/>
 		</div>
+		//  <div className={classes.sidebarContainer}>
+		// 	<Sidebar
+		// 		debug={window.localStorage.$ANNOTATE_DEBUG_MODE && state}
+		// 		taskDescription={state.taskDescription}
+		// 		images={state.images}
+		// 		regions={currentImage ? currentImage.regions || [] : []}
+		// 		history={state.history}
+		// 		currentImage={currentImage}
+		// 		labelImages={state.labelImages}
+		// 		imageClsList={state.imageClsList}
+		// 		imageTagList={state.imageTagList}
+		// 		onChangeImage={action('CHANGE_IMAGE', 'delta')}
+		// 		onSelectRegion={action('SELECT_REGION', 'region')}
+		// 		onDeleteRegion={action('DELETE_REGION', 'region')}
+		// 		onSelectImage={action('SELECT_IMAGE', 'image')}
+		// 		onChangeRegion={action('CHANGE_REGION', 'region')}
+		// 		onRestoreHistory={action('RESTORE_HISTORY')}
+		// 	/>
+		// </div>
+		// 	</div>
+		// </div>
 	)
 }
