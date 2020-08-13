@@ -95,6 +95,7 @@ export default (props: any) => {
 	}, [inferenceData])
 
 	const [afterSawingImages, setAfterSawingImages] = useState([])
+	const [currentRegion, setCurrentRegion] = useState([])
 
 	// useEffect(() => {
 	// 	if (defaultData) {
@@ -267,7 +268,11 @@ export default (props: any) => {
 		}
 	}, [data])
 	const handleRegionChange = ({ X, Y, width, height }) => {
-		console.log(X, Y, width, height)
+		// console.log(X, Y, width, height)
+	}
+
+	const handleRegionSave = () => {
+		console.log(currentRegion)
 	}
 
 	return (
@@ -286,6 +291,7 @@ export default (props: any) => {
 					imgNavigation={setActiveImg}
 					activeImg={activeImg}
 					dataLength={data.length}
+					saveRegion={handleRegionSave}
 				/>
 			</Row>
 			<div className="d-flex">
@@ -345,6 +351,7 @@ export default (props: any) => {
 							handleScaleChange={handleScaleChange}
 							regions={regions}
 							handleRegionChange={handleRegionChange}
+							setCurrentRegion={setCurrentRegion}
 						/>
 					</div>
 				</div>

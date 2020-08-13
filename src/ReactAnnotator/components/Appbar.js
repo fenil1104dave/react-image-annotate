@@ -10,9 +10,10 @@ import ZoomOut from '../../assets/images/reviewScreen/zoomOut.svg'
 import { Col, CustomInput, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
-import { IconButton } from '@material-ui/core'
+import NearMeOutlinedIcon from '@material-ui/icons/NearMeOutlined'
+import { IconButton, Button } from '@material-ui/core'
 
-const Appbar = ({ scale, setScale, onClickTool, imgNavigation, activeImg, dataLength }) => {
+const Appbar = ({ scale, setScale, onClickTool, imgNavigation, activeImg, dataLength, saveRegion }) => {
 	const [dropdownOpen, setDropdownOpen] = useState(false)
 
 	const toggle = () => setDropdownOpen((prevState) => !prevState)
@@ -30,6 +31,28 @@ const Appbar = ({ scale, setScale, onClickTool, imgNavigation, activeImg, dataLe
 						cursor: 'pointer',
 					}}
 				/>{' '}
+				<IconButton
+					style={{ color: '#FFFFFF', transform: 'rotate(-90deg)' }}
+					className="p-0 px-3"
+					onClick={() => onClickTool('select')}
+					disabled={false}
+					aria-label="Select Region"
+					src={RectangleIcon}
+					alt="SelectIcon"
+				>
+					<NearMeOutlinedIcon />
+				</IconButton>
+				{/* <img
+					className="px-3"
+					onClick={() => onClickTool('select')}
+					disabled={false}
+					aria-label="Select Region"
+					src={RectangleIcon}
+					alt="SelectIcon"
+					style={{
+						cursor: 'pointer',
+					}}
+				/> */}
 				<img className="px-3" src={LeftArrow} alt="LeftArrow" />
 				<img className="px-3" src={RightArrow} alt="RightArrow" />
 				<img className="px-3" src={BookMarkIcon} alt="BookMarkIcon" />
@@ -139,6 +162,14 @@ const Appbar = ({ scale, setScale, onClickTool, imgNavigation, activeImg, dataLe
 						</DropdownMenu>
 					</Dropdown>
 				</div>
+				<Button
+					onClick={saveRegion}
+					className="p-0 mx-3 m-0"
+					size="small"
+					style={{ backgroundColor: 'transparent', color: '#FFFFFF' }}
+				>
+					Save
+				</Button>
 			</Col>
 			<Col className="d-flex">
 				<IconButton

@@ -7,7 +7,7 @@ import useKey from 'use-key-hook'
 import { useSettings } from '../SettingsProvider'
 import { Matrix } from 'transformation-matrix-js'
 
-export default ({ state, dispatch, regions }: Props) => {
+export default ({ state, dispatch, regions, setCurrentRegion }: Props) => {
 	const settings = useSettings()
 
 	const action = (type: string, ...params: Array<string>) => (...args: any) =>
@@ -38,6 +38,10 @@ export default ({ state, dispatch, regions }: Props) => {
 	useEffect(() => {
 		state.onImagesChange(state.images)
 	}, [JSON.stringify(state.images)])
+
+	useEffect(() => {
+		setCurrentRegion(currentImage && currentImage.regions ? currentImage.regions : [])
+	}, [currentImage])
 
 	const currentRegions = currentImage && currentImage.regions ? currentImage.regions : []
 	return (
