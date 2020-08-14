@@ -13,7 +13,7 @@ import { Matrix } from 'transformation-matrix-js'
 
 const useStyles = makeStyles(styles)
 
-export default ({ state, dispatch, regions }: Props) => {
+export default ({ state, dispatch }: Props) => {
 	const settings = useSettings()
 	const classes = useStyles()
 	const action = (type: string, ...params: Array<string>) => (...args: any) =>
@@ -49,7 +49,7 @@ export default ({ state, dispatch, regions }: Props) => {
 	// 	state.setCurrentRegions(currentImage && currentImage.regions ? currentImage.regions : [])
 	// }, [currentImage])
 
-	const currentRegions = currentImage && currentImage.regions ? currentImage.regions : []
+	// const currentRegions = currentImage && currentImage.regions ? currentImage.regions : []
 
 	return (
 		// <div className={classnames(classes.container, state.fullScreen && 'Fullscreen')}>
@@ -70,7 +70,7 @@ export default ({ state, dispatch, regions }: Props) => {
 				allowedArea={state.allowedArea}
 				regionClsList={state.regionClsList}
 				regionTagList={state.regionTagList}
-				regions={[...currentRegions, ...regions]}
+				regions={currentImage ? currentImage.regions || [] : []}
 				realSize={currentImage ? currentImage.realSize : undefined}
 				imageSrc={state.selectedImage}
 				pointDistancePrecision={state.pointDistancePrecision}

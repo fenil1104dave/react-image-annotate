@@ -17,6 +17,23 @@ const data = [
 	{
 		src: Test1,
 		name: '84PMBG64X05_Tray017_R002C004_BCF2MCF10_Backlight Burr Backlight Burr 1_Bottom SMI Burr RTR.bmp',
+		regions: [{
+			type: 'box',
+			h: 0.1,
+			w: 0.5,
+			x: 0.4,
+			y: 0.2,
+			// id: i.toString(),
+			color: 'white',
+			tags: [{'value': 12, 'label': 'asjhdgj'}],
+			// cls: defect.region_id,
+			// showTags: false,
+			// visible: true,
+			// highlighted: false,
+			// is_user_feedback: false,
+			editingLabels: false,
+			id: Math.random().toString(36).substring(7),
+		}]
 	},
 	{
 		src: Test2,
@@ -66,6 +83,8 @@ export default (props: any) => {
 	// }
 	const getRegions = useCallback(() => {
 		let data = inferenceData.data
+		console.log(data);
+		console.log('data');
 		const regions = []
 		for (let i = 0; i < data.length; i++) {
 			let region = {
@@ -95,7 +114,7 @@ export default (props: any) => {
 	}, [inferenceData])
 
 	const [afterSawingImages, setAfterSawingImages] = useState([])
-	const [currentRegions, setCurrentRegions] = useState([])
+	// const [currentRegions, setCurrentRegions] = useState([])
 
 	// useEffect(() => {
 	// 	if (defaultData) {
@@ -263,13 +282,15 @@ export default (props: any) => {
 						y: coordinatess.y,
 						w: coordinatess.w,
 						h: coordinatess.h,
-						id: i.toString(),
+						// id: i.toString(),
 						color: 'white',
 						// cls: defect.region_id,
-						showTags: false,
-						visible: true,
-						highlight: true,
-						is_user_feedback: false,
+						// showTags: false,
+						// visible: true,
+						highlighted: false,
+						// is_user_feedback: false,
+						editingLabels: false,
+						id: Math.random().toString(36).substring(7),
 						// tags: [
 						// 	`x: ${data[i].extra_model_output.x.value.toString()}`,
 						// 	`y: ${data[i].extra_model_output.y.value.toString()}`,
@@ -278,14 +299,18 @@ export default (props: any) => {
 					}
 					temp.push(r)
 				})
+				console.log(temp)
+				console.log('temp')
 				setRegions(temp)
 			}
 		}
 	}, [])
 
 	const handleRegionSave = () => {
-		console.log(currentRegions)
+		// console.log(currentRegions)
 	}
+
+	const onExit = (allData) => {}
 
 	return (
 		<div
@@ -361,8 +386,10 @@ export default (props: any) => {
 							currentMat={currentMat}
 							changeMat={changeMat}
 							handleScaleChange={handleScaleChange}
-							regions={regions}
-							setCurrentRegions={setCurrentRegions}
+							// regions={regions}
+							// setCurrentRegions={setCurrentRegions}
+							onExit={onExit}
+							regionTagList={[ {label: 'asd', value: 1},{label: 'asssf', value: 2}]}
 						/>
 					</div>
 				</div>

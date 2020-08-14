@@ -143,6 +143,9 @@ export default (state: MainLayoutState, action: Action) => {
 			// This is used when the parent component wants to modify the images hash
 			return setIn(state, ['images'], action.images)
 		}
+		case 'CHANGE_REGION_TAGS': {
+			return setIn(state, ['regionTagList'], action.regionTagList)
+		}
 		case 'CHANGE_IMAGE': {
 			if (currentImageIndex === null) return state
 			const { delta } = action

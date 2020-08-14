@@ -96,3 +96,4 @@ export type Action =
 	| {| type: 'CANCEL' |}
 	| {| type: 'CHANGE_CURRENT_MAT', currentMat: Matrix |}
 	| {| type: 'CHANGE_IMAGES', images: any |}
+	| {| type: 'CHANGE_REGION_TAGS', regionTagList: any |}
