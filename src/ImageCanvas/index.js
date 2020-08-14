@@ -866,7 +866,7 @@ export default ({
 										left: 0,
 										...(displayOnTop ? { bottom: 0 } : { top: 0 }),
 									}}
-									{...(!region.editingLabels ? mouseEvents : {})}
+
 								>
 									<RegionLabel
 										allowedClasses={regionClsList}

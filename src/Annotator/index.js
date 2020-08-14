@@ -46,8 +46,8 @@ export default ({
 	onExit,
 	setImageLoaded = () => {},
 	handleScaleChange = () => {},
-	regions = [],
-	setCurrentRegions,
+	// regions = [],
+	// setCurrentRegions,
 }: Props) => {
 	const [state, dispatchToReducer] = useReducer(reducer, {
 		showTags,
@@ -73,7 +73,7 @@ export default ({
 		history: [],
 		setImageLoaded,
 		handleScaleChange,
-		setCurrentRegions: setCurrentRegions,
+		// setCurrentRegions: setCurrentRegions,
 	})
 	useEffect(() => {
 		dispatchToReducer({ type: 'SELECT_TOOL', selectedTool: selectedTool })
@@ -88,6 +88,10 @@ export default ({
 	useEffect(() => {
 		dispatchToReducer({ type: 'CHANGE_IMAGES', images: images })
 	}, [JSON.stringify(images)])
+
+	useEffect(() => {
+		dispatchToReducer({ type: 'CHANGE_REGION_TAGS', regionTagList: regionTagList })
+	}, [JSON.stringify(regionTagList)])
 
 	useEffect(() => {
 		dispatchToReducer({ type: 'SELECT_IMAGE', image: { src: selectedImage } })
@@ -113,7 +117,7 @@ export default ({
 
 	return (
 		<SettingsProvider>
-			<MainLayout debug state={state} dispatch={dispatch} regions={regions} />
+			<MainLayout debug state={state} dispatch={dispatch} />
 		</SettingsProvider>
 	)
 }

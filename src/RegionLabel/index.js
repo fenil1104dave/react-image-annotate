@@ -60,7 +60,7 @@ export default ({
 						<div className="tags">
 							{region.tags.map((t) => (
 								<div key={t} className="tag">
-									{t}
+									{t.label}
 								</div>
 							))}
 						</div>
@@ -116,13 +116,13 @@ export default ({
 								onChange={(newTags) =>
 									onChange({
 										...(region: any),
-										tags: newTags.map((t) => t.value),
+										tags: newTags.map((t) => t),
 									})
 								}
 								placeholder="Tags"
-								value={(region.tags || []).map((c) => ({ label: c, value: c }))}
+								value={(region.tags || []).map((c) => ({ label: c.label, value: c.value }))}
 								isMulti
-								options={allowedTags.map((c) => ({ value: c, label: c }))}
+								options={allowedTags.map((c) => ({ value: c.value, label: c.label }))}
 							/>
 						</div>
 					)}
