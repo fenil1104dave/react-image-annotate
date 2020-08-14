@@ -40,6 +40,7 @@ export default ({
 	isEditingLocked = false,
 }: Props) => {
 	const classes = useStyles()
+	allowedTags = [...allowedTags]
 
 	return (
 		<Paper
