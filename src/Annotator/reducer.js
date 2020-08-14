@@ -356,6 +356,8 @@ export default (state: MainLayoutState, action: Action) => {
 							editingLabels: false,
 							color: getRandomColor(),
 							id: getRandomId(),
+							is_new: true,
+							is_updated: true,
 						}
 						state = unselectRegions(state)
 						state = setIn(state, ['mode'], {
@@ -487,6 +489,7 @@ export default (state: MainLayoutState, action: Action) => {
 					...(state.images[currentImageIndex].regions || [])[regionIndex],
 					highlighted: true,
 					editingLabels: true,
+					is_updated: true,
 				}
 			)
 			return setIn(state, ['images', currentImageIndex, 'regions'], newRegions)

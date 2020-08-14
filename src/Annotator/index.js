@@ -46,9 +46,9 @@ export default ({
 	onExit,
 	setImageLoaded = () => {},
 	handleScaleChange = () => {},
-	// regions = [],
-	// setCurrentRegions,
-}: Props) => {
+	setCurrentRegions,
+}: // regions = [],
+Props) => {
 	const [state, dispatchToReducer] = useReducer(reducer, {
 		showTags,
 		allowedArea,
@@ -73,7 +73,7 @@ export default ({
 		history: [],
 		setImageLoaded,
 		handleScaleChange,
-		// setCurrentRegions: setCurrentRegions,
+		setCurrentRegions: setCurrentRegions,
 	})
 	useEffect(() => {
 		dispatchToReducer({ type: 'SELECT_TOOL', selectedTool: selectedTool })

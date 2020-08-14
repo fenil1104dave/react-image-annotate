@@ -45,9 +45,9 @@ export default ({ state, dispatch }: Props) => {
 		state.onImagesChange(state.images)
 	}, [JSON.stringify(state.images)])
 
-	// useEffect(() => {
-	// 	state.setCurrentRegions(currentImage && currentImage.regions ? currentImage.regions : [])
-	// }, [currentImage])
+	useEffect(() => {
+		state.setCurrentRegions(currentImage && currentImage.regions ? currentImage.regions : [])
+	}, [currentImage])
 
 	// const currentRegions = currentImage && currentImage.regions ? currentImage.regions : []
 
