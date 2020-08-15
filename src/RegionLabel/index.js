@@ -60,7 +60,7 @@ export default ({
 					{region.tags && (
 						<div className="tags">
 							{region.tags.map((t) => (
-								<div key={t} className="tag">
+								<div key={t.label} className="tag">
 									{t.label}
 								</div>
 							))}
