@@ -358,6 +358,7 @@ export default (state: MainLayoutState, action: Action) => {
 							id: getRandomId(),
 							is_new: true,
 							is_updated: true,
+							is_deleted: false,
 						}
 						state = unselectRegions(state)
 						state = setIn(state, ['mode'], {
@@ -415,7 +416,6 @@ export default (state: MainLayoutState, action: Action) => {
 			}
 
 			if (newRegion) {
-				console.log('newRegion', newRegion)
 				state = unselectRegions(state)
 			}
 
@@ -506,10 +506,18 @@ export default (state: MainLayoutState, action: Action) => {
 		case 'DELETE_REGION': {
 			const regionIndex = getRegionIndex(action.region)
 			if (regionIndex === null) return state
+			const currentRegion = state.images[currentImageIndex].regions[regionIndex]
+			let temp = state
+			if (!currentRegion.is_new) {
+				temp = {
+					...state,
+					deletedRegions: [...state.deletedRegions, { ...currentRegion, is_deleted: true }],
+				}
+			}
 			return setIn(
-				state,
+				temp,
 				['images', currentImageIndex, 'regions'],
-				(state.images[currentImageIndex].regions || []).filter((r) => r.id !== action.region.id)
+				(temp.images[currentImageIndex].regions || []).filter((r) => r.id !== action.region.id)
 			)
 		}
 		case 'ZOOM_HISTORY': {

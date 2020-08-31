@@ -26,7 +26,7 @@ const data = [
 				y: 0.2,
 				// id: i.toString(),
 				color: 'white',
-				tags: [{ value: 12, label: 'asjhdgj' }],
+				// tags: [{ value: 12, label: 'asjhdgj' }],
 				// cls: defect.region_id,
 				// showTags: false,
 				// visible: true,
@@ -218,58 +218,52 @@ export default (props: any) => {
 	useEffect(() => {
 		let fileRegions = [
 			{
-				id: 5,
-				file: 192,
+				id: 48,
+				file: 756,
+				ml_model: 1,
+				defects: {
+					'1': {},
+					'2': {},
+				},
+				ai_region: 47,
+				region: {
+					coordinates: {
+						h: 0.004411764705882353,
+						w: 0.028530222006157735,
+						x: 0.5372549019607843,
+						y: 0.8063725490196079,
+					},
+				},
+				is_user_feedback: false,
+				created_by: 1,
+				created_ts: '2020-08-16T07:16:27.978571Z',
+				updated_by: null,
+				updated_ts: '2020-08-16T07:16:27.978617Z',
+			},
+			{
+				id: 47,
+				file: 756,
 				ml_model: 1,
 				defects: {
 					'3': {
-						confidence_score: 0.6,
-					},
-					'4': {
-						confidence_score: 0.9,
+						confidence: 0.97237229347229,
 					},
 				},
 				ai_region: null,
 				region: {
-					coordinatess: {
-						h: 0.1,
-						w: 0.5,
-						x: 0.4,
-						y: 0.2,
+					type: 'box',
+					coordinates: {
+						h: 0.004411764705882353,
+						w: 0.006372549019607843,
+						x: 0.5372549019607843,
+						y: 0.8063725490196079,
 					},
 				},
 				is_user_feedback: false,
-				created_by: 1,
-				created_ts: '2020-08-13T06:00:03.492426Z',
+				created_by: null,
+				created_ts: '2020-08-16T07:14:59.045452Z',
 				updated_by: null,
-				updated_ts: '2020-08-13T06:15:12.081525Z',
-			},
-			{
-				id: 4,
-				file: 192,
-				ml_model: 1,
-				defects: {
-					'1': {
-						confidence_score: 0.8,
-					},
-					'2': {
-						confidence_score: 0.8,
-					},
-				},
-				ai_region: null,
-				region: {
-					coordinatess: {
-						h: 0.2,
-						w: 0.4,
-						x: 0.1,
-						y: 0.2,
-					},
-				},
-				is_user_feedback: false,
-				created_by: 1,
-				created_ts: '2020-08-13T05:56:23.896073Z',
-				updated_by: null,
-				updated_ts: '2020-08-13T05:56:23.896121Z',
+				updated_ts: '2020-08-16T07:14:59.045487Z',
 			},
 		]
 		if (fileRegions) {
@@ -277,16 +271,16 @@ export default (props: any) => {
 				const temp = []
 				fileRegions.forEach((result, i) => {
 					const { region } = result
-					const { coordinatess } = region
+					const { coordinates } = region
 					const r = {
 						type: 'box',
-						x: coordinatess.x,
-						y: coordinatess.y,
-						w: coordinatess.w,
-						h: coordinatess.h,
+						x: coordinates.x,
+						y: coordinates.y,
+						w: coordinates.w,
+						h: coordinates.h,
 						// id: i.toString(),
 						color: 'white',
-						// cls: defect.region_id,
+						cls: region.id,
 						// showTags: false,
 						// visible: true,
 						highlighted: false,
@@ -322,6 +316,8 @@ export default (props: any) => {
 		{ label: 'fibre', value: 5 },
 		{ label: 'dirt_on_tool', value: 6 },
 	])
+
+	const [currentRegions, setCurrentRegions] = useState([])
 
 	return (
 		<div
@@ -398,7 +394,7 @@ export default (props: any) => {
 							changeMat={changeMat}
 							handleScaleChange={handleScaleChange}
 							// regions={regions}
-							// setCurrentRegions={setCurrentRegions}
+							setCurrentRegions={setCurrentRegions}
 							onExit={onExit}
 							regionTagList={regionTagList}
 						/>

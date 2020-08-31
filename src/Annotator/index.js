@@ -71,6 +71,7 @@ Props) => {
 		onIhIwChange,
 		enabledTools,
 		history: [],
+		deletedRegions: [],
 		setImageLoaded,
 		handleScaleChange,
 		setCurrentRegions: setCurrentRegions,

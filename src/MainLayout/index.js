@@ -46,10 +46,10 @@ export default ({ state, dispatch }: Props) => {
 	}, [JSON.stringify(state.images)])
 
 	useEffect(() => {
-		state.setCurrentRegions(currentImage && currentImage.regions ? currentImage.regions : [])
+		const currentRegions = currentImage && currentImage.regions ? currentImage.regions : []
+		const deletedRegions = state.deletedRegions ? state.deletedRegions : []
+		state.setCurrentRegions([...currentRegions, ...deletedRegions])
 	}, [currentImage])
-
-	// const currentRegions = currentImage && currentImage.regions ? currentImage.regions : []
 
 	return (
 		// <div className={classnames(classes.container, state.fullScreen && 'Fullscreen')}>
