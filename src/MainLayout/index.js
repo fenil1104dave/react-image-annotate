@@ -1,13 +1,13 @@
 // @flow
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Sidebar from '../Sidebar'
+// import Sidebar from '../Sidebar'
 import ImageCanvas from '../ImageCanvas'
-import IconTools from '../IconTools'
+// import IconTools from '../IconTools'
 import styles from './styles'
 import useKey from 'use-key-hook'
-import classnames from 'classnames'
+// import classnames from 'classnames'
 import { useSettings } from '../SettingsProvider'
 import { Matrix } from 'transformation-matrix-js'
 
@@ -62,7 +62,7 @@ export default ({ state, dispatch }: Props) => {
 		// 				onClickTool={action('SELECT_TOOL', 'selectedTool')}
 		// 			/>
 		// 		</div>
-		<div style={{ width: '760px', height: '700px' }} className="m-3 px-2">
+		<div style={{ width: '760px', height: '760px' }} className="px-2">
 			<ImageCanvas
 				{...settings}
 				key={state.selectedImage}
@@ -101,6 +101,7 @@ export default ({ state, dispatch }: Props) => {
 				onIhIwChange={state.onIhIwChange}
 				setImageLoaded={state.setImageLoaded}
 				handleScaleChange={state.handleScaleChange}
+				rollOverZoom={state.rollOverZoom}
 			/>
 		</div>
 		// 		<div className={classes.sidebarContainer}>

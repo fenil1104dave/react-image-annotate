@@ -47,6 +47,8 @@ export default ({
 	setImageLoaded = () => {},
 	handleScaleChange = () => {},
 	setCurrentRegions,
+	rollOverZoom = false,
+	resetDeleted = false,
 }: // regions = [],
 Props) => {
 	const [state, dispatchToReducer] = useReducer(reducer, {
@@ -75,6 +77,7 @@ Props) => {
 		setImageLoaded,
 		handleScaleChange,
 		setCurrentRegions: setCurrentRegions,
+		rollOverZoom: rollOverZoom,
 	})
 	useEffect(() => {
 		dispatchToReducer({ type: 'SELECT_TOOL', selectedTool: selectedTool })
@@ -89,6 +92,12 @@ Props) => {
 	useEffect(() => {
 		dispatchToReducer({ type: 'CHANGE_IMAGES', images: images })
 	}, [JSON.stringify(images)])
+
+	useEffect(() => {
+		if (resetDeleted) {
+			dispatchToReducer({ type: 'SET_DELETED_REGIONS' })
+		}
+	}, [resetDeleted])
 
 	useEffect(() => {
 		dispatchToReducer({ type: 'CHANGE_REGION_TAGS', regionTagList: regionTagList })

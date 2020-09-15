@@ -26,12 +26,14 @@ const data = [
 				y: 0.2,
 				// id: i.toString(),
 				color: 'white',
-				// tags: [{ value: 12, label: 'asjhdgj' }],
+				tags: [{ label: 'bent_lead', value: 1 }],
 				// cls: defect.region_id,
 				// showTags: false,
 				// visible: true,
 				// highlighted: false,
 				// is_user_feedback: false,
+				is_new: false,
+				is_updated: false,
 				editingLabels: false,
 				id: Math.random().toString(36).substring(7),
 			},
@@ -235,6 +237,7 @@ export default (props: any) => {
 					},
 				},
 				is_user_feedback: false,
+				is_new: false,
 				created_by: 1,
 				created_ts: '2020-08-16T07:16:27.978571Z',
 				updated_by: null,
@@ -284,6 +287,8 @@ export default (props: any) => {
 						// showTags: false,
 						// visible: true,
 						highlighted: false,
+						is_new: false,
+						is_updated: true,
 						// is_user_feedback: false,
 						editingLabels: false,
 						id: Math.random().toString(36).substring(7),
@@ -397,6 +402,7 @@ export default (props: any) => {
 							setCurrentRegions={setCurrentRegions}
 							onExit={onExit}
 							regionTagList={regionTagList}
+							rollOverZoom={true}
 						/>
 					</div>
 				</div>

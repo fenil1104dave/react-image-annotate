@@ -120,7 +120,7 @@ export const moveRegion = (region: Region, x: number, y: number) => {
 			return { ...region, x, y }
 		}
 		case 'box': {
-			return { ...region, x: x - region.w / 2, y: y - region.h / 2 }
+			return { ...region, is_updated: true, x: x - region.w / 2, y: y - region.h / 2 }
 		}
 		case 'circle': {
 			return { ...region, x, y, xr: region.xr + x - region.x, yr: region.yr + y - region.y }

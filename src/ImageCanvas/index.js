@@ -99,6 +99,7 @@ export default ({
 	onIhIwChange,
 	setImageLoaded,
 	handleScaleChange,
+	rollOverZoom,
 }: Props) => {
 	const classes = useStyles()
 	const canvasEl = useRef(null)
@@ -143,7 +144,9 @@ export default ({
 			image.current.onload = () => {
 				changeImageLoaded(true)
 				setImageLoaded(true)
-				handleScaleChange(100)
+				if (!rollOverZoom) {
+					handleScaleChange(100)
+				}
 				onImageLoaded({
 					width: image.current.naturalWidth,
 					height: image.current.naturalHeight,
@@ -584,7 +587,7 @@ export default ({
 			style={{
 				width: '100%',
 				height: '100%',
-				maxHeight: 'calc(100vh - 68px)',
+				maxHeight: 'calc(100vh - 120px)',
 				position: 'relative',
 				overflow: 'hidden',
 				cursor: createWithPrimary
@@ -866,7 +869,6 @@ export default ({
 										left: 0,
 										...(displayOnTop ? { bottom: 0 } : { top: 0 }),
 									}}
-
 								>
 									<RegionLabel
 										allowedClasses={regionClsList}

@@ -112,6 +112,9 @@ export default (state: MainLayoutState, action: Action) => {
 		case '@@INIT': {
 			return state
 		}
+		case 'SET_DELETED_REGIONS': {
+			return setIn(state, ['deletedRegions'], [])
+		}
 		case 'SELECT_IMAGE': {
 			return setNewImage(action.image.src)
 		}
@@ -131,7 +134,10 @@ export default (state: MainLayoutState, action: Action) => {
 			if (!isEqual(oldRegion.tags, action.region.tags)) {
 				state = saveToHistory(state, 'Change Region Tags')
 			}
-			return setIn(state, ['images', currentImageIndex, 'regions', regionIndex], action.region)
+			return setIn(state, ['images', currentImageIndex, 'regions', regionIndex], {
+				...action.region,
+				is_updated: true,
+			})
 		}
 		case 'RESTORE_HISTORY': {
 			if (state.history.length > 0) {
@@ -280,6 +286,7 @@ export default (state: MainLayoutState, action: Action) => {
 
 					return setIn(state, ['images', currentImageIndex, 'regions', regionIndex], {
 						...box,
+						is_updated: true,
 						x: dx,
 						w: dw,
 						y: dy,
@@ -489,7 +496,7 @@ export default (state: MainLayoutState, action: Action) => {
 					...(state.images[currentImageIndex].regions || [])[regionIndex],
 					highlighted: true,
 					editingLabels: true,
-					is_updated: true,
+					is_updated: false,
 				}
 			)
 			return setIn(state, ['images', currentImageIndex, 'regions'], newRegions)

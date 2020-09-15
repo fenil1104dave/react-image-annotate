@@ -19,7 +19,7 @@ export default ({ children, ...otherProps }) => {
 			onMouseEnter={(e) => changeMouseOver(true)}
 			onMouseLeave={(e) => changeMouseOver(false)}
 		>
-			<RemoveScroll enabled={mouseOver} removeScrollBar={false}>
+			<RemoveScroll enabled={mouseOver} noIsolation={false} removeScrollBar={false}>
 				{children}
 			</RemoveScroll>
 		</Container>
