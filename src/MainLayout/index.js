@@ -2,21 +2,17 @@
 
 import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-// import Sidebar from '../Sidebar'
 import ImageCanvas from '../ImageCanvas'
-// import IconTools from '../IconTools'
 import styles from './styles'
 import useKey from 'use-key-hook'
-// import classnames from 'classnames'
 import { useSettings } from '../SettingsProvider'
 import { Matrix } from 'transformation-matrix-js'
 
 const useStyles = makeStyles(styles)
 
-export default ({ state, dispatch }: Props) => {
+export default ({ state, dispatch }) => {
 	const settings = useSettings()
-	const classes = useStyles()
-	const action = (type: string, ...params: Array<string>) => (...args: any) =>
+	const action = (type, ...params) => (...args: any) =>
 		params.length > 0
 			? dispatch(
 					({
@@ -26,14 +22,14 @@ export default ({ state, dispatch }: Props) => {
 			  )
 			: dispatch({ type, ...args[0] })
 
-	const currentImage = state.images.find((img) => img.src === state.selectedImage)
+	const currentImage = state.images.find(img => img.src === state.selectedImage)
 
 	useKey(() => dispatch({ type: 'CANCEL' }), {
 		detectKeys: [27],
 	})
 
 	if (state.changeMat === undefined) {
-		state.changeMat = (mat) => {
+		state.changeMat = mat => {
 			dispatch({
 				type: 'CHANGE_CURRENT_MAT',
 				currentMat: mat,
@@ -47,6 +43,7 @@ export default ({ state, dispatch }: Props) => {
 
 	useEffect(() => {
 		const currentRegions = currentImage && currentImage.regions ? currentImage.regions : []
+		console.log('currentRegions', currentRegions)
 		const deletedRegions = state.deletedRegions ? state.deletedRegions : []
 		state.setCurrentRegions([...currentRegions, ...deletedRegions])
 	}, [currentImage])

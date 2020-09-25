@@ -20,10 +20,10 @@ const data = [
 		regions: [
 			{
 				type: 'box',
-				h: 0.1,
-				w: 0.5,
-				x: 0.4,
-				y: 0.2,
+				h: 0.007893452739745621,
+				w: 0.012511553144464496,
+				x: 0.7993914865524276,
+				y: 0.7416257642297427,
 				// id: i.toString(),
 				color: 'white',
 				tags: [{ label: 'bent_lead', value: 1 }],
@@ -35,7 +35,9 @@ const data = [
 				is_new: false,
 				is_updated: false,
 				editingLabels: false,
-				id: Math.random().toString(36).substring(7),
+				id: Math.random()
+					.toString(36)
+					.substring(7),
 			},
 		],
 	},
@@ -49,6 +51,31 @@ const data = [
 	},
 ]
 
+const temp = [
+	{
+		id: 8366,
+		file: 2843,
+		ml_model: 1,
+		defects: { '4': {} },
+		ai_region: null,
+		region: {
+			coordinates: {
+				h: 0.007893452739745621,
+				w: 0.012511553144464496,
+				x: 0.7993914865524276,
+				y: 0.7416257642297427,
+			},
+		},
+		is_user_feedback: true,
+		is_removed: false,
+		created_by: 1,
+		created_ts: '2020-09-15T10:00:26.063970Z',
+		updated_by: null,
+		updated_ts: '2020-09-15T10:00:26.064002Z',
+		classification_correctness: null,
+		detection_correctness: null,
+	},
+]
 export default (props: any) => {
 	const inferenceData = {
 		data: [],
@@ -57,7 +84,7 @@ export default (props: any) => {
 	const [scale, setScale] = useState(100)
 	const [activeImg, setActiveImg] = useState(0)
 
-	const handleClick = useCallback((index) => {
+	const handleClick = useCallback(index => {
 		setActiveImg(index)
 	}, [])
 
@@ -161,11 +188,11 @@ export default (props: any) => {
 		setAfterSawingImages(tempAfterSawingImages)
 	}
 
-	const changeMat = (mat) => {
+	const changeMat = mat => {
 		setMat(mat)
 		setScale(((1 / mat.a) * 100).toFixed(0))
 	}
-	const moveToPoint = (box) => {
+	const moveToPoint = box => {
 		changeMat({
 			a: 0.1,
 			b: 0,
@@ -177,7 +204,7 @@ export default (props: any) => {
 		// toggleShowTags(true)
 		// setScale(1000);
 	}
-	const handleScaleChange = (value) => {
+	const handleScaleChange = value => {
 		// setScale(value)
 		let newMat = {
 			a: 100 / value,
@@ -209,12 +236,12 @@ export default (props: any) => {
 	}
 
 	const [selectedTool, setSelectedTool] = useState('pan')
-	const handleToolChange = (tool) => {
+	const handleToolChange = tool => {
 		setSelectedTool(tool)
 	}
 
 	const [dropdownOpen, setDropdownOpen] = useState(false)
-	const toggle = () => setDropdownOpen((prevState) => !prevState)
+	const toggle = () => setDropdownOpen(prevState => !prevState)
 
 	const [regions, setRegions] = useState([])
 	useEffect(() => {
@@ -291,7 +318,9 @@ export default (props: any) => {
 						is_updated: true,
 						// is_user_feedback: false,
 						editingLabels: false,
-						id: Math.random().toString(36).substring(7),
+						id: Math.random()
+							.toString(36)
+							.substring(7),
 						// tags: [
 						// 	`x: ${data[i].extra_model_output.x.value.toString()}`,
 						// 	`y: ${data[i].extra_model_output.y.value.toString()}`,
@@ -311,7 +340,7 @@ export default (props: any) => {
 		// console.log(currentRegions)
 	}
 
-	const onExit = (allData) => {}
+	const onExit = allData => {}
 
 	const [regionTagList, setRegionTagList] = useState([
 		{ label: 'bent_lead', value: 1 },

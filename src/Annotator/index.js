@@ -2,26 +2,9 @@
 
 import React, { useReducer, useEffect } from 'react'
 import MainLayout from '../MainLayout'
-import type { ToolEnum, Image, Mode, MainLayoutState, Action } from '../MainLayout/types'
 import SettingsProvider from '../SettingsProvider'
 import reducer from './reducer'
 import { Matrix } from 'transformation-matrix-js'
-
-type Props = {
-	taskDescription: string,
-	allowedArea?: { x: number, y: number, w: number, h: number },
-	regionTagList?: Array<string>,
-	regionClsList?: Array<string>,
-	imageTagList?: Array<string>,
-	imageClsList?: Array<string>,
-	enabledTools?: Array<string>,
-	showTags?: boolean,
-	selectedImage?: string,
-	images: Array<Image>,
-	showPointDistances?: boolean,
-	pointDistancePrecision?: number,
-	onExit: (MainLayoutState) => any,
-}
 
 const getDefaultMat = () => Matrix.from(1, 0, 0, 1, -10, -10)
 
@@ -49,8 +32,7 @@ export default ({
 	setCurrentRegions,
 	rollOverZoom = false,
 	resetDeleted = false,
-}: // regions = [],
-Props) => {
+}) => {
 	const [state, dispatchToReducer] = useReducer(reducer, {
 		showTags,
 		allowedArea,
@@ -58,7 +40,6 @@ Props) => {
 		showPointDistances,
 		pointDistancePrecision,
 		selectedTool,
-		// selectedTool: 'create-polygon',
 		mode: null,
 		taskDescription,
 		images,
@@ -111,7 +92,7 @@ Props) => {
 		dispatchToReducer({ type: 'CHANGE_CURRENT_MAT', currentMat: currentMat })
 	}, [JSON.stringify(currentMat)])
 
-	const dispatch = (action: Action) => {
+	const dispatch = action => {
 		if (
 			action.type === 'HEADER_BUTTON_CLICKED' &&
 			(action.buttonName === 'Exit' ||

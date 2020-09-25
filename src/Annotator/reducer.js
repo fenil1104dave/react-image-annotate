@@ -1,13 +1,15 @@
-// @flow
+/* eslint-disable */
 
-import type { MainLayoutState, Action } from '../MainLayout/types'
 import { moveRegion } from '../ImageCanvas/region-tools.js'
 import { setIn, updateIn } from 'seamless-immutable'
 import moment from 'moment'
 import { Matrix } from 'transformation-matrix-js'
 import isEqual from 'lodash/isEqual'
 
-const getRandomId = () => Math.random().toString().split('.')[1]
+const getRandomId = () =>
+	Math.random()
+		.toString()
+		.split('.')[1]
 
 const getRandomInt = (min, max) => {
 	return Math.floor(Math.random() * (max - min + 1)) + min
@@ -27,21 +29,21 @@ const typesToSaveWithHistory = {
 	DELETE_REGION: 'Delete Region',
 }
 
-export default (state: MainLayoutState, action: Action) => {
+export default (state, action) => {
 	// console.log("state", state)
 	// console.log("action", action)
 	if (!action.type.includes('MOUSE')) {
 		state = setIn(state, ['lastAction'], action)
 	}
-	let currentImageIndex = state.images.findIndex((img) => img.src === state.selectedImage)
+	let currentImageIndex = state.images.findIndex(img => img.src === state.selectedImage)
 	if (currentImageIndex === -1) currentImageIndex = null
-	const getRegionIndex = (region) => {
+	const getRegionIndex = region => {
 		const regionId = typeof region === 'string' ? region : region.id
 		if (currentImageIndex === null) return null
-		const regionIndex = (state.images[currentImageIndex].regions || []).findIndex((r) => r.id === regionId)
+		const regionIndex = (state.images[currentImageIndex].regions || []).findIndex(r => r.id === regionId)
 		return regionIndex === -1 ? null : regionIndex
 	}
-	const getRegion = (regionId) => {
+	const getRegion = regionId => {
 		const regionIndex = getRegionIndex(regionId)
 		if (regionIndex === null) return [null, null]
 		const region = state.images[currentImageIndex].regions[regionIndex]
@@ -61,24 +63,24 @@ export default (state: MainLayoutState, action: Action) => {
 			return setIn(
 				state,
 				['images', currentImageIndex, 'regions'],
-				(regions || []).filter((r) => r.id !== region.id)
+				(regions || []).filter(r => r.id !== region.id)
 			)
 		}
 	}
-	const unselectRegions = (state: MainLayoutState) => {
+	const unselectRegions = state => {
 		if (currentImageIndex === null) return state
 		return setIn(
 			state,
 			['images', currentImageIndex, 'regions'],
-			(state.images[currentImageIndex].regions || []).map((r) => ({
+			(state.images[currentImageIndex].regions || []).map(r => ({
 				...r,
 				highlighted: false,
 			}))
 		)
 	}
 
-	const saveToHistory = (state: MainLayoutState, name: string) =>
-		updateIn(state, ['history'], (h) =>
+	const saveToHistory = (state, name) =>
+		updateIn(state, ['history'], h =>
 			[
 				{
 					time: moment().toDate(),
@@ -92,19 +94,19 @@ export default (state: MainLayoutState, action: Action) => {
 		state = saveToHistory(state, typesToSaveWithHistory[action.type] || action.type)
 	}
 
-	const closeEditors = (state: MainLayoutState) => {
+	const closeEditors = state => {
 		if (currentImageIndex === null) return state
 		return setIn(
 			state,
 			['images', currentImageIndex, 'regions'],
-			(state.images[currentImageIndex].regions || []).map((r) => ({
+			(state.images[currentImageIndex].regions || []).map(r => ({
 				...r,
 				editingLabels: false,
 			}))
 		)
 	}
 
-	const setNewImage = (newImage: string) => {
+	const setNewImage = newImage => {
 		return setIn(state, ['selectedImage'], newImage)
 	}
 
@@ -166,7 +168,7 @@ export default (state: MainLayoutState, action: Action) => {
 			const { region } = action
 			const regionIndex = getRegionIndex(action.region)
 			if (regionIndex === null) return state
-			const regions = [...(state.images[currentImageIndex].regions || [])].map((r) => ({
+			const regions = [...(state.images[currentImageIndex].regions || [])].map(r => ({
 				...r,
 				highlighted: r.id === region.id,
 				editingLabels: r.id === region.id,
@@ -309,14 +311,7 @@ export default (state: MainLayoutState, action: Action) => {
 					if (!region) return setIn(state, ['mode'], null)
 					return setIn(
 						state,
-						[
-							'images',
-							currentImageIndex,
-							'regions',
-							regionIndex,
-							'points',
-							(region: any).points.length - 1,
-						],
+						['images', currentImageIndex, 'regions', regionIndex, 'points', region.points.length - 1],
 						[x, y]
 					)
 				}
@@ -382,10 +377,7 @@ export default (state: MainLayoutState, action: Action) => {
 						state = saveToHistory(state, 'Create Polygon')
 						newRegion = {
 							type: 'polygon',
-							points: [
-								[x, y],
-								[x, y],
-							],
+							points: [[x, y], [x, y]],
 							open: true,
 							highlighted: true,
 							color: getRandomColor(),
@@ -440,7 +432,7 @@ export default (state: MainLayoutState, action: Action) => {
 			}
 
 			const regions = [...(state.images[currentImageIndex].regions || [])]
-				.map((r) => ({
+				.map(r => ({
 					...r,
 					editingLabels: false,
 				}))
@@ -486,7 +478,7 @@ export default (state: MainLayoutState, action: Action) => {
 			const regionIndex = getRegionIndex(action.region)
 			if (regionIndex === null) return state
 			const newRegions = setIn(
-				state.images[currentImageIndex].regions.map((r) => ({
+				state.images[currentImageIndex].regions.map(r => ({
 					...r,
 					highlighted: false,
 					editingLabels: false,
@@ -496,7 +488,6 @@ export default (state: MainLayoutState, action: Action) => {
 					...(state.images[currentImageIndex].regions || [])[regionIndex],
 					highlighted: true,
 					editingLabels: true,
-					is_updated: false,
 				}
 			)
 			return setIn(state, ['images', currentImageIndex, 'regions'], newRegions)
@@ -524,15 +515,15 @@ export default (state: MainLayoutState, action: Action) => {
 			return setIn(
 				temp,
 				['images', currentImageIndex, 'regions'],
-				(temp.images[currentImageIndex].regions || []).filter((r) => r.id !== action.region.id)
+				(temp.images[currentImageIndex].regions || []).filter(r => r.id !== action.region.id)
 			)
 		}
 		case 'ZOOM_HISTORY': {
 			const { region, direction } = action
 			if (direction == 'ADD_NEW') {
-				return updateIn(state, ['zoomHistory'], (zh) => [region].concat((zh || []).slice()))
+				return updateIn(state, ['zoomHistory'], zh => [region].concat((zh || []).slice()))
 			} else {
-				return updateIn(state, ['zoomHistory'], function (zh) {
+				return updateIn(state, ['zoomHistory'], function(zh) {
 					let newRegion = (zh || []).slice()
 					newRegion = newRegion.asMutable({ deep: true })
 					newRegion.splice(region, 1)
@@ -607,12 +598,12 @@ export default (state: MainLayoutState, action: Action) => {
 				}
 			}
 			// Close any open boxes
-			const regions: any = state.images[currentImageIndex].regions
-			if (regions.some((r) => r.editingLabels)) {
+			const regions = state.images[currentImageIndex].regions
+			if (regions.some(r => r.editingLabels)) {
 				return setIn(
 					state,
 					['images', currentImageIndex, 'regions'],
-					regions.map((r) => ({
+					regions.map(r => ({
 						...r,
 						editingLabels: false,
 					}))
@@ -621,7 +612,7 @@ export default (state: MainLayoutState, action: Action) => {
 				return setIn(
 					state,
 					['images', currentImageIndex, 'regions'],
-					regions.map((r) => ({
+					regions.map(r => ({
 						...r,
 						highlighted: false,
 					}))

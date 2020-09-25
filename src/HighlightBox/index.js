@@ -63,7 +63,7 @@ export default ({
 			{...mouseEvents}
 			{...(!zoomWithPrimary && !zoomOutWithPrimary && !dragWithPrimary
 				? {
-						onMouseDown: (e) => {
+						onMouseDown: e => {
 							if (!r.locked && r.type === 'point' && r.highlighted && e.button === 0) {
 								return onBeginMovePoint(r)
 							}
@@ -91,13 +91,17 @@ export default ({
 									: undefined,
 					  }),
 				position: 'absolute',
-				left: pbox.x - 5,
-				top: pbox.y - 5,
-				width: pbox.w + 10,
-				height: pbox.h + 10,
+				left: pbox.x - 5 ? pbox.x - 5 : 0,
+				top: pbox.y - 5 ? pbox.y - 5 : 0,
+				width: pbox.w + 10 ? pbox.w + 10 : 0,
+				height: pbox.h + 10 ? pbox.h + 10 : 0,
 			}}
 		>
-			<path d={`M5,5 L${pbox.w + 5},5 L${pbox.w + 5},${pbox.h + 5} L5,${pbox.h + 5} Z`} />
+			<path
+				d={`M5,5 L${pbox.w ? pbox.w + 5 : 0},5 L${pbox.w ? pbox.w + 5 : 0},${pbox.h ? pbox.h + 5 : 0} L5,${
+					pbox.h ? pbox.h + 5 : 0
+				} Z`}
+			/>
 		</svg>
 	)
 }

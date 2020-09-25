@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
 import styles from './styles'
@@ -12,6 +12,7 @@ import TrashIcon from '@material-ui/icons/Delete'
 import CheckIcon from '@material-ui/icons/Check'
 import UndoIcon from '@material-ui/icons/Undo'
 import Select from 'react-select'
+import ZoomInIcon from '@material-ui/icons/ZoomIn'
 
 const useStyles = makeStyles(styles)
 
@@ -22,10 +23,10 @@ type Props = {
 	allowedTags?: Array<string>,
 	cls?: string,
 	tags?: Array<string>,
-	onDelete: (Region) => null,
-	onChange: (Region) => null,
-	onClose: (Region) => null,
-	onOpen: (Region) => null,
+	onDelete: Region => null,
+	onChange: Region => null,
+	onClose: Region => null,
+	onOpen: Region => null,
 }
 
 export default ({
@@ -38,6 +39,7 @@ export default ({
 	onClose,
 	onOpen,
 	isEditingLocked = false,
+	zoomToRegion,
 }: Props) => {
 	const classes = useStyles()
 	allowedTags = [...allowedTags]
@@ -50,7 +52,8 @@ export default ({
 			})}
 		>
 			{!editing ? (
-				<div>
+				<div style={{ display: 'flex' }}>
+					<ZoomInIcon fontSize="small" onClick={() => zoomToRegion(region)} />
 					{region.cls && (
 						<div className="name">
 							<div className="circle" style={{ backgroundColor: region.color }} />
@@ -59,7 +62,7 @@ export default ({
 					)}
 					{region.tags && (
 						<div className="tags">
-							{region.tags.map((t) => (
+							{region.tags.map(t => (
 								<div key={t.label} className="tag">
 									{t.label}
 								</div>
@@ -100,30 +103,30 @@ export default ({
 						<div style={{ marginTop: 6 }}>
 							<Select
 								placeholder="Classification"
-								onChange={(o) =>
+								onChange={o =>
 									onChange({
 										...(region: any),
 										cls: o.value,
 									})
 								}
 								value={region.cls ? { label: region.cls, value: region.cls } : null}
-								options={allowedClasses.map((c) => ({ value: c, label: c }))}
+								options={allowedClasses.map(c => ({ value: c, label: c }))}
 							/>
 						</div>
 					)}
 					{allowedTags.length > 0 && (
 						<div style={{ marginTop: 4 }}>
 							<Select
-								onChange={(newTags) =>
+								onChange={newTags =>
 									onChange({
 										...(region: any),
-										tags: newTags.map((t) => t),
+										tags: newTags ? newTags.map(t => t) : [],
 									})
 								}
 								placeholder="Tags"
-								value={(region.tags || []).map((c) => ({ label: c.label, value: c.value }))}
+								value={(region.tags || []).map(c => ({ label: c.label, value: c.value }))}
 								isMulti
-								options={allowedTags.map((c) => ({ value: c.value, label: c.label }))}
+								options={allowedTags.map(c => ({ value: c.value, label: c.label }))}
 							/>
 						</div>
 					)}
