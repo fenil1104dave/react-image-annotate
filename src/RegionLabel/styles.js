@@ -3,24 +3,98 @@
 import { grey } from '@material-ui/core/colors'
 
 export default {
-	regionInfo: {
-		fontSize: 12,
-		cursor: 'default',
-		transition: 'opacity 200ms',
-		opacity: 0.7,
-		'&:hover': {
-			opacity: 0.9,
-			cursor: 'pointer',
-		},
-		'&.highlighted': {
-			opacity: 0.9,
-			'&:hover': {
-				opacity: 1,
+	paper: {
+		boxShadow: 'none',
+		margin: 0,
+		'& .MuiAutocomplete-listbox': {
+			'& .MuiListSubheader-gutters': {
+				paddingLeft: '8px',
+				lineHeight: '24px',
+				fontSize: '0.875rem',
+				color: '#000000',
+			},
+			'& .MuiAutocomplete-groupUl .MuiAutocomplete-option': {
+				paddingLeft: 0,
+				display: 'flex',
+				alignItems: 'center',
+				fontWeight: 400,
 			},
 		},
+	},
+	option: {
+		minHeight: 'auto',
+		alignItems: 'flex-start',
+		padding: 0,
+		'&[aria-selected="true"]': {
+			backgroundColor: 'transparent',
+		},
+		'&[data-focus="true"]': {
+			backgroundColor: 'transparent',
+		},
+	},
+	popperDisablePortal: {
+		position: 'relative',
+		width: 'auto !important',
+		height: 250,
+		overflowY: 'auto',
+		'&::-webkit-scrollbar ': {
+			width: 3,
+		},
+
+		/* Track */
+		'&::-webkit-scrollbar-track': {
+			borderRadius: 10,
+		},
+
+		/* Handle */
+		'&::-webkit-scrollbar-thumb': {
+			background: '#EEEEEE',
+			borderRadius: 10,
+		},
+
+		/* Handle on hover */
+		'&::-webkit-scrollbar-thumb:hover': {
+			background: '#EEEEEE',
+		},
+	},
+	item: {
+		display: 'flex',
+		alignItems: 'center',
+		cursor: 'pointer',
+	},
+	popper: {
+		zIndex: 100,
+	},
+	label: {
+		fontSize: '0.875rem',
+		fontWeight: 400,
+		color: '#313131',
+	},
+	button: {
+		borderRadius: '3px',
+		fontWeight: 'normal',
+		fontSize: '14px',
+		lineHeight: 'normal',
+		border: '0px',
+		color: '#FFFFFF',
+		backgroundColor: '#F56C6C',
+		padding: '8px 24px',
+		'&:hover': {
+			backgroundColor: '#E14242',
+		},
+		'&:disabled': {
+			background: '#E0E0E0',
+			color: '#000D12',
+			opacity: 0.24,
+		},
+	},
+	regionInfo: {
+		cursor: 'default',
+		transition: 'opacity 200ms',
+		'&:hover': {
+			cursor: 'pointer',
+		},
 		// pointerEvents: "none",
-		fontWeight: 600,
-		color: grey[900],
 		padding: 8,
 		'& .name': {
 			display: 'flex',
@@ -42,6 +116,13 @@ export default {
 				fontSize: 10,
 				textDecoration: 'underline',
 			},
+		},
+	},
+	open: {
+		minWidth: '175px',
+		borderRadius: 0,
+		'& .MuiAutocomplete-endAdornment': {
+			display: 'none',
 		},
 	},
 }

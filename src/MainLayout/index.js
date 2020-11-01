@@ -43,7 +43,6 @@ export default ({ state, dispatch }) => {
 
 	useEffect(() => {
 		const currentRegions = currentImage && currentImage.regions ? currentImage.regions : []
-		console.log('currentRegions', currentRegions)
 		const deletedRegions = state.deletedRegions ? state.deletedRegions : []
 		state.setCurrentRegions([...currentRegions, ...deletedRegions])
 	}, [currentImage])

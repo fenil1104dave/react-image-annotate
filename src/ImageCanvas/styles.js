@@ -36,4 +36,17 @@ export default {
 			animationPlayState: 'running',
 		},
 	},
+	paperBox: {
+		padding: '3% 0 3% 7%',
+		background: '#A9A9A9',
+		borderRadius: '4px',
+		width: '105px',
+		opacity: 0.7,
+	},
+	papperBoxFont: {
+		fontSize: '11px',
+		fontWeight: 500,
+		fontFamily: 'Roboto',
+		color: '#FFFFFF',
+	},
 }

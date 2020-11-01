@@ -9,10 +9,12 @@ import type { Region } from '../ImageCanvas/region-tools.js'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import TrashIcon from '@material-ui/icons/Delete'
-import CheckIcon from '@material-ui/icons/Check'
-import UndoIcon from '@material-ui/icons/Undo'
-import Select from 'react-select'
 import ZoomInIcon from '@material-ui/icons/ZoomIn'
+import Box from '@material-ui/core/Box'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import CustomizedCheckbox from '../Checkbox'
 
 const useStyles = makeStyles(styles)
 
@@ -42,17 +44,40 @@ export default ({
 	zoomToRegion,
 }: Props) => {
 	const classes = useStyles()
-	allowedTags = [...allowedTags]
+	const [value, setValue] = useState([])
+	const [inputValue, setInputValue] = useState('')
+	const [tags, setTags] = useState([])
+
+	useEffect(() => {
+		if (region.tags && region.tags.length) {
+			const t = region.tags.map(c => c.value)
+			const temp = allowedTags.filter(c => !t.includes(c.value))
+			setTags([...temp, ...region.tags])
+			const r = [...region.tags.map(c => ({ label: c.label, value: c.value, type: c.type }))]
+			setValue(r)
+		} else {
+			setTags([...allowedTags])
+		}
+	}, [region.tags, allowedTags])
+
+	const handleApplyClick = () => {
+		onChange({
+			...region,
+			tags: value ? value.map(t => t) : [],
+		})
+		onClose(region)
+	}
 
 	return (
 		<Paper
 			onClick={() => (!editing && !isEditingLocked ? onOpen(region) : null)}
 			className={classnames(classes.regionInfo, {
 				highlighted: region.highlighted,
+				[classes.open]: editing,
 			})}
 		>
 			{!editing ? (
-				<div style={{ display: 'flex' }}>
+				<div style={{ display: 'flex', alignItems: 'center' }}>
 					<ZoomInIcon fontSize="small" onClick={() => zoomToRegion(region)} />
 					{region.cls && (
 						<div className="name">
@@ -71,72 +96,61 @@ export default ({
 					)}
 				</div>
 			) : (
-				<div style={{ width: 200 }}>
-					<div style={{ display: 'flex', flexDirection: 'row' }}>
-						<div
-							style={{
-								display: 'flex',
-								backgroundColor: region.color,
-								color: '#fff',
-								padding: 4,
-								paddingLeft: 8,
-								paddingRight: 8,
-								borderRadius: 4,
-								fontWeight: 'bold',
-								textShadow: '0px 0px 5px rgba(0,0,0,0.4)',
+				tags.length > 0 && (
+					<Box>
+						<Autocomplete
+							open
+							id={region.id}
+							disablePortal
+							multiple
+							classes={{
+								paper: classes.paper,
+								option: classes.option,
+								popperDisablePortal: classes.popperDisablePortal,
 							}}
-						>
-							{region.type}
-						</div>
-						<div style={{ flexGrow: 1 }} />
-						<IconButton
-							onClick={() => onDelete(region)}
-							tabIndex={-1}
-							style={{ width: 22, height: 22 }}
-							size="small"
-							variant="outlined"
-						>
-							<TrashIcon style={{ marginTop: -8, width: 16, height: 16 }} />
-						</IconButton>
-					</div>
-					{allowedClasses.length > 0 && (
-						<div style={{ marginTop: 6 }}>
-							<Select
-								placeholder="Classification"
-								onChange={o =>
-									onChange({
-										...(region: any),
-										cls: o.value,
-									})
+							onChange={(e, newValue) => setValue(newValue)}
+							value={value}
+							renderTags={() => {}}
+							limitTags={0}
+							groupBy={option => option.type}
+							getOptionSelected={(option, value) => option.value === value.value}
+							getOptionLabel={option => option.label || ''}
+							options={tags
+								.sort((a, b) => -b.type.localeCompare(a.type))
+								.map(c => ({ value: c.value, label: c.label, type: c.type }))}
+							inputValue={inputValue}
+							onInputChange={(event, value, reason) => {
+								if (reason !== 'reset') {
+									setInputValue(value)
 								}
-								value={region.cls ? { label: region.cls, value: region.cls } : null}
-								options={allowedClasses.map(c => ({ value: c, label: c }))}
-							/>
-						</div>
-					)}
-					{allowedTags.length > 0 && (
-						<div style={{ marginTop: 4 }}>
-							<Select
-								onChange={newTags =>
-									onChange({
-										...(region: any),
-										tags: newTags ? newTags.map(t => t) : [],
-									})
-								}
-								placeholder="Tags"
-								value={(region.tags || []).map(c => ({ label: c.label, value: c.value }))}
-								isMulti
-								options={allowedTags.map(c => ({ value: c.value, label: c.label }))}
-							/>
-						</div>
-					)}
-					<div style={{ marginTop: 4, display: 'flex' }}>
-						<div style={{ flexGrow: 1 }} />
-						<Button onClick={() => onClose(region)} size="small" variant="contained" color="primary">
-							<CheckIcon />
-						</Button>
-					</div>
-				</div>
+							}}
+							renderInput={params => {
+								return (
+									<TextField
+										{...params}
+										variant="standard"
+										placeholder="Search"
+										className={classes.inputBase}
+									/>
+								)
+							}}
+							renderOption={(option, { selected }) => (
+								<>
+									<CustomizedCheckbox checked={selected} />
+									<Typography className={classes.label}>{option.label}</Typography>
+								</>
+							)}
+						/>
+						<Box display="flex" justifyContent="space-between" alignItems="center">
+							<Button disabled={!value.length} className={classes.button} onClick={handleApplyClick}>
+								Apply
+							</Button>
+							<IconButton onClick={() => onDelete(region)} variant="outlined">
+								<TrashIcon />
+							</IconButton>
+						</Box>
+					</Box>
+				)
 			)}
 		</Paper>
 	)

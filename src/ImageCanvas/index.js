@@ -17,6 +17,8 @@ import HighlightBox from '../HighlightBox'
 // import excludePatternSrc from "./xpattern.png"
 import excludePatternSrc from './xpattern.js'
 import PreventScrollToParents from '../PreventScrollToParents'
+import Popper from '@material-ui/core/Popper'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles(styles)
 
@@ -102,6 +104,7 @@ export default ({
 	rollOverZoom,
 }: Props) => {
 	const classes = useStyles()
+	const popperRef = useRef(null)
 	const canvasEl = useRef(null)
 	const image = useRef(null)
 	const layoutParams = useRef({})
@@ -825,7 +828,6 @@ export default ({
 						if (region.highlighted && region.type === 'box') margin += 6
 						const labelBoxHeight = region.editingLabels && !region.locked ? 170 : region.tags ? 60 : 50
 						const displayOnTop = pbox.y > labelBoxHeight
-
 						const coords = displayOnTop
 							? {
 									left: pbox.x ? pbox.x : 0,
@@ -905,6 +907,7 @@ export default ({
 							</div>
 						)
 					})}
+
 			{zoomWithPrimary && zoomOutWithPrimary && zoomBox !== null && (
 				<div
 					style={{

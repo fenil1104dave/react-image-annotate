@@ -26,7 +26,7 @@ const data = [
 				y: 0.7416257642297427,
 				// id: i.toString(),
 				color: 'white',
-				tags: [{ label: 'bent_lead', value: 1 }],
+				tags: [{ label: 'bent_lead', value: 1, type: 'Ai Defect' }],
 				// cls: defect.region_id,
 				// showTags: false,
 				// visible: true,
@@ -311,6 +311,7 @@ export default (props: any) => {
 						// id: i.toString(),
 						color: 'white',
 						cls: region.id,
+						defect_type: 'Ai Defect',
 						// showTags: false,
 						// visible: true,
 						highlighted: false,
@@ -343,12 +344,12 @@ export default (props: any) => {
 	const onExit = allData => {}
 
 	const [regionTagList, setRegionTagList] = useState([
-		{ label: 'bent_lead', value: 1 },
-		{ label: 'length_deviation', value: 2 },
-		{ label: 'burr', value: 3 },
-		{ label: 'flake', value: 4 },
-		{ label: 'fibre', value: 5 },
-		{ label: 'dirt_on_tool', value: 6 },
+		{ label: 'bent_lead', value: 1, type: 'Other Defect' },
+		{ label: 'length_deviation', value: 2, type: 'Other Defect' },
+		{ label: 'burr', value: 3, type: 'Other Defect' },
+		{ label: 'flake', value: 4, type: 'Other Defect' },
+		{ label: 'fibre', value: 5, type: 'Other Defect' },
+		{ label: 'dirt_on_tool', value: 6, type: 'Other Defect' },
 	])
 
 	const [currentRegions, setCurrentRegions] = useState([])
