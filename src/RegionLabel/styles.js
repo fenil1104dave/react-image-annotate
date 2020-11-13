@@ -35,7 +35,7 @@ export default {
 	popperDisablePortal: {
 		position: 'relative',
 		width: 'auto !important',
-		height: 250,
+		maxHeight: 200,
 		overflowY: 'auto',
 		'&::-webkit-scrollbar ': {
 			width: 3,

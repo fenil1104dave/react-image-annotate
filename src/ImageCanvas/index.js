@@ -826,8 +826,10 @@ export default ({
 						onIhIwChange(ih, iw)
 						let margin = 8
 						if (region.highlighted && region.type === 'box') margin += 6
-						const labelBoxHeight = region.editingLabels && !region.locked ? 170 : region.tags ? 60 : 50
+						const labelBoxHeight = region.editingLabels && !region.locked ? 280 : region.tags ? 60 : 50
+						const labelBoxWidth = region.editingLabels && !region.locked ? 180 : region.tags ? 60 : 50
 						const displayOnTop = pbox.y > labelBoxHeight
+						const displayOnLeft = pbox.x > labelBoxWidth
 						const coords = displayOnTop
 							? {
 									left: pbox.x ? pbox.x : 0,
@@ -887,7 +889,11 @@ export default ({
 								<div
 									style={{
 										position: 'absolute',
-										left: 0,
+										...(displayOnLeft
+											? pbox.w > 180
+												? { left: 0 }
+												: { right: Math.abs(pbox.w - 180) + 20 }
+											: { left: 0 }),
 										...(displayOnTop ? { bottom: 0 } : { top: 0 }),
 									}}
 								>

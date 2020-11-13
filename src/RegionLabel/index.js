@@ -116,6 +116,7 @@ export default ({
 							getOptionSelected={(option, value) => option.value === value.value}
 							getOptionLabel={option => option.label || ''}
 							options={tags
+								.sort((a, b) => -b.label.localeCompare(a.label))
 								.sort((a, b) => -b.type.localeCompare(a.type))
 								.map(c => ({ value: c.value, label: c.label, type: c.type }))}
 							inputValue={inputValue}
