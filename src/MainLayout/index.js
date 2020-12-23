@@ -58,7 +58,7 @@ export default ({ state, dispatch }) => {
 		// 				onClickTool={action('SELECT_TOOL', 'selectedTool')}
 		// 			/>
 		// 		</div>
-		<div style={{ width: '760px', height: '760px' }} className="px-2">
+		<div style={{ width: '95%', height: '80vh' }}>
 			<ImageCanvas
 				{...settings}
 				key={state.selectedImage}

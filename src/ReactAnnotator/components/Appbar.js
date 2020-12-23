@@ -16,7 +16,7 @@ import { IconButton, Button } from '@material-ui/core'
 const Appbar = ({ scale, setScale, onClickTool, imgNavigation, activeImg, dataLength, saveRegion }) => {
 	const [dropdownOpen, setDropdownOpen] = useState(false)
 
-	const toggle = () => setDropdownOpen((prevState) => !prevState)
+	const toggle = () => setDropdownOpen(prevState => !prevState)
 	return (
 		<>
 			<Col className="d-flex" lg={10}>
@@ -101,7 +101,7 @@ const Appbar = ({ scale, setScale, onClickTool, imgNavigation, activeImg, dataLe
 						min={100}
 						max={1000}
 						step={1}
-						onChange={(e) => setScale(e.target.value)}
+						onChange={e => setScale(e.target.value)}
 					/>
 					<span
 						style={{
@@ -114,7 +114,7 @@ const Appbar = ({ scale, setScale, onClickTool, imgNavigation, activeImg, dataLe
 						+
 					</span>
 				</div>
-				<div
+				{/* <div
 					className="px-3"
 					style={{
 						color: '#FFFFFF',
@@ -161,7 +161,7 @@ const Appbar = ({ scale, setScale, onClickTool, imgNavigation, activeImg, dataLe
 							<DropdownItem header>Nothing Added yet</DropdownItem>
 						</DropdownMenu>
 					</Dropdown>
-				</div>
+				</div> */}
 				<Button
 					onClick={saveRegion}
 					className="p-0 mx-3 m-0"

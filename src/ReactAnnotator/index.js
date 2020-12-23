@@ -35,6 +35,12 @@ const data = [
 				is_new: false,
 				is_updated: false,
 				editingLabels: false,
+				allowedArea: {
+					x: 0,
+					y: 0,
+					w: 1,
+					h: 1,
+				},
 				id: Math.random()
 					.toString(36)
 					.substring(7),

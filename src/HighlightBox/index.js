@@ -77,7 +77,7 @@ const useStyles = makeStyles({
 		padding: '9px',
 		background: 'rgba(169, 169, 169, 0.5)',
 		borderRadius: '4px',
-		width: '105px',
+		width: '110px',
 	},
 	papperBoxFont: {
 		fontSize: '11px',
@@ -176,8 +176,8 @@ export default ({
 			>
 				<span className={classes.arrow} ref={setArrowRef} />
 				<Paper className={classes.paperBox}>
-					<Typography className={classes.papperBoxFont}>{`X: ${parseFloat(r.h).toFixed(5)}`}</Typography>
-					<Typography className={classes.papperBoxFont}>{`Y: ${parseFloat(r.w).toFixed(5)}`}</Typography>
+					<Typography className={classes.papperBoxFont}>{`Length: ${parseFloat(r.h).toFixed(5)}`}</Typography>
+					<Typography className={classes.papperBoxFont}>{`Width: ${parseFloat(r.w).toFixed(5)}`}</Typography>
 					<Typography className={classes.papperBoxFont}>{`Area: ${parseFloat(r.h * r.w).toFixed(
 						5
 					)}`}</Typography>

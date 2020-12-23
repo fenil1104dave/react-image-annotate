@@ -183,10 +183,7 @@ export default ({
 				.toArray()
 		)
 
-		const fitScale = Math.max(
-			image.current.naturalWidth / (clientWidth - 20),
-			image.current.naturalHeight / (clientHeight - 20)
-		)
+		const fitScale = Math.max(image.current.naturalWidth / clientWidth, image.current.naturalHeight / clientHeight)
 
 		const [iw, ih] = [image.current.naturalWidth / fitScale, image.current.naturalHeight / fitScale]
 		onIhIwChange(ih, iw)
@@ -608,7 +605,7 @@ export default ({
 			style={{
 				width: '100%',
 				height: '100%',
-				maxHeight: 'calc(100vh - 120px)',
+				maxHeight: '100vh',
 				position: 'relative',
 				overflow: 'hidden',
 				cursor: createWithPrimary

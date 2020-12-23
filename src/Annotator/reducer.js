@@ -499,6 +499,7 @@ export default (state, action) => {
 			return setIn(state, ['images', currentImageIndex, 'regions', regionIndex], {
 				...(state.images[currentImageIndex].regions || [])[regionIndex],
 				editingLabels: false,
+				highlighted: false,
 			})
 		}
 		case 'DELETE_REGION': {
