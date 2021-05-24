@@ -41,9 +41,7 @@ const data = [
 					w: 1,
 					h: 1,
 				},
-				id: Math.random()
-					.toString(36)
-					.substring(7),
+				id: Math.random().toString(36).substring(7),
 			},
 		],
 	},
@@ -90,7 +88,7 @@ export default (props: any) => {
 	const [scale, setScale] = useState(100)
 	const [activeImg, setActiveImg] = useState(0)
 
-	const handleClick = useCallback(index => {
+	const handleClick = useCallback((index) => {
 		setActiveImg(index)
 	}, [])
 
@@ -194,11 +192,11 @@ export default (props: any) => {
 		setAfterSawingImages(tempAfterSawingImages)
 	}
 
-	const changeMat = mat => {
+	const changeMat = (mat) => {
 		setMat(mat)
 		setScale(((1 / mat.a) * 100).toFixed(0))
 	}
-	const moveToPoint = box => {
+	const moveToPoint = (box) => {
 		changeMat({
 			a: 0.1,
 			b: 0,
@@ -210,7 +208,7 @@ export default (props: any) => {
 		// toggleShowTags(true)
 		// setScale(1000);
 	}
-	const handleScaleChange = value => {
+	const handleScaleChange = (value) => {
 		// setScale(value)
 		let newMat = {
 			a: 100 / value,
@@ -242,12 +240,12 @@ export default (props: any) => {
 	}
 
 	const [selectedTool, setSelectedTool] = useState('pan')
-	const handleToolChange = tool => {
+	const handleToolChange = (tool) => {
 		setSelectedTool(tool)
 	}
 
 	const [dropdownOpen, setDropdownOpen] = useState(false)
-	const toggle = () => setDropdownOpen(prevState => !prevState)
+	const toggle = () => setDropdownOpen((prevState) => !prevState)
 
 	const [regions, setRegions] = useState([])
 	useEffect(() => {
@@ -325,9 +323,7 @@ export default (props: any) => {
 						is_updated: true,
 						// is_user_feedback: false,
 						editingLabels: false,
-						id: Math.random()
-							.toString(36)
-							.substring(7),
+						id: Math.random().toString(36).substring(7),
 						// tags: [
 						// 	`x: ${data[i].extra_model_output.x.value.toString()}`,
 						// 	`y: ${data[i].extra_model_output.y.value.toString()}`,
@@ -347,7 +343,7 @@ export default (props: any) => {
 		// console.log(currentRegions)
 	}
 
-	const onExit = allData => {}
+	const onExit = (allData) => {}
 
 	const [regionTagList, setRegionTagList] = useState([
 		{ label: 'bent_lead', value: 1, type: 'Other Defect' },

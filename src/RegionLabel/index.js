@@ -7,10 +7,12 @@ import styles from './styles'
 import classnames from 'classnames'
 import type { Region } from '../ImageCanvas/region-tools.js'
 import IconButton from '@material-ui/core/IconButton'
-import Button from '@material-ui/core/Button'
-import TrashIcon from '@material-ui/icons/Delete'
-import ZoomInIcon from '@material-ui/icons/ZoomIn'
+import CloseIcon from '@material-ui/icons/Close'
+import AddIcon from '@material-ui/icons/Add'
+import DeleteIcon from '@material-ui/icons/Delete'
 import Box from '@material-ui/core/Box'
+import SortIcon from '@material-ui/icons/Sort'
+import HistoryIcon from '@material-ui/icons/History'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Autocomplete from '@material-ui/lab/Autocomplete'
@@ -25,10 +27,10 @@ type Props = {
 	allowedTags?: Array<string>,
 	cls?: string,
 	tags?: Array<string>,
-	onDelete: Region => null,
-	onChange: Region => null,
-	onClose: Region => null,
-	onOpen: Region => null,
+	onDelete: (Region) => null,
+	onChange: (Region) => null,
+	onClose: (Region) => null,
+	onOpen: (Region) => null,
 }
 
 export default ({
@@ -50,56 +52,79 @@ export default ({
 
 	useEffect(() => {
 		if (region.tags && region.tags.length) {
-			const t = region.tags.map(c => c.value)
-			const temp = allowedTags.filter(c => !t.includes(c.value))
+			const t = region.tags.map((c) => c.value)
+			const temp = allowedTags.filter((c) => !t.includes(c.value))
 			setTags([...temp, ...region.tags])
-			const r = [...region.tags.map(c => ({ label: c.label, value: c.value, type: c.type }))]
+			const r = [...region.tags.map((c) => ({ label: c.label, value: c.value, type: c.type }))]
 			setValue(r)
 		} else {
 			setTags([...allowedTags])
 		}
 	}, [region.tags, allowedTags])
 
-	const handleApplyClick = () => {
+	const handleApplyClick = (value) => {
+		setValue(value)
 		onChange({
 			...region,
-			tags: value ? value.map(t => t) : [],
+			tags: value ? value.map((t) => t) : [],
 		})
 		onClose(region)
 	}
 
+	const deleteDefectTag = (defectValue) => {
+		handleApplyClick(value.filter((x) => x.value !== defectValue))
+	}
+
 	return (
-		<Paper
-			onClick={() => (!editing && !isEditingLocked ? onOpen(region) : null)}
+		<Box
 			className={classnames(classes.regionInfo, {
 				highlighted: region.highlighted,
-				[classes.open]: editing,
 			})}
 		>
-			{!editing ? (
-				<div style={{ display: 'flex', alignItems: 'center' }}>
-					<ZoomInIcon fontSize="small" onClick={() => zoomToRegion(region)} />
-					{region.cls && (
-						<div className="name">
-							<div className="circle" style={{ backgroundColor: region.color }} />
-							{region.cls}
-						</div>
-					)}
-					{region.tags && (
-						<div className="tags">
-							{region.tags.map(t => (
-								<div key={t.label} className="tag">
-									{t.label}
-								</div>
-							))}
-						</div>
-					)}
+			<div style={{ display: 'flex', alignItems: 'center' }}>
+				{region.cls && (
+					<div className="name">
+						<div className="circle" style={{ backgroundColor: region.color }} />
+						{region.cls}
+					</div>
+				)}
+
+				<div className="tags">
+					{region.tags
+						? region.tags.map((t) => (
+								<Box my={0.4} px={1} mx={0.2} key={t.label} className="tag">
+									<Typography style={{ marginRight: '5px', fontSize: '12px' }}>{t.label}</Typography>
+									{t.type !== 'Ai Defect' && (
+										<CloseIcon
+											className={classes.closeBtn}
+											onClick={() => deleteDefectTag(t.value)}
+										/>
+									)}
+								</Box>
+								// <div key={t.label} className="tag">
+								// 	{t.label}
+								// </div>
+						  ))
+						: ''}
+					<Box onClick={() => onOpen(region)} my={0.4} px={1} mx={0.2} className="tag addIcon">
+						{region.tags && region.tags.length !== 0 ? (
+							''
+						) : (
+							<Typography style={{ marginRight: '5px', fontSize: '12px' }}>Add</Typography>
+						)}
+						<AddIcon className={classes.closeBtn} />
+					</Box>
+					<Box onClick={() => onDelete(region)} my={0.4} px={1} mx={0.2} className="tag addIcon">
+						<DeleteIcon className={classes.closeBtn} />
+					</Box>
 				</div>
-			) : (
-				tags.length > 0 && (
-					<Box>
+			</div>
+			{editing && (
+				<Paper>
+					<Box p={1}>
 						<Autocomplete
 							open
+							freeSolo
 							id={region.id}
 							disablePortal
 							multiple
@@ -108,30 +133,53 @@ export default ({
 								option: classes.option,
 								popperDisablePortal: classes.popperDisablePortal,
 							}}
-							onChange={(e, newValue) => setValue(newValue)}
+							onChange={(e, newValue) => handleApplyClick(newValue)}
 							value={value}
 							renderTags={() => {}}
 							limitTags={0}
-							groupBy={option => option.type}
+							groupBy={(option) => option.type}
 							getOptionSelected={(option, value) => option.value === value.value}
-							getOptionLabel={option => option.label || ''}
+							getOptionLabel={(option) => option.label || ''}
 							options={tags
 								.sort((a, b) => -b.label.localeCompare(a.label))
 								.sort((a, b) => -b.type.localeCompare(a.type))
-								.map(c => ({ value: c.value, label: c.label, type: c.type }))}
+								.map((c) => ({ value: c.value, label: c.label, type: c.type }))}
 							inputValue={inputValue}
 							onInputChange={(event, value, reason) => {
 								if (reason !== 'reset') {
 									setInputValue(value)
 								}
 							}}
-							renderInput={params => {
+							renderInput={(params) => {
 								return (
 									<TextField
 										{...params}
-										variant="standard"
-										placeholder="Search"
+										fullWidth
+										variant="outlined"
+										placeholder="Search..."
 										className={classes.inputBase}
+										InputProps={{
+											...params.InputProps,
+											endAdornment: (
+												<>
+													{params.InputProps.endAdornment}
+													<IconButton
+														className={classes.searchIcons}
+														aria-label="sort search"
+														onClick={() => {}}
+													>
+														<SortIcon />
+													</IconButton>
+													<IconButton
+														className={classes.searchIcons}
+														aria-label="search history"
+														onClick={() => {}}
+													>
+														<HistoryIcon />
+													</IconButton>
+												</>
+											),
+										}}
 									/>
 								)
 							}}
@@ -142,17 +190,9 @@ export default ({
 								</>
 							)}
 						/>
-						<Box display="flex" justifyContent="space-between" alignItems="center">
-							<Button disabled={!value.length} className={classes.button} onClick={handleApplyClick}>
-								Apply
-							</Button>
-							<IconButton onClick={() => onDelete(region)} variant="outlined">
-								<TrashIcon />
-							</IconButton>
-						</Box>
 					</Box>
-				)
+				</Paper>
 			)}
-		</Paper>
+		</Box>
 	)
 }

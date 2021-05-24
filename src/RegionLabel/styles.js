@@ -89,11 +89,11 @@ export default {
 		},
 	},
 	regionInfo: {
-		cursor: 'default',
-		transition: 'opacity 200ms',
-		'&:hover': {
-			cursor: 'pointer',
-		},
+		// cursor: 'default',
+		// transition: 'opacity 200ms',
+		// '&:hover': {
+		// 	cursor: 'pointer',
+		// },
 		// pointerEvents: "none",
 		padding: 8,
 		'& .name': {
@@ -109,12 +109,21 @@ export default {
 			},
 		},
 		'& .tags': {
+			display: 'flex',
 			'& .tag': {
-				color: grey[700],
-				display: 'inline-block',
-				margin: 1,
-				fontSize: 10,
-				textDecoration: 'underline',
+				// color: grey[700],
+				// display: 'inline-block',
+				// margin: 1,
+				// fontSize: 10,
+				// textDecoration: 'underline',
+				backgroundColor: 'rgba(37, 99, 235, 0.8)',
+				color: '#FFFFFF',
+				borderRadius: '2px',
+				display: 'flex',
+				alignItems: 'center',
+			},
+			'& .addIcon': {
+				cursor: 'pointer',
 			},
 		},
 	},
@@ -124,5 +133,25 @@ export default {
 		'& .MuiAutocomplete-endAdornment': {
 			display: 'none',
 		},
+	},
+	closeBtn: {
+		fontSize: '12px',
+		cursor: 'pointer',
+	},
+	inputBase: {
+		width: '200px !important',
+		'& .MuiOutlinedInput-notchedOutline': {
+			border: '1px solid #4F46E5',
+			boxShadow: '0px 0px 5px #C7D2FE',
+			'&:hover': {
+				border: '1px solid #4F46E5',
+				boxShadow: '0px 0px 5px #C7D2FE',
+			},
+		},
+	},
+	searchIcons: {
+		paddingTop: '0px',
+		paddingBottom: '0px',
+		paddingRight: '0px',
 	},
 }

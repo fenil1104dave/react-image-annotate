@@ -47,16 +47,16 @@ type Props = {
 	regionTagList?: Array<string>,
 	allowedArea?: { x: number, y: number, w: number, h: number },
 
-	onChangeRegion: Region => any,
-	onBeginRegionEdit: Region => any,
-	onCloseRegionEdit: Region => any,
-	onDeleteRegion: Region => any,
+	onChangeRegion: (Region) => any,
+	onBeginRegionEdit: (Region) => any,
+	onCloseRegionEdit: (Region) => any,
+	onDeleteRegion: (Region) => any,
 	onBeginBoxTransform: (Box, [number, number]) => any,
 	onBeginCircleTransform: (Circle, directions: string) => any,
 	onBeginMovePolygonPoint: (Polygon, index: number) => any,
 	onAddPolygonPoint: (Polygon, point: [number, number], index: number) => any,
-	onSelectRegion: Region => any,
-	onBeginMovePoint: Point => any,
+	onSelectRegion: (Region) => any,
+	onBeginMovePoint: (Point) => any,
 	onImageLoaded: ({ width: number, height: number }) => any,
 	handleScaleChange: ({ value: number }) => any,
 	setImageLoaded: () => any,
@@ -69,9 +69,9 @@ export default ({
 	imageSrc,
 	realSize,
 	showTags,
-	onMouseMove = p => null,
-	onMouseDown = p => null,
-	onMouseUp = p => null,
+	onMouseMove = (p) => null,
+	onMouseDown = (p) => null,
+	onMouseUp = (p) => null,
 	dragWithPrimary = false,
 	zoomWithPrimary = false,
 	zoomOutWithPrimary = false,
@@ -121,7 +121,7 @@ export default ({
 
 	const innerMousePos = mat.applyToPoint(mousePosition.current.x, mousePosition.current.y)
 
-	const projectRegionBox = r => {
+	const projectRegionBox = (r) => {
 		const { iw, ih } = layoutParams.current
 		// onIhIwChange(ih, iw);
 		const bbox = getEnclosingBox(r, iw, ih)
@@ -133,10 +133,7 @@ export default ({
 			h: bbox.h * ih + margin * 2,
 		}
 		const pbox = {
-			...mat
-				.clone()
-				.inverse()
-				.applyToPoint(cbox.x, cbox.y),
+			...mat.clone().inverse().applyToPoint(cbox.x, cbox.y),
 			w: cbox.w / mat.a,
 			h: cbox.h / mat.d,
 		}
@@ -176,12 +173,7 @@ export default ({
 			excludePattern.current.image.src = excludePatternSrc
 		}
 		context.save()
-		context.transform(
-			...mat
-				.clone()
-				.inverse()
-				.toArray()
-		)
+		context.transform(...mat.clone().inverse().toArray())
 
 		const fitScale = Math.max(image.current.naturalWidth / clientWidth, image.current.naturalHeight / clientHeight)
 
@@ -204,7 +196,12 @@ export default ({
 			const { x, y, w, h } = allowedArea
 			context.save()
 			context.globalAlpha = 0.25
-			const outer = [[0, 0], [iw, 0], [iw, ih], [0, ih]]
+			const outer = [
+				[0, 0],
+				[iw, 0],
+				[iw, ih],
+				[0, ih],
+			]
 			const inner = [
 				[x * iw, y * ih],
 				[x * iw + w * iw, y * ih],
@@ -212,13 +209,13 @@ export default ({
 				[x * iw, y * ih + h * ih],
 			]
 			context.moveTo(...outer[0])
-			outer.forEach(p => context.lineTo(...p))
+			outer.forEach((p) => context.lineTo(...p))
 			context.lineTo(...outer[0])
 			context.closePath()
 
 			inner.reverse()
 			context.moveTo(...inner[0])
-			inner.forEach(p => context.lineTo(...p))
+			inner.forEach((p) => context.lineTo(...p))
 			context.lineTo(...inner[0])
 
 			context.fillStyle = excludePattern.current.pattern || '#f00'
@@ -234,7 +231,10 @@ export default ({
 			context.shadowColor = 'black'
 			context.shadowBlur = 4
 		}
-		for (const region of cloneDeep(regions.filter(r => r.visible || r.visible === undefined)).sort(function(a, b) {
+		for (const region of cloneDeep(regions.filter((r) => r.visible || r.visible === undefined)).sort(function (
+			a,
+			b
+		) {
 			return (a.zIndex || 0) - (b.zIndex || 0)
 		})) {
 			switch (region.type) {
@@ -261,6 +261,9 @@ export default ({
 					context.save()
 
 					context.shadowColor = 'black'
+					if (region.is_dotted) {
+						context.setLineDash([6])
+					}
 					context.shadowBlur = 4
 					context.strokeStyle = region.color
 					context.strokeRect(region.x * iw, region.y * ih, region.w * iw, region.h * ih)
@@ -383,7 +386,7 @@ export default ({
 		if (
 			!(
 				Object.keys(oldMat).length === Object.keys(newMatClone).length &&
-				Object.keys(oldMat).every(key => oldMat[key] === newMatClone[key])
+				Object.keys(oldMat).every((key) => oldMat[key] === newMatClone[key])
 			)
 		) {
 			changeZoomHistory(newMatClone, 'ADD_NEW')
@@ -405,7 +408,7 @@ export default ({
 	}
 
 	const mouseEvents = {
-		onMouseMove: e => {
+		onMouseMove: (e) => {
 			const { left, top } = canvasEl.current.getBoundingClientRect()
 			prevMousePosition.current.x = mousePosition.current.x
 			prevMousePosition.current.y = mousePosition.current.y
@@ -478,7 +481,7 @@ export default ({
 				onMouseDown({ x: projMouse.x / iw, y: projMouse.y / ih })
 			}
 		},
-		onMouseUp: e => {
+		onMouseUp: (e) => {
 			e.preventDefault()
 			const projMouse = mat.applyToPoint(mousePosition.current.x, mousePosition.current.y)
 			if (zoomStart) {
@@ -506,9 +509,7 @@ export default ({
 					if (scale < 0.1) scale = 0.1
 					if (scale > 10) scale = 10
 
-					const newMat = getDefaultMat()
-						.translate(zoomStart.x, zoomStart.y)
-						.scaleU(scale)
+					const newMat = getDefaultMat().translate(zoomStart.x, zoomStart.y).scaleU(scale)
 					const newMatClone = newMat.clone()
 					changeZoomHistory(newMatClone, 'ADD_NEW')
 					changeMat(newMatClone)
@@ -524,7 +525,7 @@ export default ({
 				onMouseUp({ x: projMouse.x / iw, y: projMouse.y / ih })
 			}
 		},
-		onWheel: e => {
+		onWheel: (e) => {
 			if (e.ctrlKey) {
 				const direction = e.deltaY > 0 ? 1 : e.deltaY < 0 ? -1 : 0
 				zoomIn(direction, mousePosition.current)
@@ -565,10 +566,7 @@ export default ({
 	let zoomBox = !zoomStart
 		? null
 		: {
-				...mat
-					.clone()
-					.inverse()
-					.applyToPoint(zoomStart.x, zoomStart.y),
+				...mat.clone().inverse().applyToPoint(zoomStart.x, zoomStart.y),
 				w: (zoomEnd.x - zoomStart.x) / mat.a,
 				h: (zoomEnd.y - zoomStart.y) / mat.d,
 		  }
@@ -583,7 +581,7 @@ export default ({
 		}
 	}
 
-	const zoomToRegion = region => {
+	const zoomToRegion = (region) => {
 		mat = {
 			a: 0.1,
 			b: 0,
@@ -595,7 +593,7 @@ export default ({
 		changeMat(mat)
 	}
 
-	const onCloseRegion = region => {
+	const onCloseRegion = (region) => {
 		changeMat({ a: 1, b: 0, c: 0, d: 1, e: -10, f: -10 })
 		onCloseRegionEdit(region)
 	}
@@ -623,8 +621,8 @@ export default ({
 		>
 			{showCrosshairs && <Crosshairs mousePosition={mousePosition} />}
 			{regions
-				.filter(r => r.visible || r.visible === undefined)
-				.filter(r => !r.locked)
+				.filter((r) => r.visible || r.visible === undefined)
+				.filter((r) => !r.locked)
 				.map((r, i) => {
 					const pbox = projectRegionBox(r)
 					const { iw, ih } = layoutParams.current
@@ -665,7 +663,7 @@ export default ({
 											key={i}
 											className={classes.transformGrabber}
 											{...mouseEvents}
-											onMouseDown={e => {
+											onMouseDown={(e) => {
 												if (e.button === 0)
 													return onBeginBoxTransform(r, [px * 2 - 1, py * 2 - 1])
 												mouseEvents.onMouseDown(e)
@@ -728,7 +726,7 @@ export default ({
 												key={i}
 												className={classes.transformGrabber}
 												{...mouseEvents}
-												onMouseDown={e => {
+												onMouseDown={(e) => {
 													if (e.button === 0 && i == 0) {
 														return onBeginCircleTransform(r, 'MOVE_REGION')
 													} else if (e.button === 0 && i != 0) {
@@ -759,7 +757,7 @@ export default ({
 											<div
 												key={i}
 												{...mouseEvents}
-												onMouseDown={e => {
+												onMouseDown={(e) => {
 													if (e.button === 0 && (!r.open || i === 0))
 														return onBeginMovePolygonPoint(r, i)
 													mouseEvents.onMouseDown(e)
@@ -795,7 +793,7 @@ export default ({
 												<div
 													key={i}
 													{...mouseEvents}
-													onMouseDown={e => {
+													onMouseDown={(e) => {
 														if (e.button === 0) return onAddPolygonPoint(r, pa, i + 1)
 														mouseEvents.onMouseDown(e)
 													}}
@@ -816,7 +814,7 @@ export default ({
 				})}
 			{showTags &&
 				regions
-					.filter(r => r.visible || r.visible === undefined)
+					.filter((r) => r.visible || r.visible === undefined)
 					.map((region, index) => {
 						const pbox = projectRegionBox(region)
 						const { iw, ih } = layoutParams.current
@@ -873,9 +871,9 @@ export default ({
 									zIndex: 10 + (region.editingLabels ? 5 : 0),
 									width: 200,
 								}}
-								onMouseDown={e => e.preventDefault()}
-								onMouseUp={e => e.preventDefault()}
-								onMouseEnter={e => {
+								onMouseDown={(e) => e.preventDefault()}
+								onMouseUp={(e) => e.preventDefault()}
+								onMouseEnter={(e) => {
 									if (region.editingLabels) {
 										mouseEvents.onMouseUp(e)
 										e.button = 1
@@ -937,12 +935,12 @@ export default ({
 					}}
 				>
 					{regions
-						.filter(r1 => r1.type === 'point')
+						.filter((r1) => r1.type === 'point')
 						.flatMap((r1, i1) =>
 							regions
 								.filter((r2, i2) => i2 > i1)
-								.filter(r2 => r2.type === 'point')
-								.map(r2 => {
+								.filter((r2) => r2.type === 'point')
+								.map((r2) => {
 									const pr1 = projectRegionBox(r1)
 									const pr2 = projectRegionBox(r2)
 									const prm = {
@@ -965,8 +963,9 @@ export default ({
 									return (
 										<Fragment>
 											<path
-												d={`M${pr1.x + pr1.w / 2},${pr1.y + pr1.h / 2} L${pr2.x +
-													pr2.w / 2},${pr2.y + pr2.h / 2}`}
+												d={`M${pr1.x + pr1.w / 2},${pr1.y + pr1.h / 2} L${pr2.x + pr2.w / 2},${
+													pr2.y + pr2.h / 2
+												}`}
 											/>
 											<text x={prm.x} y={prm.y}>
 												{displayDistance}
